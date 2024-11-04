@@ -25,8 +25,6 @@ build-job:
   artifacts:
     paths:
       - $JAR_FILE
-  only:
-    - master
 
 # Étape de test
 test-job:
@@ -43,8 +41,6 @@ deploy-job:
   stage: deploy
   tags:
     - local
-  environment:
-    name: production
   dependencies:
     - build-job
   script:
