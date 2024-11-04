@@ -1,0 +1,52 @@
+image: maven:3.8.5-openjdk-17  # Image Maven avec Java 17
+
+stages:
+  - build
+  - test
+  - deploy
+  - run
+
+variables:
+  JAR_FILE: "target/freelance-0.0.1-SNAPSHOT.jar"  # Nom du fichier JAR généré
+
+# Étape de build
+build-job:
+  stage: build
+  tags:
+    - local
+  script:
+    - mvn clean package -DskipTests  # Compile le projet et génère le JAR sans exécuter les tests
+  artifacts:
+    paths:
+      - target/*.jar  # Sauvegarde le JAR pour les étapes suivantes
+
+# Étape de test
+test-job:
+  stage: test
+  tags:
+    - local
+  script:
+    - mvn test  # Exécute les tests pour valider le code
+
+# Étape de déploiement
+deploy-job:
+  stage: deploy
+  tags:
+    - local
+  environment:
+    name: production
+  script:
+    - apt-get update -qq && apt-get install -qqy sshpass  # Installe sshpass
+    - sshpass -p 'back' scp -o StrictHostKeyChecking=no $JAR_FILE back@172.31.250.128:/home/back/myapp.jar  # Copie le JAR vers le serveur distant
+  only:
+    - master  # Limite le déploiement à la branche principale
+
+# Étape d'exécution
+run-job:
+  stage: run
+  tags:
+    - local
+  script:
+    - sshpass -p 'back' ssh -o StrictHostKeyChecking=no back@172.31.250.128 "nohup java -jar /home/back/myapp.jar &"  # Exécute le JAR en arrière-plan
+  only:
+    - master
