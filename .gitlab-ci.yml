@@ -5,7 +5,7 @@ stages:
   - status
 
 variables:
-  JAR_FILE: "target/freelance-0.0.1-SNAPSHOT.jar"
+  JAR_FILE: "target/freelance-*.jar"
   DEV_USER: "back"
   DEV_HOST: "172.31.250.128"
   DEV_PATH: "/home/back/freelance.jar"
