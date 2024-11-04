@@ -2,7 +2,7 @@ stages:
   - build
   - test
   - deploy
-  - run
+  - status
 
 variables:
   JAR_FILE: "target/freelance-0.0.1-SNAPSHOT.jar"
@@ -35,6 +35,12 @@ test-job:
     - build-job
   script:
     - mvn test  # Exécute les tests
+  artifacts:
+    paths:
+      - target/surefire-reports/*.xml
+      - target/surefire-reports/*.txt
+    reports:
+      junit: target/surefire-reports/*.xml
 
 # Étape de déploiement
 deploy-job:
@@ -56,11 +62,13 @@ deploy-job:
     - echo "Déploiement terminé."
 
 # Étape de vérification de l'exécution
-run-check:
-  stage: run
+status-check:
+  stage: status
   tags:
     - local
   script:
+    - echo "Vérification de l'état du service freelance..."
     - sshpass -p "$REMOTE_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "sudo systemctl status freelance"  # Vérifie l'état du service
+    - echo "Vérification terminée."
   only:
     - master
