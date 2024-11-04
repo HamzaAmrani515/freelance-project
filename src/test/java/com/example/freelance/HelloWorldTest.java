@@ -12,6 +12,6 @@ public class HelloWorldTest {
 
     @Test
     void soustraction_test() {
-        Assertions.assertEquals(3, 4 - 2);
+        Assertions.assertEquals(2, 4 - 2);
     }
 }

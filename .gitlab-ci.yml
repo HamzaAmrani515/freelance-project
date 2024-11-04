@@ -6,10 +6,10 @@ stages:
 
 variables:
   JAR_FILE: "target/freelance-0.0.1-SNAPSHOT.jar"
-  REMOTE_USER: "back"
-  REMOTE_HOST: "172.31.250.128"
-  REMOTE_PATH: "/home/back/freelance.jar"
-  REMOTE_PASSWORD: "back"
+  DEV_USER: "back"
+  DEV_HOST: "172.31.250.128"
+  DEV_PATH: "/home/back/freelance.jar"
+  DEV_PASSWORD: "back"
 
 cache:
   paths:
@@ -51,9 +51,9 @@ deploy-job:
     - build-job
   script:
     - apt-get update -qq && apt-get install -qqy sshpass  # Installation de sshpass si nécessaire
-    - sshpass -p "$REMOTE_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
+    - sshpass -p "$DEV_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $DEV_USER@$DEV_HOST:$DEV_PATH
     # Vérifie si le service est déjà en cours d'exécution et le redémarre uniquement si nécessaire
-    - sshpass -p "$REMOTE_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "sudo systemctl is-active --quiet freelance && sudo systemctl restart freelance || sudo systemctl start freelance"
+    - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl is-active --quiet freelance && sudo systemctl restart freelance || sudo systemctl start freelance"
   only:
     - master
   before_script:
@@ -68,7 +68,7 @@ status-check:
     - local
   script:
     - echo "Vérification de l'état du service freelance..."
-    - sshpass -p "$REMOTE_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "sudo systemctl status freelance"  # Vérifie l'état du service
+    - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl status freelance"  # Vérifie l'état du service
     - echo "Vérification terminée."
   only:
     - master
