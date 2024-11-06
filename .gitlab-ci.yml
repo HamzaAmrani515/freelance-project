@@ -50,10 +50,13 @@ deploy-job:
   dependencies:
     - build-job
   script:
-    - apt-get update -qq && apt-get install -qqy sshpass  # Installation de sshpass si nécessaire
+    # Installer sshpass.
+    - apt-get update -qq && apt-get install -qqy sshpass
+    # Copie le fichier JAR vers le serveur en utilisant scp avec sshpass pour l'authentification.
     - sshpass -p "$DEV_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $DEV_USER@$DEV_HOST:$DEV_PATH
-    # Vérifie si le service est déjà en cours d'exécution et le redémarre uniquement si nécessaire
-    - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl is-active --quiet freelance && sudo systemctl restart freelance || sudo systemctl start freelance"
+    # Redémarre le service "freelance" sur le serveur.
+    - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl restart freelance"
+
   only:
     - master
   before_script:
