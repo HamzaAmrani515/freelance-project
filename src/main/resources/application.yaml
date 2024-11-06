@@ -3,5 +3,5 @@ spring:
     name: freelance
 logging:
   file:
-    path: /var/log/
+    path: /var/log/freelance/
     name: freelance-app.log
