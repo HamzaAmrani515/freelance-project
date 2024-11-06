@@ -7,7 +7,7 @@ public class HelloWorldTest {
 
     @Test
     void addition_test() {
-        Assertions.assertEquals(2, 1 + 1);
+        Assertions.assertEquals(1, 1 + 1);
     }
 
     @Test
