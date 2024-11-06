@@ -5,3 +5,8 @@ logging:
   file:
     path: /var/log/freelance/
     name: freelance-app.log
+    max-size: 10MB
+    max-history: 30
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
