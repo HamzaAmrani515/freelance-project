@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: freelance
+logging:
+  file:
+    path: /var/log/
+    name: freelance-app.log
