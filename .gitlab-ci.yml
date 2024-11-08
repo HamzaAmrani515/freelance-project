@@ -58,7 +58,7 @@ deploy-job:
     - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl restart freelance"
 
   only:
-    - master
+    - develop
   before_script:
     - echo "Déploiement en cours..."
   after_script:
@@ -74,4 +74,4 @@ status-check:
     - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl status freelance"  # Vérifie l'état du service
     - echo "Vérification terminée."
   only:
-    - master
+    - develop
