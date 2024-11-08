@@ -14,6 +14,6 @@ public class HelloWorldController {
     @GetMapping
     public String hello() {
         logger.info("Hello je suis le log spring boot.");
-        return "hello i am Assala Hamoudi V15. \n";
+        return "hello i am Assala Hamoudi V16. \n";
     }
 }
