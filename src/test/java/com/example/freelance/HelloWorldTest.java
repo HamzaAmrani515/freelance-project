@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class HelloWorldTest {
 
+
     @Test
     void addition_test() {
         Assertions.assertEquals(2, 1 + 1);

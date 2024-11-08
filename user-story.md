@@ -49,7 +49,34 @@
 
 2. Afficher les freelances triés par pertinence, du plus pertinent au moins pertinent.
 
-## Diagramme de classe metier 
+## Diagramme de UC
+
+```plantuml
+@startuml
+left to right direction
+
+actor Client
+actor Freelance
+actor "Gérant de la plateforme" as Gérant 
+
+rectangle "Système " {
+  usecase "Valider un Profil" as UC5
+  usecase "Afficher  des Freelances Recommander" as UC6
+  usecase "Suivre le Statut de la Mission" as UC7
+  usecase "Afficher  les mission Recommander" as UC8
+
+}
+
+Client --> UC6
+
+Freelance --> UC8
+Gérant  --> UC5
+Gérant  --> UC7
+
+@enduml
+
+```
+## Diagramme de classe metier
 
 ```plantuml
 @startuml
