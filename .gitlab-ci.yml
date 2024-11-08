@@ -3,9 +3,9 @@ stages:
   - test
   - deploy
   - status
-
+#variable d'environnement gitlab
 variables:
-  JAR_FILE: "target/freelance-*.jar"
+  JAR_FILE: "target/freelance-*.jar" #emplacement de jar
   DEV_USER: "back"
   DEV_HOST: "172.31.250.128"
   DEV_PATH: "/home/back/freelance.jar"
@@ -21,10 +21,10 @@ build-job:
   tags:
     - local
   script:
-    - mvn clean package -DskipTests  # Compile sans exécuter les tests
+    - mvn clean package -DskipTests  # Compile le code et générer mon jar sans exécuter les tests
   artifacts:
     paths:
-      - $JAR_FILE
+      - $JAR_FILE  #emplacement de jar
 
 # Étape de test
 test-job:
@@ -35,7 +35,7 @@ test-job:
     - build-job
   script:
     - mvn test  # Exécute les tests
-  artifacts:
+  artifacts: #pour voir les raports de test
     paths:
       - target/surefire-reports/*.xml
       - target/surefire-reports/*.txt
@@ -48,7 +48,7 @@ deploy-job:
   tags:
     - local
   dependencies:
-    - build-job
+    - build-job #attendre la fin d'exécution de build
   script:
     # Installer sshpass.
     - apt-get update -qq && apt-get install -qqy sshpass
