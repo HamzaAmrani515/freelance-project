@@ -1,7 +1,5 @@
 # User Stories pour le Système de Recommandation des Freelances
 
----
-
 ## User Story 1 : Initialiser le Modèle de Données
 
 **En tant que** développeur,  
@@ -12,10 +10,11 @@
 1. Ajouter les entités suivantes :
     - **Freelance**
     - **Mission**
+    - **Competence**
+    - **AffectationMission**
 
 2. Les données doivent être stockées dans la base de données PostgreSQL.
 
----
 
 ## User Story 2 : Développer une API gérant le Système de Recommandation Basé sur le Filtrage Collaboratif
 
@@ -33,7 +32,6 @@
     - **Niveau d’expérience** : Pondéré par les années d’expérience du freelance.
     - **Note moyenne** : Pondérée par la note moyenne obtenue dans les missions similaires.
 
----
 
 ## User Story 3 : Afficher les Freelances Recommandés sur l'Interface Frontend
 
@@ -51,7 +49,8 @@
 
 2. Afficher les freelances triés par pertinence, du plus pertinent au moins pertinent.
 
-# Diagramme de classe metier 
+## Diagramme de classe metier 
+
 ```plantuml
 @startuml
 class Freelance {
@@ -87,8 +86,5 @@ Mission "1" -- "0..*" AffectationMission : "a été attribuée à"
 Freelance "0..*" -- "0..*" Competence : "possède"
 Mission "0..*" -- "0..*" Competence : "requiert"
 
-
 @enduml
-
 ```
----
