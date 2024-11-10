@@ -1,3 +1,4 @@
+environment : local
 spring:
   application:
     name: freelance
