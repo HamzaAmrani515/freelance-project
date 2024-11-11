@@ -46,35 +46,30 @@ test-job:
     reports:
       junit: target/surefire-reports/*.xml
 
-# Centralized target management
-.before_script:
-  before_script:
-    - |
-      if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then
-        export TARGET_USER=$DEV_USER
-        export TARGET_PASSWORD=$DEV_PASSWORD
-        export TARGET_HOST=$DEV_HOST
-        export TARGET_PATH=$DEV_PATH
-      elif [ "$CI_COMMIT_REF_NAME" == "staging" ]; then
-        export TARGET_USER=$PPROD_USER
-        export TARGET_PASSWORD=$PPROD_PASSWORD
-        export TARGET_HOST=$PPROD_HOST
-        export TARGET_PATH=$PPROD_PATH
-      else
-        echo "Branch not recognized for deployment. Exiting..."
-        exit 1
-      fi
-    - echo "Using target: $TARGET_USER@$TARGET_HOST at $TARGET_PATH"
-
-# Deploy job
+# Deploy job with centralized target management in the script
 deploy-job:
   stage: deploy
   tags:
     - local
-  extends: .before_script
   dependencies:
     - build-job
   script:
+    - |
+      if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then
+        TARGET_USER=$DEV_USER
+        TARGET_PASSWORD=$DEV_PASSWORD
+        TARGET_HOST=$DEV_HOST
+        TARGET_PATH=$DEV_PATH
+      elif [ "$CI_COMMIT_REF_NAME" == "staging" ]; then
+        TARGET_USER=$PPROD_USER
+        TARGET_PASSWORD=$PPROD_PASSWORD
+        TARGET_HOST=$PPROD_HOST
+        TARGET_PATH=$PPROD_PATH
+      else
+        echo "Branch not recognized for deployment. Exiting..."
+        exit 1
+      fi
+    - echo "Deploying to $TARGET_HOST"
     - apt-get update -qq && apt-get install -qqy sshpass
     - sshpass -p "$TARGET_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $TARGET_USER@$TARGET_HOST:$TARGET_PATH
     - sshpass -p "$TARGET_PASSWORD" ssh -o StrictHostKeyChecking=no $TARGET_USER@$TARGET_HOST "echo '$TARGET_PASSWORD' | sudo -S systemctl restart freelance"
@@ -82,13 +77,26 @@ deploy-job:
     - develop
     - staging
 
-# Status check job
+# Status check job with centralized target management in the script
 status-check:
   stage: status
   tags:
     - local
-  extends: .before_script
   script:
+    - |
+      if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then
+        TARGET_USER=$DEV_USER
+        TARGET_PASSWORD=$DEV_PASSWORD
+        TARGET_HOST=$DEV_HOST
+      elif [ "$CI_COMMIT_REF_NAME" == "staging" ]; then
+        TARGET_USER=$PPROD_USER
+        TARGET_PASSWORD=$PPROD_PASSWORD
+        TARGET_HOST=$PPROD_HOST
+      else
+        echo "Branch not recognized for status check. Exiting..."
+        exit 1
+      fi
+    - echo "Checking service status on $TARGET_HOST"
     - sshpass -p "$TARGET_PASSWORD" ssh -o StrictHostKeyChecking=no $TARGET_USER@$TARGET_HOST "sudo systemctl status freelance"
   only:
     - develop
