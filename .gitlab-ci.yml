@@ -3,19 +3,13 @@ stages:
   - test
   - deploy
   - status
-#variable d'environnement gitlab
+
 variables:
-  JAR_FILE: "target/freelance-*.jar" #emplacement de jar
-  ###############
-  ### ENV DEV ###
-  ###############
+  JAR_FILE: "target/freelance-*.jar"
   DEV_USER: "back"
   DEV_PASSWORD: "back"
   DEV_HOST: "172.31.250.128"
   DEV_PATH: "/home/back/freelance.jar"
-  #################
-  ### ENV PPROD ###
-  #################
   PPROD_USER: "bdd"
   PPROD_PASSWORD: "bdd"
   PPROD_HOST: "172.31.250.157"
@@ -23,20 +17,20 @@ variables:
 
 cache:
   paths:
-    - ~/.m2/repository  # Cache des dépendances Maven pour accélérer le build
+    - ~/.m2/repository
 
-# Étape de build
+# Build job
 build-job:
   stage: build
   tags:
     - local
   script:
-    - mvn clean package -DskipTests  # Compile le code et générer mon jar sans exécuter les tests
+    - mvn clean package -DskipTests
   artifacts:
     paths:
-      - $JAR_FILE  #emplacement de jar
+      - $JAR_FILE
 
-# Étape de test
+# Test job
 test-job:
   stage: test
   tags:
@@ -44,56 +38,58 @@ test-job:
   dependencies:
     - build-job
   script:
-    - mvn test  # Exécute les tests
-  artifacts: #pour voir les raports de test
+    - mvn test
+  artifacts:
     paths:
       - target/surefire-reports/*.xml
       - target/surefire-reports/*.txt
     reports:
       junit: target/surefire-reports/*.xml
 
-# Étape de déploiement
-deploy-dev-job:
+# Centralized target management
+.before_script:
+  before_script:
+    - |
+      if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then
+        export TARGET_USER=$DEV_USER
+        export TARGET_PASSWORD=$DEV_PASSWORD
+        export TARGET_HOST=$DEV_HOST
+        export TARGET_PATH=$DEV_PATH
+      elif [ "$CI_COMMIT_REF_NAME" == "staging" ]; then
+        export TARGET_USER=$PPROD_USER
+        export TARGET_PASSWORD=$PPROD_PASSWORD
+        export TARGET_HOST=$PPROD_HOST
+        export TARGET_PATH=$PPROD_PATH
+      else
+        echo "Branch not recognized for deployment. Exiting..."
+        exit 1
+      fi
+    - echo "Using target: $TARGET_USER@$TARGET_HOST at $TARGET_PATH"
+
+# Deploy job
+deploy-job:
   stage: deploy
   tags:
     - local
+  extends: .before_script
   dependencies:
-    - build-job #attendre la fin d'exécution de build
+    - build-job
   script:
-    # Installer sshpass.
     - apt-get update -qq && apt-get install -qqy sshpass
-    # Copie le fichier JAR vers le serveur en utilisant scp avec sshpass pour l'authentification.
-    - sshpass -p "$DEV_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $DEV_USER@$DEV_HOST:$DEV_PATH
-    # Redémarre le service "freelance" sur le serveur.
-    - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl restart freelance"
+    - sshpass -p "$TARGET_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $TARGET_USER@$TARGET_HOST:$TARGET_PATH
+    - sshpass -p "$TARGET_PASSWORD" ssh -o StrictHostKeyChecking=no $TARGET_USER@$TARGET_HOST "echo '$TARGET_PASSWORD' | sudo -S systemctl restart freelance"
   only:
     - develop
-
-deploy-pprod-job:
-  stage: deploy
-  tags:
-    - local
-  dependencies:
-    - build-job #attendre la fin d'exécution de build
-  script:
-    # Installer sshpass.
-    - apt-get update -qq && apt-get install -qqy sshpass
-    # Copie le fichier JAR vers le serveur en utilisant scp avec sshpass pour l'authentification.
-    - sshpass -p "$PPROD_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $PPROD_USER@$PPROD_HOST:$PPROD_PATH
-    # Redémarre le service "freelance" sur le serveur.
-    - sshpass -p "$PPROD_PASSWORD" ssh -o StrictHostKeyChecking=no $PPROD_USER@$PPROD_HOST "echo '$PPROD_PASSWORD' | sudo -S systemctl restart freelance"
-  only:
     - staging
 
-
-# Étape de vérification de l'exécution
+# Status check job
 status-check:
   stage: status
   tags:
     - local
+  extends: .before_script
   script:
-    - echo "Vérification de l'état du service freelance..."
-    - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl status freelance"  # Vérifie l'état du service
-    - echo "Vérification terminée."
+    - sshpass -p "$TARGET_PASSWORD" ssh -o StrictHostKeyChecking=no $TARGET_USER@$TARGET_HOST "sudo systemctl status freelance"
   only:
     - develop
+    - staging
