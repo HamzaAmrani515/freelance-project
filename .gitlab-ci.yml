@@ -97,7 +97,7 @@ status-check:
         exit 1
       fi
     - echo "Checking service status on $TARGET_HOST"
-    - sshpass -p "$TARGET_PASSWORD" ssh -o StrictHostKeyChecking=no $TARGET_USER@$TARGET_HOST "sudo systemctl status freelance"
+    - sshpass -p "$TARGET_PASSWORD" ssh -o StrictHostKeyChecking=no $TARGET_USER@$TARGET_HOST "echo '$TARGET_PASSWORD' | sudo -S systemctl status freelance"
   only:
     - develop
     - staging
