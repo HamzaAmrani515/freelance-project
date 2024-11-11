@@ -6,10 +6,20 @@ stages:
 #variable d'environnement gitlab
 variables:
   JAR_FILE: "target/freelance-*.jar" #emplacement de jar
+  ###############
+  ### ENV DEV ###
+  ###############
   DEV_USER: "back"
+  DEV_PASSWORD: "back"
   DEV_HOST: "172.31.250.128"
   DEV_PATH: "/home/back/freelance.jar"
-  DEV_PASSWORD: "back"
+  #################
+  ### ENV PPROD ###
+  #################
+  PPROD_USER: "bdd"
+  PPROD_PASSWORD: "bdd"
+  PPROD_HOST: "172.31.250.157"
+  PPROD_PATH: "/home/bdd/freelance.jar"
 
 cache:
   paths:
@@ -43,7 +53,7 @@ test-job:
       junit: target/surefire-reports/*.xml
 
 # Étape de déploiement
-deploy-job:
+deploy-dev-job:
   stage: deploy
   tags:
     - local
@@ -56,13 +66,25 @@ deploy-job:
     - sshpass -p "$DEV_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $DEV_USER@$DEV_HOST:$DEV_PATH
     # Redémarre le service "freelance" sur le serveur.
     - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl restart freelance"
-
   only:
     - develop
-  before_script:
-    - echo "Déploiement en cours..."
-  after_script:
-    - echo "Déploiement terminé."
+
+deploy-pprod-job:
+  stage: deploy
+  tags:
+    - local
+  dependencies:
+    - build-job #attendre la fin d'exécution de build
+  script:
+    # Installer sshpass.
+    - apt-get update -qq && apt-get install -qqy sshpass
+    # Copie le fichier JAR vers le serveur en utilisant scp avec sshpass pour l'authentification.
+    - sshpass -p "$PPROD_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $PPROD_USER@$PPROD_HOST:$PPROD_PATH
+    # Redémarre le service "freelance" sur le serveur.
+    - sshpass -p "$PPROD_PASSWORD" ssh -o StrictHostKeyChecking=no $PPROD_USER@$PPROD_HOST "sudo systemctl restart freelance"
+  only:
+    - staging
+
 
 # Étape de vérification de l'exécution
 status-check:

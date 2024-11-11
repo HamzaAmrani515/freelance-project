@@ -1,0 +1,10 @@
+environment : prod
+spring:
+  application:
+    name: freelance
+logging:
+  file:
+    name: /var/log/freelance/freelance-app.log
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
