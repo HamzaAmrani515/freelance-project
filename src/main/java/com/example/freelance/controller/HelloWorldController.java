@@ -18,6 +18,6 @@ public class HelloWorldController {
     @GetMapping
     public String hello() {
         logger.info("Hello je suis le log spring boot.");
-        return "Hello i am [ " + environment + " ] environment V18. \n";
+        return "Hello i am [ " + environment + " ] environment V21. \n";
     }
 }
