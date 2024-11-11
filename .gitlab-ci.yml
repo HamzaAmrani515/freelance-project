@@ -81,7 +81,7 @@ deploy-pprod-job:
     # Copie le fichier JAR vers le serveur en utilisant scp avec sshpass pour l'authentification.
     - sshpass -p "$PPROD_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $PPROD_USER@$PPROD_HOST:$PPROD_PATH
     # Redémarre le service "freelance" sur le serveur.
-    - sshpass -p "$PPROD_PASSWORD" ssh -o StrictHostKeyChecking=no $PPROD_USER@$PPROD_HOST "sudo systemctl restart freelance"
+    - sshpass -p "$PPROD_PASSWORD" ssh -o StrictHostKeyChecking=no $PPROD_USER@$PPROD_HOST "echo '$PPROD_PASSWORD' | sudo -S systemctl restart freelance"
   only:
     - staging
 
