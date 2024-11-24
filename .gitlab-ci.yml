@@ -6,10 +6,17 @@ stages:
 
 variables:
   JAR_FILE: "target/freelance-*.jar"
+
+  ###############
+  ### Env DEV ###
+  ###############
   DEV_USER: "back"
   DEV_PASSWORD: "back"
   DEV_HOST: "172.31.250.128"
   DEV_PATH: "/home/back/freelance.jar"
+  #################
+  ### Env PPROD ###
+  #################
   PPROD_USER: "bdd"
   PPROD_PASSWORD: "bdd"
   PPROD_HOST: "172.31.250.157"
@@ -19,7 +26,9 @@ cache:
   paths:
     - ~/.m2/repository
 
-# Build job
+#################
+### Build job ###
+#################
 build-job:
   stage: build
   tags:
@@ -30,7 +39,9 @@ build-job:
     paths:
       - $JAR_FILE
 
-# Test job
+################
+### Test job ###
+################
 test-job:
   stage: test
   tags:
@@ -46,7 +57,9 @@ test-job:
     reports:
       junit: target/surefire-reports/*.xml
 
-# Deploy job with centralized target management in the script
+##################
+### Deploy job ###
+##################
 deploy-job:
   stage: deploy
   tags:
@@ -77,7 +90,9 @@ deploy-job:
     - develop
     - staging
 
-# Status check job with centralized target management in the script
+##################
+### Status job ###
+##################
 status-check:
   stage: status
   tags:
