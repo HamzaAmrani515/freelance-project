@@ -10,10 +10,10 @@ variables:
   ###############
   ### Env DEV ###
   ###############
-  DEV_USER: "back"
-  DEV_PASSWORD: "back"
-  DEV_HOST: "172.31.250.128"
-  DEV_PATH: "/home/back/freelance.jar"
+  DEV_USER: "devback"
+  DEV_PASSWORD: "devback"
+  DEV_HOST: " 172.31.249.74"
+  DEV_PATH: "/home/devback/freelance.jar"
   #################
   ### Env PPROD ###
   #################
