@@ -1,20 +1,19 @@
 stages:
   - build
   - deploy
-  - status
 
 variables:
   BUILD_PATH: "build"
   ###########
   ### DEV ###
   ###########
-  DEV_USER: "back"
-  DEV_PASSWORD: "back"
-  DEV_HOST: "172.31.250.128"
-  DEV_PATH: "/home/back/react-app"
-  ###########
-  ### DEV ###
-  ###########
+  DEV_USER: "devfront"
+  DEV_PASSWORD: "devfront"
+  DEV_HOST: "172.31.253.145"
+  DEV_PATH: "/home/devfront/react-app"
+  #############
+  ### PPROD ###
+  #############
   PPROD_USER: "front"
   PPROD_PASSWORD: "front"
   PPROD_HOST: "172.31.250.215"
@@ -63,5 +62,7 @@ deploy-front:
     - sshpass -p "$TARGET_PASSWORD" ssh -o StrictHostKeyChecking=no $TARGET_USER@$TARGET_HOST "rm -rf $TARGET_PATH"
     - sshpass -p "$TARGET_PASSWORD" scp -r -o StrictHostKeyChecking=no $BUILD_PATH $TARGET_USER@$TARGET_HOST:$TARGET_PATH
     - sshpass -p "$TARGET_PASSWORD" ssh -o StrictHostKeyChecking=no $TARGET_USER@$TARGET_HOST "echo '$TARGET_PASSWORD' | sudo -S systemctl restart nginx"
-
+  only:
+    - develop
+    - staging
 
