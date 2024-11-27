@@ -1,5 +1,4 @@
 package com.example.freelance.controller;
-//ce que voie le front
 
 import com.example.freelance.model.FreelanceModel;
 import com.example.freelance.repository.FreelanceRepository;
@@ -11,24 +10,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/freelances")
 public class FreelanceController {
-    @Autowired //pour instancier freelancerepository
+    @Autowired
     private FreelanceRepository freelanceRepository;
 
     @GetMapping
-    public List<FreelanceModel> findAllFreelance() {
+    public List<FreelanceModel> getAllFreelances() {
         return freelanceRepository.findAll();
     }
 
+    @GetMapping
+    public FreelanceModel getFreelanceById(Long id) {
+        return freelanceRepository.findById(id).orElse(null);
+    }
+
     @PostMapping
-    public FreelanceModel createFreelance(FreelanceModel freelanceModel) {
+    public FreelanceModel saveFreelance(FreelanceModel freelanceModel) {
         return freelanceRepository.save(freelanceModel);
     }
+
     @DeleteMapping
-    public void deleteFreelance (Long id){
+    public void deleteFreelance(Long id) {
         freelanceRepository.deleteById(id);
     }
+
     @PutMapping
-    public FreelanceModel updateFreelance(FreelanceModel freelanceModel){
+    public FreelanceModel updateFreelance(FreelanceModel freelanceModel) {
         return freelanceRepository.save(freelanceModel);
     }
 
