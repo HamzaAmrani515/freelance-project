@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import FreelanceListPage from './pages/FreelanceListPage';
+import FreelanceAddPage from './pages/FreelanceAddPage';
+import FreelanceEditPage from './pages/FreelanceEditPage';
+import FreelanceDetailsPage from './pages/FreelanceDetailsPage';
+import { OpenAPI } from './api';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FC = () => {
+    OpenAPI.BASE = OpenAPI.BASE = process.env.REACT_APP_BACK_API_URL || 'http://default-api-url.com';
+
+    return (
+        <Router>
+            <Routes>
+                <Route path="/freelances" element={<FreelanceListPage />} />
+                <Route path="/freelances/add" element={<FreelanceAddPage />} />
+                <Route path="/freelances/edit/:id" element={<FreelanceEditPage />} />
+                <Route path="/freelances/details/:id" element={<FreelanceDetailsPage />} />
+            </Routes>
+        </Router>
+    );
+};
 
 export default App;

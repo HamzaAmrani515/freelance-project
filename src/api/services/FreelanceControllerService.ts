@@ -11,10 +11,17 @@ export class FreelanceControllerService {
      * @returns Freelance OK
      * @throws ApiError
      */
-    public static getAllFreelances(): CancelablePromise<Array<Freelance>> {
+    public static getFreelanceById({
+        id,
+    }: {
+        id: number,
+    }): CancelablePromise<Freelance> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/freelances',
+            url: '/api/freelances/{id}',
+            path: {
+                'id': id,
+            },
         });
     }
     /**
@@ -22,33 +29,20 @@ export class FreelanceControllerService {
      * @throws ApiError
      */
     public static updateFreelance({
-        freelance,
+        id,
+        requestBody,
     }: {
-        freelance: Freelance,
+        id: number,
+        requestBody: Freelance,
     }): CancelablePromise<Freelance> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/freelances',
-            query: {
-                'freelance': freelance,
+            url: '/api/freelances/{id}',
+            path: {
+                'id': id,
             },
-        });
-    }
-    /**
-     * @returns Freelance OK
-     * @throws ApiError
-     */
-    public static saveFreelance({
-        freelance,
-    }: {
-        freelance: Freelance,
-    }): CancelablePromise<Freelance> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/freelances',
-            query: {
-                'freelance': freelance,
-            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
     /**
@@ -62,8 +56,8 @@ export class FreelanceControllerService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/freelances',
-            query: {
+            url: '/api/freelances/{id}',
+            path: {
                 'id': id,
             },
         });
@@ -72,17 +66,26 @@ export class FreelanceControllerService {
      * @returns Freelance OK
      * @throws ApiError
      */
-    public static getFreelanceById({
-        id,
-    }: {
-        id: number,
-    }): CancelablePromise<Freelance> {
+    public static getAllFreelances(): CancelablePromise<Array<Freelance>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/freelances/{id}',
-            path: {
-                'id': id,
-            },
+            url: '/api/freelances',
+        });
+    }
+    /**
+     * @returns Freelance OK
+     * @throws ApiError
+     */
+    public static saveFreelance({
+        requestBody,
+    }: {
+        requestBody: Freelance,
+    }): CancelablePromise<Freelance> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/freelances',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 }

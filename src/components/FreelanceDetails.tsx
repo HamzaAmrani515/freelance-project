@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Freelance, FreelanceControllerService } from '../api';
-import { useNavigate, useParams } from 'react-router-dom'; // Remplacer useHistory par useNavigate
+import { useNavigate, useParams } from 'react-router-dom';
 
 const FreelanceDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [freelance, setFreelance] = useState<Freelance | null>(null);
-    const navigate = useNavigate(); // Remplacer useHistory par useNavigate
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchFreelance = async () => {
@@ -51,7 +51,7 @@ const FreelanceDetails: React.FC = () => {
 
             <div className="mt-6 flex justify-center">
                 <button
-                    onClick={() => navigate('/freelances')} // Remplacer history.push par navigate
+                    onClick={() => navigate('/freelances')}
                     className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-200"
                 >
                     Fermer
