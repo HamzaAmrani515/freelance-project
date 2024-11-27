@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "freelance")//nom de table de base
-public class FreelanceModel {
+public class Freelance {
     @Id//reconnaitre la colonne ID
     @GeneratedValue(strategy = GenerationType.IDENTITY)//pour incrementer automatiquement
     private Long id;
