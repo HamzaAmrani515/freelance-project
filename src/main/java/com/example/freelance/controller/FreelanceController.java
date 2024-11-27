@@ -18,8 +18,8 @@ public class FreelanceController {
         return freelanceRepository.findAll();
     }
 
-    @GetMapping
-    public FreelanceModel getFreelanceById(Long id) {
+    @GetMapping("/{id}")
+    public FreelanceModel getFreelanceById( @PathVariable Long id) {
         return freelanceRepository.findById(id).orElse(null);
     }
 
