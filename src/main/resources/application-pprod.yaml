@@ -1,10 +1,13 @@
-environment : pprod
 spring:
-  application:
-    name: freelance
-logging:
-  file:
-    name: /var/log/freelance/freelance-app.log
-  level:
-    root: INFO
-    org.springframework.web: DEBUG
+  datasource:
+    url: jdbc:postgresql://172.31.249.254:5432/pprod_freelance
+    username: pprod_freelance_user
+    password: freelance
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
