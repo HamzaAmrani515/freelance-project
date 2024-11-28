@@ -80,38 +80,38 @@ Gérant  --> UC7
 
 ```plantuml
 @startuml
-class Freelance {
+class RefFreelance {
     - Long id
     - String nom
     - int anneesExperience
     - double noteMoyenne
-    - Set<Competence> competences
-    - List<AffectationMission> affectationsMission
+    - Set<RefCompetence> competences
 }
 
-class Mission {
+class RefMission {
     - Long id
     - String titre
-    - Set<Competence> competencesRequises
+    - Set<RefCompetence> competencesRequises
 }
 
-class Competence {
+class RefCompetence {
     - Long id
     - String nom
 }
 
 class AffectationMission {
     - Long id
-    - Freelance freelance
-    - Mission mission
+    - RefFreelance freelance
+    - RefMission mission
     - LocalDate dateAffectation
     - double note
 }
 
-Freelance "1" -- "0..*" AffectationMission : "a été affecté à"
-Mission "1" -- "0..*" AffectationMission : "a été attribuée à"
-Freelance "0..*" -- "0..*" Competence : "possède"
-Mission "0..*" -- "0..*" Competence : "requiert"
+RefFreelance "1" -- "0..*" AffectationMission : "a été affecté à"
+RefMission "1" -- "0..*" AffectationMission : "a été attribuée à"
+RefFreelance "0..*" -- "0..*" RefCompetence : "possède"
+RefMission "0..*" -- "0..*" RefCompetence : "requiert"
 
 @enduml
+
 ```
