@@ -28,6 +28,8 @@ build-front:
     - if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then cp .env.dev .env; fi
     - if [ "$CI_COMMIT_REF_NAME" == "staging" ]; then cp .env.pprod .env; fi
     - if [ "$CI_COMMIT_REF_NAME" == "master" ]; then cp .env.prod .env; fi
+    - node --version
+    - npm --version
     - npm install
     - npm run build
   artifacts:
