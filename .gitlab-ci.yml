@@ -2,7 +2,6 @@ stages:
   - build
   - test
   - deploy
-  - status
 
 variables:
   JAR_FILE: "target/freelance-*.jar"
@@ -17,10 +16,17 @@ variables:
   #################
   ### Env PPROD ###
   #################
-  PPROD_USER: "bdd"
-  PPROD_PASSWORD: "bdd"
-  PPROD_HOST: "172.31.250.157"
-  PPROD_PATH: "/home/bdd/freelance.jar"
+  PPROD_USER: "pprodback"
+  PPROD_PASSWORD: "pprodback"
+  PPROD_HOST: "172.31.249.151"
+  PPROD_PATH: "/home/pprodback/freelance.jar"
+  #################
+  ### Env PROD ###
+  #################
+  PROD_USER: "prodback"
+  PROD_PASSWORD: "prodback"
+  PROD_HOST: "*"
+  PROD_PATH: "/home/prodback/freelance.jar"
 
 cache:
   paths:
@@ -78,6 +84,11 @@ deploy-job:
         TARGET_PASSWORD=$PPROD_PASSWORD
         TARGET_HOST=$PPROD_HOST
         TARGET_PATH=$PPROD_PATH
+      elif [ "$CI_COMMIT_REF_NAME" == "master" ]; then
+        TARGET_USER=$PROD_USER
+        TARGET_PASSWORD=$PROD_PASSWORD
+        TARGET_HOST=$PROD_HOST
+        TARGET_PATH=$PROD_PATH
       else
         echo "Branch not recognized for deployment. Exiting..."
         exit 1
@@ -89,30 +100,4 @@ deploy-job:
   only:
     - develop
     - staging
-
-##################
-### Status job ###
-##################
-status-check:
-  stage: status
-  tags:
-    - local
-  script:
-    - |
-      if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then
-        TARGET_USER=$DEV_USER
-        TARGET_PASSWORD=$DEV_PASSWORD
-        TARGET_HOST=$DEV_HOST
-      elif [ "$CI_COMMIT_REF_NAME" == "staging" ]; then
-        TARGET_USER=$PPROD_USER
-        TARGET_PASSWORD=$PPROD_PASSWORD
-        TARGET_HOST=$PPROD_HOST
-      else
-        echo "Branch not recognized for status check. Exiting..."
-        exit 1
-      fi
-    - echo "Checking service status on $TARGET_HOST"
-    - sshpass -p "$TARGET_PASSWORD" ssh -o StrictHostKeyChecking=no $TARGET_USER@$TARGET_HOST "echo '$TARGET_PASSWORD' | sudo -S systemctl status freelance"
-  only:
-    - develop
-    - staging
+    - master
