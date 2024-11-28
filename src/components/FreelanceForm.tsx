@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Freelance } from '../api';
-import { useNavigate } from 'react-router-dom';
 
 interface FreelanceFormProps {
     onSubmit: (freelance: Freelance) => void;
