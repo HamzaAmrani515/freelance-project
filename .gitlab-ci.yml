@@ -29,6 +29,7 @@ build-front:
     - if [ "$CI_COMMIT_REF_NAME" == "staging" ]; then cp .env.pprod .env; fi
     - if [ "$CI_COMMIT_REF_NAME" == "master" ]; then cp .env.prod .env; fi
     - apt-get update -y
+    - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
     - apt-get install -y nodejs npm
     - npm install
     - npm run build
