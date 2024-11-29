@@ -7,4 +7,3 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FreelanceRepository extends JpaRepository<Freelance, Long> {//intéragir avec la base de donnée
 }
-
