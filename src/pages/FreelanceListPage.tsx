@@ -53,7 +53,7 @@ const FreelanceListPage: React.FC = () => {
             <div className="max-w-7xl mx-auto space-y-8">
                 {/* Header section */}
                 <div className="flex justify-between items-center">
-                    <h1 className="text-3xl font-semibold text-gray-800">Liste des Freelances aaaaa</h1>
+                    <h1 className="text-3xl font-semibold text-gray-800">Liste des Freelances</h1>
                     <Link to="/freelances/add">
                         <button
                             className="bg-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200">
