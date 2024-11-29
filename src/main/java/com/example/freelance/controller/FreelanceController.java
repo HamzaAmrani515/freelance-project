@@ -33,12 +33,12 @@ public class FreelanceController {
         freelanceService.deleteFreelance(id);
     }
 
-
-    @DeleteMapping("/{name}")
+/*
+    @DeleteMapping("/test/{name}")
     public void deleteFreelanceByName(@PathVariable String name) {
 
     }
-
+*/
 
 
     @PutMapping("/{id}")
