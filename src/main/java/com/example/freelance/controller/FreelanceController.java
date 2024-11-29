@@ -34,7 +34,7 @@ public class FreelanceController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{name}")
     public void deleteFreelanceByName(@PathVariable String name) {
 
     }
