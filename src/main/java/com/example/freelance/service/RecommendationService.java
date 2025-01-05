@@ -22,6 +22,8 @@ public class RecommendationService {
     private final FreelancerRepository freelancerRepository;
     private final EvaluationRepository evaluationRepository;
 
+    private static final Integer MIN_SIMILAR = 2;
+
     public List<FreelancerRecommendationDTO> recommendFreelancersForMission(Long missionId) {
         /*==============
          1) Récup mission cible
@@ -32,7 +34,7 @@ public class RecommendationService {
         Set<Long> targetCompetenceIds = targetMission.getCompetences().stream().map(Competence::getId).collect(Collectors.toSet());
 
         // 2) Missions "similaires" => On ne charge que leurs IDs (pas les entités complètes)
-        List<Long> similarMissionIds = missionRepository.findSimilarMissionIds(targetCompetenceIds, missionId);
+        List<Long> similarMissionIds = missionRepository.findSimilarMissionIds(targetCompetenceIds, missionId, MIN_SIMILAR);
         if (similarMissionIds.isEmpty()) {
             // Pas de missions similaires => peu/pas de recommandations
             return Collections.emptyList();
@@ -80,16 +82,18 @@ public class RecommendationService {
             intersection.retainAll(targetCompetenceIds);
             int commonCount = intersection.size();
 
-            // b) Expérience
-            double experience = Optional.ofNullable(freelancer.getExperience()).orElse(0.0);
+            if (commonCount >= MIN_SIMILAR) {
+                // b) Expérience
+                double experience = Optional.ofNullable(freelancer.getExperience()).orElse(0.0);
 
-            // c) Note moyenne sur missions similaires ( en utilisant la méthode average déjà prédéfinie)
-            double avgRating = evals.stream().mapToDouble(e -> Optional.ofNullable(e.getNote()).orElse(0.0)).average().orElse(0.0);
+                // c) Note moyenne sur missions similaires ( en utilisant la méthode average déjà prédéfinie)
+                double avgRating = evals.stream().mapToDouble(e -> Optional.ofNullable(e.getNote()).orElse(0.0)).average().orElse(0.0);
 
-            // scoring
-            int score = (int) ((commonCount * 2.0) + experience + (avgRating * 2.0));
+                // scoring
+                int score = (int) ((commonCount * 2.0) + experience + (avgRating * 2.0));
 
-            recommendations.add(new FreelancerRecommendationDTO(freelancerId, freelancer.getNom(), freelancer.getPrenom(), score));
+                recommendations.add(new FreelancerRecommendationDTO(freelancerId, freelancer.getNom(), freelancer.getPrenom(), score));
+            }
         }
 
         // Trier la liste des recommendation en fonction du score

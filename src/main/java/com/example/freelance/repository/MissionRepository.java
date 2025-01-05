@@ -19,7 +19,7 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
                 WHERE comp.id IN :targetCompetenceIds
                   AND m.id <> :missionId
                 GROUP BY m.id
-                HAVING COUNT(DISTINCT comp.id) >= 4
+                HAVING COUNT(DISTINCT comp.id) >= :similar
             """)
-    List<Long> findSimilarMissionIds(@Param("targetCompetenceIds") Set<Long> compIds, @Param("missionId") Long missionId);
+    List<Long> findSimilarMissionIds(@Param("targetCompetenceIds") Set<Long> compIds, @Param("missionId") Long missionId, @Param("similar") int similar);
 }
