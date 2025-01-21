@@ -9,6 +9,7 @@ import com.example.freelance.repository.EvaluationRepository;
 import com.example.freelance.repository.FreelancerRepository;
 import com.example.freelance.repository.MissionRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,148 +21,99 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RecommendationService {
 
-    /**
-     * Repository pour accéder aux données des missions
-     */
     private final MissionRepository missionRepository;
-    /**
-     * Repository pour accéder aux données des freelances
-     */
     private final FreelancerRepository freelancerRepository;
-    /**
-     * Repository pour accéder aux données des évaluations
-     */
     private final EvaluationRepository evaluationRepository;
 
-    /**
-     * Constante définissant le nombre minimal de compétences communes.
-     */
-    private static final Integer MIN_SIMILAR = 2;
+    private static final Integer MIN_SIMILAR = 4;
 
-    /**
-     * Recommande une liste de freelances pour une mission précise.
-     *
-     * @param missionId l'identifiant de la mission cible
-     * @return une liste d'objets {@link FreelancerRecommendationDTO} contenant le freelance et son score
-     */
     public List<FreelancerRecommendationDTO> recommendFreelancersForMission(Long missionId) {
+        log.info("Début de la recommandation des freelances pour la mission ID: {}", missionId);
 
-        /*==============
-         1) Récupération de la mission cible
-         ===============*/
+        Mission targetMission = missionRepository.findById(missionId)
+                .orElseThrow(() -> {
+                    log.error("Mission non trouvée avec ID: {}", missionId);
+                    return new IllegalArgumentException("Mission non trouvée : " + missionId);
+                });
+        log.info("Mission récupérée : {}", targetMission.getTitre());
 
-        // Récupère la mission en base à partir de l'id fourni, ou lance une exception si absente
-        Mission targetMission = missionRepository.findById(missionId).orElseThrow(() -> new IllegalArgumentException("Mission non trouvée : " + missionId));
 
-        // Extrait l'ensemble des ID de compétences associées à la mission cible
-        Set<Long> targetCompetenceIds = targetMission.getCompetences().stream().map(Competence::getId).collect(Collectors.toSet());
+//On extrait les compétences requises pour la mission sous forme d’ID (targetCompetenceIds).
+        Set<Long> targetCompetenceIds = targetMission.getCompetences().stream()
+                .map(Competence::getId)
+                .collect(Collectors.toSet());
+        log.info("Compétences de la mission cible récupérées: {}", targetCompetenceIds);
 
-        /*==============
-         2) Rechercher les missions "similaires"
-         ===============*/
-
-        // Récupère les IDs des missions dont les compétences sont suffisamment proches
-        // (au moins MIN_SIMILAR compétences en commun) de celles de la mission cible
         List<Long> similarMissionIds = missionRepository.findSimilarMissionIds(targetCompetenceIds, missionId, MIN_SIMILAR);
+        log.info("{} missions similaires trouvées pour la mission ID: {}", similarMissionIds.size(), missionId);
 
-        // Si aucune mission n'est similaire, on retourne une liste vide (pas de recommandation possible)
         if (similarMissionIds.isEmpty()) {
+            log.warn("Aucune mission similaire trouvée, arrêt du processus de recommandation.");
             return Collections.emptyList();
         }
 
-        /*==============
-         3) Charger toutes les évaluations des missions similaires
-         ===============*/
-
-        // Recherche en base toutes les évaluations associées aux missions similaires
         List<Evaluation> evaluationsOnSimilar = evaluationRepository.findAllByMissionIds(similarMissionIds);
+        log.info("{} évaluations récupérées pour les missions similaires.", evaluationsOnSimilar.size());
 
-        // Si on ne trouve aucune évaluation, on renvoie une liste vide
-        // (aucune donnée sur laquelle baser un score de recommandation)
         if (evaluationsOnSimilar.isEmpty()) {
+            log.warn("Aucune évaluation trouvée, arrêt du processus de recommandation.");
             return Collections.emptyList();
         }
 
-        /*==============
-         4) Regrouper les évaluations par freelance
-         ===============*/
+        Map<Long, List<Evaluation>> evalsByFreelancer = evaluationsOnSimilar.stream()
+                .collect(Collectors.groupingBy(e -> e.getFreelancer().getId()));
+        log.info("Regroupement des évaluations par freelance effectué.");
 
-        // Transforme la liste d'évaluations en une map : {freelancerId -> liste d'Evaluation}
-        Map<Long, List<Evaluation>> evalsByFreelancer = evaluationsOnSimilar.stream().collect(Collectors.groupingBy(e -> e.getFreelancer().getId()));
-
-        /*==============
-         5) Récupérer la liste des freelances concernés (uniquement ceux qui ont des évaluations)
-         ===============*/
-
-        // On extrait l'ensemble des ID de freelances depuis la map
         Set<Long> freelancerIds = evalsByFreelancer.keySet();
         if (freelancerIds.isEmpty()) {
+            log.warn("Aucun freelance évalué, arrêt du processus de recommandation.");
             return Collections.emptyList();
         }
 
-        /*==============
-         6) Charger en une fois tous les freelances + leurs compétences
-         ===============*/
-
-        // Récupère en base la liste des freelances concernés (avec leurs compétences) grâce à un EntityGraph
         List<Freelancer> freelancers = freelancerRepository.findAllWithCompetencesByIdIn(freelancerIds);
+        log.info("{} freelances récupérés avec leurs compétences.", freelancers.size());
 
-        // Crée une map {freelancerId -> Freelancer} pour un accès plus rapide lors du calcul
-        Map<Long, Freelancer> freelancerMap = freelancers.stream().collect(Collectors.toMap(Freelancer::getId, f -> f));
+        Map<Long, Freelancer> freelancerMap = freelancers.stream()
+                .collect(Collectors.toMap(Freelancer::getId, f -> f));
 
-        /*==============
-         7) Calcul du score pour chaque freelance
-         ===============*/
-
-        // Liste qui contiendra les résultats (DTOs) de recommandation
         List<FreelancerRecommendationDTO> recommendations = new ArrayList<>();
 
-        // On parcourt chaque freelance et ses évaluations
         for (Map.Entry<Long, List<Evaluation>> entry : evalsByFreelancer.entrySet()) {
             Long freelancerId = entry.getKey();
             List<Evaluation> evals = entry.getValue();
-
-            // Récupération du freelance complet depuis la map
             Freelancer freelancer = freelancerMap.get(freelancerId);
+
             if (freelancer == null) {
-                // Si le freelance n'existe plus ou a été supprimé, on ignore
+                log.warn("Freelance avec ID {} introuvable, passage au suivant.", freelancerId);
                 continue;
             }
 
-            // a) Correspondance des compétences entre le freelance et la mission cible
-            Set<Long> freelancerCompetences = freelancer.getCompetences().stream().map(Competence::getId).collect(Collectors.toSet());
+            Set<Long> freelancerCompetences = freelancer.getCompetences().stream()
+                    .map(Competence::getId)
+                    .collect(Collectors.toSet());
+            int commonCount = (int) freelancerCompetences.stream()
+                    .filter(targetCompetenceIds::contains)
+                    .count();
+            log.info("Le freelancer id {} possède {} competence similaire", freelancer.getId(), commonCount);
 
-            // Intersection entre les compétences du freelance et celles de la mission
-            Set<Long> intersection = new HashSet<>(freelancerCompetences);
-            intersection.retainAll(targetCompetenceIds);
-            int commonCount = intersection.size(); // nombre de compétences communes
-
-            // Vérifie si le freelance a au moins MIN_SIMILAR compétences en commun
             if (commonCount >= MIN_SIMILAR) {
-                // b) Expérience du freelance
                 double experience = Optional.ofNullable(freelancer.getExperience()).orElse(0.0);
-
-                // c) Note moyenne sur les missions similaires
-                // On calcule la moyenne à partir des évaluations (si la note est null, on considère 0.0)
-                double avgRating = evals.stream().mapToDouble(e -> Optional.ofNullable(e.getNote()).orElse(0.0)).average().orElse(0.0);
-
-                // d) Calcul du score global :
-                // - On double l'importance du nombre de compétences communes
-                // - On ajoute l'expérience
-                // - On double la note moyenne
+                double avgRating = evals.stream()
+                        .mapToDouble(e -> Optional.ofNullable(e.getNote()).orElse(0.0))
+                        .average().orElse(0.0);
                 int score = (int) ((commonCount * 2.0) + experience + (avgRating * 2.0));
 
-                // On ajoute la recommandation avec le score calculé
+                log.info("Freelancer {} - Score calculé: {}", freelancer.getNom(), score);
                 recommendations.add(new FreelancerRecommendationDTO(freelancerId, freelancer.getNom(), freelancer.getPrenom(), score));
             }
         }
 
-        // Trie les freelances recommandés par score décroissant
         recommendations.sort(Comparator.comparingDouble(FreelancerRecommendationDTO::getScore).reversed());
+        log.info("Recommandation terminée. {} freelances recommandés avec les id {} .", recommendations.size(), recommendations.stream().map(FreelancerRecommendationDTO::getFreelancerId).toList());
 
-        // Retourne la liste finale de recommandation
         return recommendations;
     }
 }
