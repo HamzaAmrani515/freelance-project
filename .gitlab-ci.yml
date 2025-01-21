@@ -2,31 +2,52 @@ stages:
   - build
   - test
   - deploy
-  - status
-#variable d'environnement gitlab
+
 variables:
-  JAR_FILE: "target/freelance-*.jar" #emplacement de jar
-  DEV_USER: "back"
-  DEV_HOST: "172.31.250.128"
-  DEV_PATH: "/home/back/freelance.jar"
-  DEV_PASSWORD: "back"
+  JAR_FILE: "target/freelance-*.jar"
+
+  ###############
+  ### Env DEV ###
+  ###############
+  DEV_USER: "devback"
+  DEV_PASSWORD: "devback"
+  DEV_HOST: "172.31.249.74"
+  DEV_PATH: "/home/devback/freelance.jar"
+  #################
+  ### Env PPROD ###
+  #################
+  PPROD_USER: "pprodback"
+  PPROD_PASSWORD: "pprodback"
+  PPROD_HOST: "172.31.249.151"
+  PPROD_PATH: "/home/pprodback/freelance.jar"
+  #################
+  ### Env PROD ###
+  #################
+  PROD_USER: "prodback"
+  PROD_PASSWORD: "prodback"
+  PROD_HOST: "*"
+  PROD_PATH: "/home/prodback/freelance.jar"
 
 cache:
   paths:
-    - ~/.m2/repository  # Cache des dépendances Maven pour accélérer le build
+    - ~/.m2/repository
 
-# Étape de build
+#################
+### Build job ###
+#################
 build-job:
   stage: build
   tags:
     - local
   script:
-    - mvn clean package -DskipTests  # Compile le code et générer mon jar sans exécuter les tests
+    - mvn clean package -DskipTests
   artifacts:
     paths:
-      - $JAR_FILE  #emplacement de jar
+      - $JAR_FILE
 
-# Étape de test
+################
+### Test job ###
+################
 test-job:
   stage: test
   tags:
@@ -34,44 +55,49 @@ test-job:
   dependencies:
     - build-job
   script:
-    - mvn test  # Exécute les tests
-  artifacts: #pour voir les raports de test
+    - mvn test
+  artifacts:
     paths:
       - target/surefire-reports/*.xml
       - target/surefire-reports/*.txt
     reports:
       junit: target/surefire-reports/*.xml
 
-# Étape de déploiement
+##################
+### Deploy job ###
+##################
 deploy-job:
   stage: deploy
   tags:
     - local
   dependencies:
-    - build-job #attendre la fin d'exécution de build
+    - build-job
   script:
-    # Installer sshpass.
+    - |
+      if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then
+        TARGET_USER=$DEV_USER
+        TARGET_PASSWORD=$DEV_PASSWORD
+        TARGET_HOST=$DEV_HOST
+        TARGET_PATH=$DEV_PATH
+      elif [ "$CI_COMMIT_REF_NAME" == "staging" ]; then
+        TARGET_USER=$PPROD_USER
+        TARGET_PASSWORD=$PPROD_PASSWORD
+        TARGET_HOST=$PPROD_HOST
+        TARGET_PATH=$PPROD_PATH
+      elif [ "$CI_COMMIT_REF_NAME" == "master" ]; then
+        TARGET_USER=$PROD_USER
+        TARGET_PASSWORD=$PROD_PASSWORD
+        TARGET_HOST=$PROD_HOST
+        TARGET_PATH=$PROD_PATH
+      else
+        echo "Branch not recognized for deployment. Exiting..."
+        exit 1
+      fi
+    - echo "Deploying to $TARGET_HOST"
     - apt-get update -qq && apt-get install -qqy sshpass
-    # Copie le fichier JAR vers le serveur en utilisant scp avec sshpass pour l'authentification.
-    - sshpass -p "$DEV_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $DEV_USER@$DEV_HOST:$DEV_PATH
-    # Redémarre le service "freelance" sur le serveur.
-    - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl restart freelance"
-
+    - sshpass -p "$TARGET_PASSWORD" scp -o StrictHostKeyChecking=no $JAR_FILE $TARGET_USER@$TARGET_HOST:$TARGET_PATH
+    - sshpass -p "$TARGET_PASSWORD" ssh -o StrictHostKeyChecking=no $TARGET_USER@$TARGET_HOST "echo '$TARGET_PASSWORD' | sudo -S systemctl restart freelance"
   only:
-    - master
-  before_script:
-    - echo "Déploiement en cours..."
-  after_script:
-    - echo "Déploiement terminé."
-
-# Étape de vérification de l'exécution
-status-check:
-  stage: status
-  tags:
-    - local
-  script:
-    - echo "Vérification de l'état du service freelance..."
-    - sshpass -p "$DEV_PASSWORD" ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST "sudo systemctl status freelance"  # Vérifie l'état du service
-    - echo "Vérification terminée."
-  only:
+    - develop
+    - staging
     - master

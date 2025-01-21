@@ -49,42 +49,69 @@
 
 2. Afficher les freelances triés par pertinence, du plus pertinent au moins pertinent.
 
-## Diagramme de classe metier 
+## Diagramme de UC
 
 ```plantuml
 @startuml
-class Freelance {
+left to right direction
+
+actor Client
+actor Freelance
+actor "Gérant de la plateforme" as Gérant 
+
+rectangle "Système " {
+  usecase "Valider un Profil" as UC5
+  usecase "Afficher  des Freelances Recommander" as UC6
+  usecase "Suivre le Statut de la Mission" as UC7
+  usecase "Afficher  les mission Recommander" as UC8
+
+}
+
+Client --> UC6
+
+Freelance --> UC8
+Gérant  --> UC5
+Gérant  --> UC7
+
+@enduml
+
+```
+## Diagramme de classe metier
+
+```plantuml
+@startuml
+class RefFreelance {
     - Long id
     - String nom
     - int anneesExperience
     - double noteMoyenne
-    - Set<Competence> competences
-    - List<AffectationMission> affectationsMission
+    - Set<RefCompetence> competences
 }
 
-class Mission {
+class RefMission {
     - Long id
     - String titre
-    - Set<Competence> competencesRequises
+    - Set<RefCompetence> competencesRequises
 }
 
-class Competence {
+class RefCompetence {
     - Long id
     - String nom
 }
 
 class AffectationMission {
     - Long id
-    - Freelance freelance
-    - Mission mission
+    - RefFreelance freelance
+    - RefMission mission
     - LocalDate dateAffectation
     - double note
 }
 
-Freelance "1" -- "0..*" AffectationMission : "a été affecté à"
-Mission "1" -- "0..*" AffectationMission : "a été attribuée à"
-Freelance "0..*" -- "0..*" Competence : "possède"
-Mission "0..*" -- "0..*" Competence : "requiert"
+RefFreelance "1" -- "0..*" AffectationMission : "a été affecté à"
+RefMission "1" -- "0..*" AffectationMission : "a été attribuée à"
+RefFreelance "0..*" -- "0..*" RefCompetence : "possède"
+RefMission "0..*" -- "0..*" RefCompetence : "requiert"
 
 @enduml
+
 ```
