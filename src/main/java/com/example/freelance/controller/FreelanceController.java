@@ -1,30 +1,30 @@
 package com.example.freelance.controller;
 
-import com.example.freelance.model.Freelance;
+import com.example.freelance.model.Freelancer;
 import com.example.freelance.service.FreelanceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/freelances")
 public class FreelanceController {
-    @Autowired
-    private FreelanceService freelanceService;
+    private final FreelanceService freelanceService;
 
     @GetMapping
-    public List<Freelance> getAllFreelances() {
+    public List<Freelancer> getAllFreelances() {
         return freelanceService.getAllFreelances();
     }
 
     @GetMapping("/{id}")
-    public Freelance getFreelanceById(@PathVariable Long id) {
+    public Freelancer getFreelanceById(@PathVariable Long id) {
         return freelanceService.getFreelanceById(id);
     }
 
     @PostMapping
-    public Freelance saveFreelance(@RequestBody Freelance freelance) {
+    public Freelancer saveFreelance(@RequestBody Freelancer freelance) {
         return freelanceService.saveFreelance(freelance);
     }
 
@@ -33,17 +33,13 @@ public class FreelanceController {
         freelanceService.deleteFreelance(id);
     }
 
-/*
     @DeleteMapping("/test/{name}")
     public void deleteFreelanceByName(@PathVariable String name) {
 
     }
-*/
-
 
     @PutMapping("/{id}")
-    public Freelance updateFreelance(@PathVariable Long id, @RequestBody Freelance freelance) {
+    public Freelancer updateFreelance(@PathVariable Long id, @RequestBody Freelancer freelance) {
         return freelanceService.updateFreelance(id, freelance);
     }
-
 }
