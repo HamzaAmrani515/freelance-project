@@ -13,13 +13,13 @@ import java.util.Set;
 public interface MissionRepository extends JpaRepository<Mission, Long> {
 
     @Query("""
-                SELECT m.id
-                FROM Mission m
-                JOIN m.competences comp
-                WHERE comp.id IN :targetCompetenceIds
-                  AND m.id <> :missionId
-                GROUP BY m.id
-                HAVING COUNT(DISTINCT comp.id) >= :similar
-            """)
+            SELECT m.id
+            FROM Mission m
+            JOIN m.competences comp
+            WHERE comp.id IN :targetCompetenceIds
+              AND m.id <> :missionId
+            GROUP BY m.id
+            HAVING COUNT(DISTINCT comp.id) >= :similar
+        """)
     List<Long> findSimilarMissionIds(@Param("targetCompetenceIds") Set<Long> compIds, @Param("missionId") Long missionId, @Param("similar") int similar);
 }
