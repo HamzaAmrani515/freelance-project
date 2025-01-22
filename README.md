@@ -5,7 +5,7 @@ Cette plateforme s'adresse à un large éventail de secteurs IT (développement 
 
 ### Liste des étudiants
 - **Étudiant 1 : (HAMOUDI, Assala) login: assala**
-  - Création des mocks de freelances : créer des données fictives pour représenter des freelances dans le système.
+     - Création des mocks de freelances : créer des données fictives pour représenter des freelances dans le système.
      - Algorithme de recommandation de freelances par similarité de missions: developpement d'un algorithme permettant d’identifier des missions similaires à celle créée, afin de recommander des freelances ayant validé des missions comparables
      - Ajout des fonctionnalités de tri par score et expérience : compliter l'algorithme de trie en ajoutant des fonctionnalités de tri par score et expérience.
 - **Étudiant 2 : Hamza EL AMRANI**

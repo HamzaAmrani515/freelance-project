@@ -25,7 +25,7 @@ variables:
   #################
   PROD_USER: "prodback"
   PROD_PASSWORD: "prodback"
-  PROD_HOST: "*"
+  PROD_HOST: "172.31.249.206"
   PROD_PATH: "/home/prodback/freelance.jar"
 
 cache:
