@@ -18,20 +18,20 @@ DB_USER = "dev_freelance_user"
 DB_PASSWORD = "freelance"
 
 # =============================================================================
-# VOLUMÉTRIE
+# 2) VOLUMÉTRIE
 # =============================================================================
 NB_CLIENTS = 5
-NB_FREELANCERS = 36000  # Insère 36 000 freelances
+NB_FREELANCERS = 36000
 NB_GERANTS = 2
-NB_MISSIONS = 12
+NB_MISSIONS = 500
 NB_CANDIDATURES = 15
-NB_EVALUATIONS = 10
+NB_EVALUATIONS = 500
 
-# Batch size pour l'insertion groupée (freelancers / compétences)
+# Taille des batchs (pour les insertions groupées)
 BATCH_SIZE = 1000
 
 # =============================================================================
-# 2) LISTE DE COMPÉTENCES À INSÉRER
+# 3) LISTE GLOBALE DE COMPÉTENCES
 # =============================================================================
 ALL_COMPETENCES = [
     ("Frontend", "Maîtrise des technologies HTML, CSS, JavaScript, frameworks modernes (React, Angular, Vue.js)"),
@@ -45,75 +45,76 @@ ALL_COMPETENCES = [
     ("Python", "Langage polyvalent utilisé en développement web (Django, Flask) et en data science"),
     ("Java", "Langage orienté objet pour applications backend robustes"),
     ("C#", "Langage développé par Microsoft pour applications backend et desktop"),
-    ("FullStack", "Compétences à la fois en frontend et backend, capable de gérer l'ensemble du développement web"),
+    ("FullStack", "Compétences à la fois en frontend et backend"),
     ("Android", "Développement d’applications mobiles natives (Java/Kotlin)"),
     ("iOS", "Développement mobile sur iPhone/iPad (Swift, Objective-C)"),
-    ("Flutter", "Framework cross-platform mobile (Dart) pour applications iOS et Android"),
+    ("Flutter", "Framework cross-platform mobile (Dart) pour apps iOS/Android"),
     ("React Native", "Framework JavaScript pour développement mobile multiplateforme"),
-    ("DevOps", "CI/CD, Docker, Kubernetes, automatisation des déploiements, gestion de l'infrastructure"),
-    ("Cloud Computing", "Maîtrise des services cloud (AWS, Azure, GCP), déploiement et gestion des ressources"),
-    ("Machine Learning", "Développement de modèles prédictifs, Python/Scikit-learn, TensorFlow, PyTorch"),
+    ("DevOps", "CI/CD, Docker, Kubernetes, automatisation, infra"),
+    ("Cloud Computing", "Maîtrise des services cloud (AWS, Azure, GCP)"),
+    ("Machine Learning", "Dév. de modèles prédictifs, Python/Scikit-learn, TensorFlow"),
     ("Data Analysis", "Analyse de données, visualisation, SQL, outils de BI"),
-    ("Big Data", "Traitement de grandes quantités de données, Hadoop, Spark"),
-    ("Cybersecurity", "Sécurité des systèmes d'information, protection des données, conformité"),
-    ("Pentest", "Tests d’intrusion, évaluation des vulnérabilités, sécurité réseau"),
-    ("Blockchain", "Technologie des registres distribués, développement de smart contracts"),
-    ("Internet of Things (IoT)", "Développement et gestion de dispositifs connectés, communication M2M"),
-    ("Artificial Intelligence", "Conception de systèmes intelligents, NLP, vision par ordinateur"),
-    ("Augmented Reality/Virtual Reality", "Développement d'applications immersives, Unity, Unreal Engine"),
-    ("Project Management", "Gestion de projets IT, méthodologies Agile/Scrum"),
-    ("UI/UX Design", "Conception d'interfaces utilisateur, expérience utilisateur, prototypage"),
-    ("Quality Assurance", "Tests logiciels, assurance qualité, automatisation des tests"),
-    ("SRE (Site Reliability Engineering)", "Maintien de la fiabilité des systèmes, surveillance, incidents"),
-    ("Database Administration", "Gestion des bases de données relationnelles et NoSQL, optimisation"),
-    ("Network Administration", "Gestion des réseaux, configuration routeurs/switches, sécurité réseau"),
-    ("System Administration", "Gestion des systèmes (Linux, Windows), scripts d'automatisation"),
-    ("IT Support", "Assistance technique aux utilisateurs, résolution de problèmes matériels/logiciels"),
-    ("Technical Writing", "Rédaction de documentation technique, guides utilisateurs"),
-    ("SEO/SEA", "Optimisation moteurs de recherche, campagnes publicitaires en ligne"),
-    ("Digital Marketing", "Stratégies de marketing en ligne, réseaux sociaux, analyse de performance"),
-    ("E-commerce", "Gestion de plateformes e-commerce, intégration de solutions de paiement"),
-    ("Game Development", "Développement de jeux vidéo, moteurs de jeu, conception de gameplay"),
-    ("Robotics", "Conception et programmation de robots, automatisation industrielle"),
-    ("Embedded Systems", "Développement de logiciels pour systèmes embarqués, microcontrôleurs"),
-    ("IT Consulting", "Conseil en stratégie informatique, transformation digitale"),
-    ("IT Training", "Formation des utilisateurs et des équipes techniques, développement des compétences"),
-    ("IT Sales", "Vente de solutions informatiques, gestion relation client"),
-    ("IT Recruitment", "Recrutement de talents IT, gestion RH techniques"),
-    ("IT Legal Compliance", "Conformité aux réglementations informatiques, RGPD"),
-    ("IT Financial Management", "Gestion budgétaire des projets IT, analyse des coûts"),
-    ("IT Innovation Management", "Gestion de l'innovation technologique, veille stratégique"),
-    ("IT Ethics", "Éthique dans l'utilisation des technologies, responsabilité sociétale"),
-    ("IT Sustainability", "Pratiques informatiques durables, réduction de l'empreinte carbone"),
-    ("IT Disaster Recovery", "Plans de reprise après sinistre, continuité des activités"),
-    ("IT Change Management", "Gestion du changement lors de l'implémentation de nouvelles technologies"),
-    ("IT Vendor Management", "Gestion des relations avec les fournisseurs de technologies"),
-    ("IT Asset Management", "Gestion des actifs informatiques, suivi licences et équipements"),
-    ("IT Service Management", "Gestion des services IT, ITIL, amélioration continue"),
-    ("IT Governance", "Gouvernance des systèmes d'information, alignement stratégique"),
-    ("IT Risk Management", "Identification et gestion des risques informatiques"),
-    ("IT Audit", "Audit des SI, évaluation des processus"),
-    ("IT Procurement", "Achat de solutions et services informatiques, négociation de contrats"),
-    ("IT Infrastructure Management", "Gestion des infrastructures IT, data centers, virtualisation"),
-    ("IT Research and Development", "R&D en technologies de l'information"),
-    ("IT Entrepreneurship", "Création et gestion de startups technologiques, innovation"),
-    ("IT Policy Development", "Élaboration de politiques informatiques, directives organisationnelles"),
-    ("IT User Experience", "Amélioration de l'expérience utilisateur des systèmes et applications"),
-    ("IT Accessibility", "Conception de solutions accessibles, conformité aux normes d'accessibilité"),
-    ("IT Localization", "Adaptation logicielle pour marchés linguistiques/culturels"),
-    ("IT Data Privacy", "Protection de la vie privée, conformité aux réglementations sur les données"),
-    ("IT Data Governance", "Gestion de la qualité et de l'intégrité des données"),
-    ("IT Data Architecture", "Conception de l'architecture des données, modélisation"),
-    ("IT Data Integration", "Intégration de sources de données multiples, ETL"),
-    ("IT Data Warehousing", "Conception et gestion d'entrepôts de données"),
-    ("IT Data Mining", "Exploration de données pour découvrir des patterns et insights"),
-    ("IT Data Visualization", "Création de visualisations pour représenter les données"),
-    ("IT Data Quality", "Assurance de la qualité des données, nettoyage et validation"),
+    ("Big Data", "Traitement de grands volumes de données, Hadoop, Spark"),
+    ("Cybersecurity", "Sécurité des SI, protection des données, conformité"),
+    ("Pentest", "Tests d’intrusion, vulnérabilités, sécurité réseau"),
+    ("Blockchain", "Registres distribués, smart contracts, Ethereum"),
+    ("Internet of Things (IoT)", "Dispositifs connectés, M2M, capteurs"),
+    ("Artificial Intelligence", "Systèmes intelligents, NLP, vision par ordinateur"),
+    ("Augmented Reality/Virtual Reality", "Unity, Unreal Engine, apps immersives"),
+    ("Project Management", "Gestion de projets IT, Agile/Scrum"),
+    ("UI/UX Design", "Conception d'interfaces, prototypage, design thinking"),
+    ("Quality Assurance", "Tests logiciels, assurance qualité, automatisation"),
+    ("SRE (Site Reliability Engineering)", "Fiabilité des systèmes, monitoring"),
+    ("Database Administration", "DB relationnelles/NoSQL, optimisation, tuning"),
+    ("Network Administration", "Réseaux, routeurs, switches, sécurité"),
+    ("System Administration", "Gestion serveurs Linux/Windows, scripts"),
+    ("IT Support", "Assistance technique, résolution de problèmes"),
+    ("Technical Writing", "Documentation technique, guides utilisateurs"),
+    ("SEO/SEA", "Référencement naturel et payant, marketing en ligne"),
+    ("Digital Marketing", "Stratégies marketing web, réseaux sociaux"),
+    ("E-commerce", "Plateformes en ligne, solutions de paiement"),
+    ("Game Development", "Développement de jeux vidéo, moteurs, gameplay"),
+    ("Robotics", "Programmation de robots, automatisation industrielle"),
+    ("Embedded Systems", "Systèmes embarqués, microcontrôleurs, firmware"),
+    ("IT Consulting", "Conseil en stratégie informatique"),
+    ("IT Training", "Formation des utilisateurs, e-learning"),
+    ("IT Sales", "Vente de solutions IT, relation client"),
+    ("IT Recruitment", "Recrutement de talents IT, gestion RH"),
+    ("IT Legal Compliance", "Conformité réglementaire, RGPD"),
+    ("IT Financial Management", "Gestion budgétaire projets IT"),
+    ("IT Innovation Management", "Gestion de l'innovation, veille techno"),
+    ("IT Ethics", "Éthique dans l'utilisation des technologies"),
+    ("IT Sustainability", "Pratiques IT durables, éco-conception"),
+    ("IT Disaster Recovery", "Reprise après sinistre, continuité"),
+    ("IT Change Management", "Gestion du changement technologique"),
+    ("IT Vendor Management", "Gestion des fournisseurs IT"),
+    ("IT Asset Management", "Gestion des actifs, licences, parc"),
+    ("IT Service Management", "ITIL, amélioration continue des services"),
+    ("IT Governance", "Gouvernance SI, alignement stratégique"),
+    ("IT Risk Management", "Identification et gestion des risques IT"),
+    ("IT Audit", "Audit des SI, évaluation de processus"),
+    ("IT Procurement", "Achat de solutions et services IT"),
+    ("IT Infrastructure Management", "Gestion data centers, virtualisation"),
+    ("IT Research and Development", "R&D en technologies de l'info"),
+    ("IT Entrepreneurship", "Startups technologiques, innovation"),
+    ("IT Policy Development", "Politiques informatiques, directives"),
+    ("IT User Experience", "Amélioration de l'UX des systèmes"),
+    ("IT Accessibility", "Solutions accessibles, normes d'accessibilité"),
+    ("IT Localization", "Adaptation logicielle pour marchés locaux"),
+    ("IT Data Privacy", "Protection de la vie privée, RGPD"),
+    ("IT Data Governance", "Qualité et intégrité des données"),
+    ("IT Data Architecture", "Architecture des données, modélisation"),
+    ("IT Data Integration", "Intégration de sources multiples, ETL"),
+    ("IT Data Warehousing", "Entrepôts de données, BI"),
+    ("IT Data Mining", "Exploration de données, découverte de patterns"),
+    ("IT Data Visualization", "Visualisation compréhensible des données"),
+    ("IT Data Quality", "Nettoyage, validation de données"),
 ]
 
 # =============================================================================
-# 3) PROFILS FREELANCERS
+# 4) PROFILS FREELANCERS + COMPÉTENCES PAR PROFIL
 # =============================================================================
+
 PROFILS_FREELANCERS = [
     "Développement Web",
     "Développement Mobile",
@@ -137,8 +138,74 @@ PROFILS_FREELANCERS = [
     "Ingénieur en Systèmes Embarqués"
 ]
 
+# Pour chaque profil, listez les compétences "logiques".
+# (Ici, simplifié à titre d'exemple ; adaptez selon vos besoins.)
+COMPETENCES_PAR_PROFIL = {
+    "Développement Web": [
+        "Frontend", "HTML/CSS", "React", "Angular", "Vue.js", "Backend",
+        "Node.js", "PHP", "Python", "Java", "C#", "FullStack"
+    ],
+    "Développement Mobile": [
+        "Android", "iOS", "Flutter", "React Native"
+    ],
+    "DevOps & Cloud": [
+        "DevOps", "Cloud Computing", "Database Administration", "System Administration"
+    ],
+    "Data Science & IA": [
+        "Machine Learning", "Data Analysis", "Python", "Big Data", "Artificial Intelligence"
+    ],
+    "Sécurité Informatique": [
+        "Cybersecurity", "Pentest", "Network Administration", "IT Risk Management"
+    ],
+    "Design UI/UX": [
+        "UI/UX Design", "Frontend", "HTML/CSS"
+    ],
+    "Gestion de Projet IT": [
+        "Project Management", "IT Service Management"
+    ],
+    "Analyse de Données": [
+        "Data Analysis", "SQL", "Data Mining", "Data Visualization"
+    ],
+    "Administration Systèmes & Réseaux": [
+        "System Administration", "Network Administration", "IT Infrastructure Management"
+    ],
+    "Consultant en Cybersécurité": [
+        "Cybersecurity", "Pentest", "IT Audit", "IT Legal Compliance"
+    ],
+    "Spécialiste en Blockchain": [
+        "Blockchain", "Smart Contracts", "Cryptography"
+    ],
+    "Ingénieur en Intelligence Artificielle": [
+        "Artificial Intelligence", "Machine Learning", "Deep Learning", "Python"
+    ],
+    "Développeur en Réalité Augmentée/Virtuale": [
+        "Augmented Reality/Virtual Reality", "Unity", "C#", "3D Modeling"
+    ],
+    "Expert en Internet des Objets (IoT)": [
+        "Internet of Things (IoT)", "Embedded Systems", "Node.js"
+    ],
+    "Formateur IT": [
+        "IT Training", "Technical Writing"
+    ],
+    "Rédacteur Technique": [
+        "Technical Writing", "Documentation"
+    ],
+    "Spécialiste en Marketing Digital": [
+        "Digital Marketing", "SEO/SEA"
+    ],
+    "Analyste en Big Data": [
+        "Big Data", "Data Analysis", "Spark", "Hadoop"
+    ],
+    "Architecte Logiciel": [
+        "Software Architecture", "Design Patterns", "FullStack"
+    ],
+    "Ingénieur en Systèmes Embarqués": [
+        "Embedded Systems", "C/C++ Programming", "Firmware Development"
+    ],
+}
+
 # =============================================================================
-# 4) GESTION DU NOMBRE DE COMPÉTENCES PAR EXPÉRIENCE
+# 5) GESTION DU NOMBRE DE COMPÉTENCES PAR EXPÉRIENCE
 # =============================================================================
 def compute_competence_range(experience: float) -> (int, int):
     """
@@ -156,15 +223,11 @@ def compute_competence_range(experience: float) -> (int, int):
         return (10, 15)
 
 # =============================================================================
-# 5) GÉNÉRATION D'ADRESSES E-MAIL UNIQUES
+# 6) GESTION D'EMAILS UNIQUES (pour éviter le 'duplicate key' sur email)
 # =============================================================================
 EMAIL_CACHE = set()
 
 def get_unique_email():
-    """
-    Génère un e-mail via faker, et garantit qu'il est unique
-    grâce à un set Python.
-    """
     while True:
         candidate = fake.email()
         if candidate not in EMAIL_CACHE:
@@ -172,13 +235,9 @@ def get_unique_email():
             return candidate
 
 # =============================================================================
-# 6) FONCTIONS D'INSERTION
+# 7) FONCTIONS D'INSERTION
 # =============================================================================
 def create_clients(cursor, nb_clients=5):
-    """
-    Insère `nb_clients` clients de manière simple (un par un).
-    Retourne la liste des IDs créés.
-    """
     client_ids = []
     for _ in range(nb_clients):
         nom = fake.last_name().replace("'", "''")
@@ -195,10 +254,6 @@ def create_clients(cursor, nb_clients=5):
     return client_ids
 
 def create_gerants(cursor, nb_gerants=2):
-    """
-    Insère `nb_gerants` gérants de manière simple (un par un).
-    Retourne la liste des IDs créés.
-    """
     gerant_ids = []
     for _ in range(nb_gerants):
         nom = fake.last_name().replace("'", "''")
@@ -218,7 +273,6 @@ def bulk_insert_competences(cursor):
     Insère toutes les compétences de ALL_COMPETENCES dans la table `competences` (sans doublon).
     Retourne un dict {nom_competence: id_competence}.
     """
-    # Récupérer éventuellement ce qui existe déjà en base
     cursor.execute("SELECT lower(nom), id FROM competences;")
     existing = dict(cursor.fetchall())  # { "frontend": <id>, ... }
 
@@ -236,7 +290,7 @@ def bulk_insert_competences(cursor):
             comp_desc_sql = comp_desc.replace("'", "''")
             new_compet_insert_rows.append((comp_name_sql, comp_desc_sql))
 
-    # Insertion en une seule requête des compétences manquantes
+    # Insertion des compétences manquantes (en une seule requête)
     if new_compet_insert_rows:
         values_str = ",".join(
             f"('{row[0]}','{row[1]}')" for row in new_compet_insert_rows
@@ -247,11 +301,10 @@ def bulk_insert_competences(cursor):
             RETURNING id, nom;
         """
         cursor.execute(insert_sql)
-        # On récupère (id, nom)
         for (cid, cname) in cursor.fetchall():
             compet_name_to_id[cname] = cid
 
-    # Compléter compet_name_to_id si certaines compétences étaient déjà existantes
+    # Compléter compet_name_to_id pour celles déjà existantes
     for (comp_name, comp_desc) in ALL_COMPETENCES:
         if comp_name not in compet_name_to_id:
             compet_name_to_id[comp_name] = existing[comp_name.lower()]
@@ -260,8 +313,8 @@ def bulk_insert_competences(cursor):
 
 def bulk_insert_freelancers(cursor, nb_freelancers=1000, batch_size=1000):
     """
-    Insertion groupée de `nb_freelancers` freelances par paquets de `batch_size`.
-    Retourne la liste de tous les IDs insérés (dans l'ordre).
+    Insertion groupée de `nb_freelancers` freelances.
+    Retourne la liste de tous leurs IDs.
     """
     all_freelancer_ids = []
     nb_batches = ceil(nb_freelancers / batch_size)
@@ -273,14 +326,14 @@ def bulk_insert_freelancers(cursor, nb_freelancers=1000, batch_size=1000):
         for _ in range(current_batch_size):
             nom = fake.last_name().replace("'", "''")
             prenom = fake.first_name().replace("'", "''")
-            email = get_unique_email().replace("'", "''")  # email unique
+            email = get_unique_email().replace("'", "''")
             experience = round(random.uniform(0.5, 12.0), 1)
             age = random.randint(20, 60)
             gender = random.choice(["HOMME", "FEMME"])
             profil = random.choice(PROFILS_FREELANCERS)
             rows_values.append((nom, prenom, email, experience, age, gender, profil))
 
-        # Construction d'un seul gros INSERT
+        # Construction de la requête INSERT
         values_str = ",".join(
             f"('{r[0]}','{r[1]}','{r[2]}',{r[3]},{r[4]},'{r[5]}','{r[6]}')"
             for r in rows_values
@@ -299,15 +352,19 @@ def bulk_insert_freelancers(cursor, nb_freelancers=1000, batch_size=1000):
 
 def bulk_insert_freelancer_competences(cursor, freelancer_ids, compet_name_to_id):
     """
-    Associe à chaque freelance un nombre de compétences (en fonction de l'expérience).
-    Insertions groupées dans `freelancer_competences`.
+    Associe à chaque freelance un ensemble de compétences cohérentes avec son expérience (nombre),
+    piochées aléatoirement dans TOUTES les compétences.
+
+    (Vous pourriez affiner pour prendre en compte
+     le profil du freelance s'il faut être plus réaliste.)
     """
     data_to_insert = []
 
+    # On pourrait filtrer les compétences par profil du freelance,
+    # mais ici c'est simplifié : on pioche dans toutes.
     all_compet_names = list(compet_name_to_id.keys())
 
     for fid in freelancer_ids:
-        # On simule une expérience pour définir le nombre de compétences
         experience = random.uniform(0.5, 12.0)
         min_comp, max_comp = compute_competence_range(experience)
         nb_to_create = random.randint(min_comp, max_comp)
@@ -317,7 +374,7 @@ def bulk_insert_freelancer_competences(cursor, freelancer_ids, compet_name_to_id
             comp_id = compet_name_to_id[comp_name]
             data_to_insert.append((fid, comp_id))
 
-    # Insertion par batch
+    # Insertion en batch
     nb_rows = len(data_to_insert)
     nb_batches = ceil(nb_rows / BATCH_SIZE)
 
@@ -337,37 +394,63 @@ def bulk_insert_freelancer_competences(cursor, freelancer_ids, compet_name_to_id
         """
         cursor.execute(sql)
 
-def create_mission(cursor, client_id):
+# -----------------------------------------------------------------------------
+# FONCTIONS POUR CRÉER DES MISSIONS AVEC COMPÉTENCES COHÉRENTES AU PROFIL
+# -----------------------------------------------------------------------------
+
+def create_mission_coherente(cursor, client_id, compet_name_to_id):
     """
-    Insère une mission et retourne son ID.
+    Crée UNE mission avec un profil aléatoire (parmi PROFILS_FREELANCERS),
+    et lui associe des compétences cohérentes avec ce profil.
+    Retourne l'ID de la mission.
     """
-    titre = "Mission " + fake.word().capitalize().replace("'", "''")
+    # 1) Choisir un profil de mission
+    mission_profile = random.choice(PROFILS_FREELANCERS)
+
+    # 2) Générer titre + description
+    titre = f"Mission {mission_profile} - " + fake.word().capitalize().replace("'", "''")
     description = fake.paragraph(nb_sentences=3).replace("'", "''")
     budget = round(random.uniform(800, 5000), 2)
     duree = f"{random.randint(1, 6)} mois"
     statut = random.choice(["EN_ATTENTE", "ACCEPTEE", "REFUSEE"])
 
+    # 3) Insérer la mission (vous pouvez si vous voulez stocker mission_profile
+    # dans une colonne 'profil' de la table 'missions'. S'il n'existe pas,
+    # commentez simplement la ligne correspondante dans l'INSERT.)
     cursor.execute(f"""
         INSERT INTO missions (titre, description, budget, duree, statut, client_id)
         VALUES ('{titre}', '{description}', {budget}, '{duree}', '{statut}', {client_id})
         RETURNING id;
     """)
-    return cursor.fetchone()[0]
+    mission_id = cursor.fetchone()[0]
 
-def link_mission_competences(cursor, mission_id, competences_ids):
-    """
-    Associe un ensemble de compétences à une mission.
-    """
-    for cid in competences_ids:
-        cursor.execute(f"""
-            INSERT INTO mission_competences (mission_id, competence_id)
-            VALUES ({mission_id}, {cid});
-        """)
+    # 4) Récupérer la liste de compétences associées à ce profil
+    #    et en choisir quelques-unes (ex: 3 à 7) au hasard
+    if mission_profile in COMPETENCES_PAR_PROFIL:
+        compet_names_for_profile = COMPETENCES_PAR_PROFIL[mission_profile]
+    else:
+        # fallback au cas où non défini
+        compet_names_for_profile = list(compet_name_to_id.keys())
+
+    how_many = random.randint(3, 7)
+    chosen_comps = random.sample(compet_names_for_profile, min(how_many, len(compet_names_for_profile)))
+
+    # 5) Associer ces compétences à la mission
+    for comp_name in chosen_comps:
+        if comp_name in compet_name_to_id:
+            comp_id = compet_name_to_id[comp_name]
+            cursor.execute(f"""
+                INSERT INTO mission_competences (mission_id, competence_id)
+                VALUES ({mission_id}, {comp_id});
+            """)
+
+    return mission_id
+
+# -----------------------------------------------------------------------------
+# AUTRES ENTITÉS
+# -----------------------------------------------------------------------------
 
 def create_evaluation(cursor, client_id, freelancer_id, mission_id):
-    """
-    Insère une évaluation.
-    """
     note = round(random.uniform(1, 5), 1)
     commentaire = fake.sentence().replace("'", "''")
     date_eval = fake.date_time_this_year().strftime('%Y-%m-%d %H:%M:%S')
@@ -378,9 +461,6 @@ def create_evaluation(cursor, client_id, freelancer_id, mission_id):
     """)
 
 def create_candidature(cursor, freelancer_id, mission_id):
-    """
-    Insère une candidature.
-    """
     date_candidature = fake.date_time_this_year().strftime('%Y-%m-%d %H:%M:%S')
     statut = random.choice(["EN_ATTENTE", "ACCEPTEE", "REFUSEE"])
     commentaire = fake.sentence().replace("'", "''")
@@ -391,7 +471,7 @@ def create_candidature(cursor, freelancer_id, mission_id):
     """)
 
 # =============================================================================
-# 7) SCRIPT PRINCIPAL
+# 8) SCRIPT PRINCIPAL
 # =============================================================================
 def main():
     try:
@@ -410,50 +490,41 @@ def main():
     cursor = conn.cursor()
 
     try:
-        # 1) Insertion des Clients
+        # 1) Clients
         client_ids = create_clients(cursor, NB_CLIENTS)
 
-        # 2) Insertion des Gérants
+        # 2) Gérants
         gerant_ids = create_gerants(cursor, NB_GERANTS)
 
-        # 3) Insertion (unique) de toutes les compétences
+        # 3) Compétences (unique)
         compet_name_to_id = bulk_insert_competences(cursor)
 
-        # 4) Insertion groupée de 36 000 freelances (avec emails uniques)
+        # 4) Freelances (36 000) + emails uniques
         freelancer_ids = bulk_insert_freelancers(cursor, NB_FREELANCERS, BATCH_SIZE)
 
-        # 5) Association des compétences aux freelances
+        # 5) Associer des compétences aux freelances
         bulk_insert_freelancer_competences(cursor, freelancer_ids, compet_name_to_id)
 
-        # 6) Création de Missions
+        # 6) Missions cohérentes avec un profil
         mission_ids = []
         for _ in range(NB_MISSIONS):
             cl = random.choice(client_ids)
-            mid = create_mission(cursor, cl)
+            mid = create_mission_coherente(cursor, cl, compet_name_to_id)
             mission_ids.append(mid)
 
-        # 7) Associer quelques compétences (au hasard) à chaque mission
-        all_compet_ids = list(compet_name_to_id.values())
-        for mid in mission_ids:
-            how_many = random.randint(3, 7)
-            if all_compet_ids:
-                chosen = random.sample(all_compet_ids, min(how_many, len(all_compet_ids)))
-                link_mission_competences(cursor, mid, chosen)
-
-        # 8) Création d'Evaluations
+        # 7) Évaluations
         for _ in range(NB_EVALUATIONS):
             c = random.choice(client_ids)
             f = random.choice(freelancer_ids)
             m = random.choice(mission_ids)
             create_evaluation(cursor, c, f, m)
 
-        # 9) Création de Candidatures
+        # 8) Candidatures
         for _ in range(NB_CANDIDATURES):
             f = random.choice(freelancer_ids)
             m = random.choice(mission_ids)
             create_candidature(cursor, f, m)
 
-        # Commit final
         conn.commit()
         print("Insertion terminée avec succès !")
 

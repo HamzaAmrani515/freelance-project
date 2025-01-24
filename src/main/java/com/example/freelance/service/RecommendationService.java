@@ -28,7 +28,7 @@ public class RecommendationService {
     private final FreelancerRepository freelancerRepository;
     private final EvaluationRepository evaluationRepository;
 
-    private static final Integer MIN_SIMILAR = 4;
+    private static final Integer MIN_SIMILAR = 2;
 
     public List<FreelancerRecommendationDTO> recommendFreelancersForMission(Long missionId) {
         log.info("Début de la recommandation des freelances pour la mission ID: {}", missionId);
@@ -41,11 +41,16 @@ public class RecommendationService {
         log.info("Mission récupérée : {}", targetMission.getTitre());
 
 
-//On extrait les compétences requises pour la mission sous forme d’ID (targetCompetenceIds).
+//On extrait les compétences requises pour la mission sous forme d’ID (targetCompetenceIds)(stock les id des competence dans un set).
         Set<Long> targetCompetenceIds = targetMission.getCompetences().stream()
                 .map(Competence::getId)
                 .collect(Collectors.toSet());
         log.info("Compétences de la mission cible récupérées: {}", targetCompetenceIds);
+
+       /* Set<Long> x = new HashSet<>();
+        for (Competence competence : targetMission.getCompetences()) {
+            x.add(competence.getId());
+        }*/
 
         List<Long> similarMissionIds = missionRepository.findSimilarMissionIds(targetCompetenceIds, missionId, MIN_SIMILAR);
         log.info("{} missions similaires trouvées pour la mission ID: {}", similarMissionIds.size(), missionId);
