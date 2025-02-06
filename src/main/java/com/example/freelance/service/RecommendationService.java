@@ -16,12 +16,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * J'ai utiliser chatgpt
  * Service de recommandation permettant de proposer des freelances
  * en fonction d'une mission donnée.
  */
+
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class RecommendationService {
 
     private final MissionRepository missionRepository;
@@ -33,18 +35,15 @@ public class RecommendationService {
     public List<FreelancerRecommendationDTO> recommendFreelancersForMission(Long missionId) {
         log.info("Début de la recommandation des freelances pour la mission ID: {}", missionId);
 
-        Mission targetMission = missionRepository.findById(missionId)
-                .orElseThrow(() -> {
-                    log.error("Mission non trouvée avec ID: {}", missionId);
-                    return new IllegalArgumentException("Mission non trouvée : " + missionId);
-                });
+        Mission targetMission = missionRepository.findById(missionId).orElseThrow(() -> {
+            log.error("Mission non trouvée avec ID: {}", missionId);
+            return new IllegalArgumentException("Mission non trouvée : " + missionId);
+        });
         log.info("Mission récupérée : {}", targetMission.getTitre());
 
 
-//On extrait les compétences requises pour la mission sous forme d’ID (targetCompetenceIds)(stock les id des competence dans un set).
-        Set<Long> targetCompetenceIds = targetMission.getCompetences().stream()
-                .map(Competence::getId)
-                .collect(Collectors.toSet());
+        //On extrait les compétences requises pour la mission sous forme d’ID (targetCompetenceIds)(stock les id des competence dans un set).
+        Set<Long> targetCompetenceIds = targetMission.getCompetences().stream().map(Competence::getId).collect(Collectors.toSet());
         log.info("Compétences de la mission cible récupérées: {}", targetCompetenceIds);
 
        /* Set<Long> x = new HashSet<>();
@@ -68,8 +67,7 @@ public class RecommendationService {
             return Collections.emptyList();
         }
 
-        Map<Long, List<Evaluation>> evalsByFreelancer = evaluationsOnSimilar.stream()
-                .collect(Collectors.groupingBy(e -> e.getFreelancer().getId()));
+        Map<Long, List<Evaluation>> evalsByFreelancer = evaluationsOnSimilar.stream().collect(Collectors.groupingBy(e -> e.getFreelancer().getId()));
         log.info("Regroupement des évaluations par freelance effectué.");
 
         Set<Long> freelancerIds = evalsByFreelancer.keySet();
@@ -81,8 +79,7 @@ public class RecommendationService {
         List<Freelancer> freelancers = freelancerRepository.findAllWithCompetencesByIdIn(freelancerIds);
         log.info("{} freelances récupérés avec leurs compétences.", freelancers.size());
 
-        Map<Long, Freelancer> freelancerMap = freelancers.stream()
-                .collect(Collectors.toMap(Freelancer::getId, f -> f));
+        Map<Long, Freelancer> freelancerMap = freelancers.stream().collect(Collectors.toMap(Freelancer::getId, f -> f));
 
         List<FreelancerRecommendationDTO> recommendations = new ArrayList<>();
 
@@ -96,19 +93,13 @@ public class RecommendationService {
                 continue;
             }
 
-            Set<Long> freelancerCompetences = freelancer.getCompetences().stream()
-                    .map(Competence::getId)
-                    .collect(Collectors.toSet());
-            int commonCount = (int) freelancerCompetences.stream()
-                    .filter(targetCompetenceIds::contains)
-                    .count();
+            Set<Long> freelancerCompetences = freelancer.getCompetences().stream().map(Competence::getId).collect(Collectors.toSet());
+            int commonCount = (int) freelancerCompetences.stream().filter(targetCompetenceIds::contains).count();
             log.info("Le freelancer id {} possède {} competence similaire", freelancer.getId(), commonCount);
 
             if (commonCount >= MIN_SIMILAR) {
                 double experience = Optional.ofNullable(freelancer.getExperience()).orElse(0.0);
-                double avgRating = evals.stream()
-                        .mapToDouble(e -> Optional.ofNullable(e.getNote()).orElse(0.0))
-                        .average().orElse(0.0);
+                double avgRating = evals.stream().mapToDouble(e -> Optional.ofNullable(e.getNote()).orElse(0.0)).average().orElse(0.0);
                 int score = (int) ((commonCount * 2.0) + experience + (avgRating * 2.0));
 
                 log.info("Freelancer {} - Score calculé: {}", freelancer.getNom(), score);

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://172.31.252.97:5432/dev_freelance
+    url: jdbc:postgresql://172.31.253.115:5432/dev_freelance
     username: dev_freelance_user
     password: freelance
     driver-class-name: org.postgresql.Driver
