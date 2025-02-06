@@ -9,9 +9,15 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Assala Hamoudi
+ */
 @Repository
 public interface MissionRepository extends JpaRepository<Mission, Long> {
 
+    /**
+     * @author Assala Hamoudi
+     */
     @Query("""
             SELECT m.id
             FROM Mission m

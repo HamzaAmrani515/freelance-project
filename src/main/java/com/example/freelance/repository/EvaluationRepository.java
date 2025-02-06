@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author Assala Hamoudi
+ */
 @Repository
 public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
     @Query("""

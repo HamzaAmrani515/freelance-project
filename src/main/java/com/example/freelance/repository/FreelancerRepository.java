@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author Assala Hamoudi
+ */
 @Repository
 public interface FreelancerRepository extends JpaRepository<Freelancer, Long> {
     @EntityGraph(attributePaths = {"competences"})

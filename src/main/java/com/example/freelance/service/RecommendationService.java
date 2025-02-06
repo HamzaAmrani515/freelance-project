@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
  * J'ai utiliser chatgpt
  * Service de recommandation permettant de proposer des freelances
  * en fonction d'une mission donnée.
+ * @author Assala Hamoudi
  */
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
