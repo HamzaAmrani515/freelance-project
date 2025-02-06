@@ -11,7 +11,7 @@ variables:
   ###############
   DEV_USER: "devback"
   DEV_PASSWORD: "devback"
-  DEV_HOST: "172.31.249.74"
+  DEV_HOST: "172.31.250.191"
   DEV_PATH: "/home/devback/freelance.jar"
   #################
   ### Env PPROD ###
