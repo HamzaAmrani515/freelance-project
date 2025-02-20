@@ -40,7 +40,7 @@ class RecommendationServiceTest {
     private RecommendationService recommendationService;
 
     @Test
-    @DisplayName("Should throw IllegalArgumentException when mission is not found")
+    @DisplayName("faire une  IllegalArgumentException si la mission n'est pas trouver")
     void recommendFreelancersForMission_MissionNotFound() {
         // GIVEN
         Long missionId = 1L;
@@ -54,9 +54,9 @@ class RecommendationServiceTest {
     }
 
     @Test
-    @DisplayName("Should return an empty list when no similar missions are found")
+    @DisplayName("retourner une liste vide si il a pas de lmission similaire")
     void recommendFreelancersForMission_NoSimilarMissions() {
-        // GIVEN
+        // GIVEN ( création d'un jeux de données )
         Long missionId = 1L;
         Competence competence = new Competence();
         competence.setId(100L);
@@ -78,7 +78,7 @@ class RecommendationServiceTest {
     }
 
     @Test
-    @DisplayName("Should return an empty list when no evaluations are found")
+    @DisplayName("retourner une liste vite si il trouve pas d'evaluation ")
     void recommendFreelancersForMission_NoEvaluations() {
         // GIVEN
         Long missionId = 1L;
@@ -104,7 +104,7 @@ class RecommendationServiceTest {
     }
 
     @Test
-    @DisplayName("Should skip a freelancer if it is not found in the repository")
+    @DisplayName("zapper un frrelance s'il a pas rouver dans le repository")
     void recommendFreelancersForMission_FreelancerNotFound() {
         // GIVEN
         Long missionId = 1L;
@@ -139,7 +139,7 @@ class RecommendationServiceTest {
     }
 
     @Test
-    @DisplayName("Should return an empty list if the freelancer does not have enough common competences")
+    @DisplayName("retourner une liste vide si le freelance n'a pas assez de competence ")
     void recommendFreelancersForMission_NotEnoughCommonCompetences() {
         // GIVEN
         Long missionId = 1L;
@@ -182,9 +182,9 @@ class RecommendationServiceTest {
     }
 
     @Test
-    @DisplayName("Should return a recommended freelancer with the correct score when criteria are met")
+    @DisplayName("retourner le freelance recommander avec le score calculer ")
     void recommendFreelancersForMission_ValidRecommendation() {
-        // GIVEN
+
         Long missionId = 1L;
 
         // Création des compétences requises pour la mission
@@ -231,6 +231,7 @@ class RecommendationServiceTest {
         List<FreelancerRecommendationDTO> result = recommendationService.recommendFreelancersForMission(missionId);
 
         // THEN
+        //assertion pour faire les vérification
         assertNotNull(result);
         assertEquals(1, result.size());
         FreelancerRecommendationDTO recommendation = result.get(0);

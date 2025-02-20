@@ -15,6 +15,7 @@ import java.util.List;
  */
 @Repository
 public interface FreelancerRepository extends JpaRepository<Freelancer, Long> {
+    //pour me rajouter
     @EntityGraph(attributePaths = {"competences"})
     @Query("SELECT f FROM Freelancer f WHERE f.id IN :freelancerIds")
     List<Freelancer> findAllWithCompetencesByIdIn(@Param("freelancerIds") Collection<Long> ids);
