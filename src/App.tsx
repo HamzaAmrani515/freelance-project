@@ -4,6 +4,8 @@ import FreelanceListPage from './pages/FreelanceListPage';
 import FreelanceAddPage from './pages/FreelanceAddPage';
 import FreelanceEditPage from './pages/FreelanceEditPage';
 import FreelanceDetailsPage from './pages/FreelanceDetailsPage';
+import MissionPage from './pages/MissionPage';
+
 import { OpenAPI } from './api';
 
 const App: React.FC = () => {
@@ -16,6 +18,8 @@ const App: React.FC = () => {
                 <Route path="/freelances/add" element={<FreelanceAddPage />} />
                 <Route path="/freelances/edit/:id" element={<FreelanceEditPage />} />
                 <Route path="/freelances/details/:id" element={<FreelanceDetailsPage />} />
+                <Route path="/missions/:id" element={<MissionPage />} />
+
             </Routes>
         </Router>
     );

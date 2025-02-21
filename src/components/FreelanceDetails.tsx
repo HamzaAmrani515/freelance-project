@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Freelance, FreelanceControllerService } from '../api';
+import { Freelancer, FreelanceControllerService } from '../api';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FreelanceDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    const [freelance, setFreelance] = useState<Freelance | null>(null);
+    const [freelance, setFreelance] = useState<Freelancer | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {

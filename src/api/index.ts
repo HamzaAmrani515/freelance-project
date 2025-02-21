@@ -7,6 +7,12 @@ export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
-export type { Freelance } from './models/Freelance';
+export type { Competence } from './models/Competence';
+export { Freelancer } from './models/Freelancer';
+export type { FreelancerRecommendationDTO } from './models/FreelancerRecommendationDTO';
+export type { MissionFreelance } from './models/MissionFreelance';
 
 export { FreelanceControllerService } from './services/FreelanceControllerService';
+export { MissionControllerService } from './services/MissionControllerService';
+export { RecommendationControllerService } from './services/RecommendationControllerService';
+export { RecommendationServiceFonctionDecouperControllerService } from './services/RecommendationServiceFonctionDecouperControllerService';

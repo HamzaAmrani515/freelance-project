@@ -2,10 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Freelance = {
+export type MissionFreelance = {
     id?: number;
-    nom?: string;
-    prenom?: string;
-    email?: string;
+    missionId?: number;
+    freelancerId?: number;
 };
 

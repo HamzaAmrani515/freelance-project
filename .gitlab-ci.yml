@@ -9,7 +9,7 @@ variables:
   ###########
   DEV_USER: "devfront"
   DEV_PASSWORD: "devfront"
-  DEV_HOST: "172.31.253.145"
+  DEV_HOST: "172.31.250.216"
   DEV_PATH: "/home/devfront/react-app"
   #############
   ### PPROD ###

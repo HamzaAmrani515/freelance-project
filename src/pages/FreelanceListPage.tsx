@@ -3,10 +3,10 @@ import FreelanceTable from '../components/FreelanceTable';
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FreelanceControllerService } from '../api/';
-import { Freelance } from '../api/models/Freelance';
+import { Freelancer } from '../api/models/Freelancer';
 
 const FreelanceListPage: React.FC = () => {
-    const [freelancesList, setFreelancesList] = useState<Freelance[]>([]);
+    const [freelancesList, setFreelancesList] = useState<Freelancer[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 

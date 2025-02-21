@@ -3,7 +3,7 @@ import FreelanceForm from '../components/FreelanceForm';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FreelanceControllerService } from '../api/';
-import { Freelance } from '../api/models/Freelance';
+import { Freelancer } from '../api/models/Freelancer';
 
 const FreelanceAddPage: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -15,7 +15,7 @@ const FreelanceAddPage: React.FC = () => {
         }
     }, [errorMessage]);
 
-    const handleAddFreelance = async (newFreelance: Freelance) => {
+    const handleAddFreelance = async (newFreelance: Freelancer) => {
         try {
             console.log(newFreelance);
             await FreelanceControllerService.saveFreelance({ requestBody: newFreelance });
