@@ -1,6 +1,4 @@
 package com.example.freelance.model;
-
-
 import com.example.freelance.model.enums.CandidatureStatut;
 import jakarta.persistence.*;
 import lombok.Data;
