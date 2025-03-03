@@ -27,6 +27,9 @@ public class Freelancer {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @OneToMany(mappedBy = "freelancer")
+    private Set<Mission> missions = new HashSet<>();
+
     private Double experience;
 
     private Integer age;
@@ -41,4 +44,7 @@ public class Freelancer {
     @ManyToMany
     @JoinTable(name = "freelancer_competences", joinColumns = @JoinColumn(name = "freelancer_id"), inverseJoinColumns = @JoinColumn(name = "competence_id"))
     private Set<Competence> competences = new HashSet<>();
+
+    @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Notification> notifications = new HashSet<>();
 }

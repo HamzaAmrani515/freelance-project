@@ -16,6 +16,7 @@ import java.util.Optional;
 public class FreelanceService {
     private final FreelancerRepository freelanceRepository;
 
+
     
     public List<Freelancer> getAllFreelances() {
         return freelanceRepository.findAll();
@@ -47,5 +48,9 @@ public class FreelanceService {
             return freelanceRepository.save(getExistingFreelancer);
         }
         return null;
+    }
+
+    public List<Freelancer> getAllFreelancers() {
+        return freelanceRepository.findAll();
     }
 }
