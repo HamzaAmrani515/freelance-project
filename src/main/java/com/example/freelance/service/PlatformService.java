@@ -2,10 +2,15 @@ package com.example.freelance.service;
 import com.example.freelance.model.Freelancer;
 import com.example.freelance.model.Mission;
 import com.example.freelance.model.Platform;
+import com.example.freelance.model.enums.MissionStatut;
+import com.example.freelance.repository.MissionRepository;
 import com.example.freelance.repository.PlatformRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+
+import java.util.List;
 import java.util.Optional;
 
 
@@ -14,6 +19,9 @@ public class PlatformService {
 
     @Autowired
     private PlatformRepository platformRepository;
+
+    @Autowired
+    private MissionRepository missionRepository;
 
     public Platform createPlatform() {
         Platform platform = new Platform();
@@ -24,10 +32,26 @@ public class PlatformService {
         return platformRepository.findById(id);
     }
 
+    public Platform addMission(Long platformId) {
+        Platform platform = platformRepository.findById(platformId)
+                .orElseThrow(() -> new RuntimeException("Platform not found"));
+        List<Mission> missionsEnAttente = missionRepository.findAllByStatut(MissionStatut.EN_ATTENTE);
+        platform.getMissions().addAll(missionsEnAttente);
+        return platformRepository.save(platform);
+    }
 
+   /* public Platform addFreelancer(Long platformId) {
+        Platform platform = platformRepository.findById(platformId)
+                .orElseThrow(() -> new RuntimeException("Platform not found"));
+        platform.getFreelancers().add(freelancer);
+        return platformRepository.save(platform);
+    }*/
 
     public boolean isEligible(Freelancer freelancer, Mission mission) {
 
+        if (!mission.getStatut().equals(MissionStatut.EN_ATTENTE)) {
+            return false;
+        }
         if (freelancer.getExperience() < 1) {
             return false;
         }
@@ -40,24 +64,6 @@ public class PlatformService {
         return true;
     }
 
-    public String applyForMission(Long platformId, Long freelancerId, Long missionId) {
-        Platform platform = platformRepository.findById(platformId)
-                .orElseThrow(() -> new RuntimeException("Platform not found"));git
 
-        Freelancer freelancer = platform.getFreelancers().stream()
-                .filter(f -> f.getId().equals(freelancerId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Freelancer not found"));
 
-        Mission mission = platform.getMissions().stream()
-                .filter(m -> m.getId().equals(missionId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Mission not found"));
-
-        if (isEligible(freelancer, mission)) {
-            return " Candidature acceptée pour la mission: " + mission.getTitre();
-        } else {
-            return " Candidature refusée : le freelance ne correspond pas aux critères.";
-        }
-    }
 }

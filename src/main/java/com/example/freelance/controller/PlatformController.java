@@ -25,15 +25,17 @@ public class PlatformController {
         return platformService.getPlatformById(id);
     }
 
-
-
-
-
-    @PostMapping("/{platformId}/apply")
-    public String applyForMission(
-            @PathVariable Long platformId,
-            @RequestParam Long freelancerId,
-            @RequestParam Long missionId) {
-        return platformService.applyForMission(platformId, freelancerId, missionId);
+    @PostMapping("/{platformId}/addMission")
+    public Platform addMission(@PathVariable Long platformId) {
+        return platformService.addMission(platformId);
     }
+
+/*
+    @PostMapping("/{platformId}/addFreelancer")
+    public Platform addFreelancer(@PathVariable Long platformId, @RequestBody Freelancer freelancer) {
+        return platformService.addFreelancer(platformId, freelancer);
+    }
+* */
+
+
 }
