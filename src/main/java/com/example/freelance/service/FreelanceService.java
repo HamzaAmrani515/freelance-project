@@ -2,6 +2,7 @@ package com.example.freelance.service;
 
 import com.example.freelance.model.Freelancer;
 import com.example.freelance.repository.FreelancerRepository;
+import com.example.freelance.repository.MissionFreelanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FreelanceService {
     private final FreelancerRepository freelanceRepository;
+    private final MissionFreelanceRepository missionFreelanceRepository;
 
 
     
@@ -52,5 +54,10 @@ public class FreelanceService {
 
     public List<Freelancer> getAllFreelancers() {
         return freelanceRepository.findAll();
+    }
+    public boolean isFreelancerAvailable(Freelancer freelancer) {
+
+
+        return missionFreelanceRepository.findByFreelancerId(freelancer.getId()).isEmpty();
     }
 }
