@@ -40,5 +40,8 @@ public class Notification {
         this.freelancer = freelancer;
         this.mission = mission;
     }
+
+
 }
+
 

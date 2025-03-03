@@ -1,10 +1,8 @@
 package com.example.freelance.controller;
-
 import com.example.freelance.model.Notification;
 import com.example.freelance.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,3 +17,4 @@ public class NotificationController {
         return notificationService.getNotificationsForFreelancer(freelancerId);
     }
 }
+
