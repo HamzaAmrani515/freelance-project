@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Freelancer } from '../api';
+import { Freelancer } from '../../api';
 
 interface FreelanceFormProps {
     onSubmit: (freelance: Freelancer) => void;

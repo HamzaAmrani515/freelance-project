@@ -1,5 +1,5 @@
 import React from 'react';
-import { Freelancer } from '../api';
+import { Freelancer } from '../../api';
 import { Link } from 'react-router-dom';
 
 interface FreelanceTableProps {

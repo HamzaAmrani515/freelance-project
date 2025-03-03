@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Freelancer, FreelanceControllerService } from '../api';
+import { Freelancer, FreelanceControllerService } from '../../api';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FreelanceDetails: React.FC = () => {

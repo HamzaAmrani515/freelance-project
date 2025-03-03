@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import FreelanceTable from '../components/FreelanceTable';
+import FreelanceTable from '../../components/freelance/FreelanceTable';
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { FreelanceControllerService } from '../api/';
-import { Freelancer } from '../api/models/Freelancer';
+import { FreelanceControllerService } from '../../api';
+import { Freelancer } from '../../api/models/Freelancer';
 
 const FreelanceListPage: React.FC = () => {
     const [freelancesList, setFreelancesList] = useState<Freelancer[]>([]);

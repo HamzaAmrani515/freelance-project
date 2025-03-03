@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import FreelanceForm from '../components/FreelanceForm';
+import FreelanceForm from '../../components/freelance/FreelanceForm';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FreelanceControllerService } from '../api/';
-import { Freelancer } from '../api/models/Freelancer';
+import { FreelanceControllerService } from '../../api';
+import { Freelancer } from '../../api/models/Freelancer';
 
 const FreelanceAddPage: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FreelancerRecommendationDTO } from '../api';
+import { FreelancerRecommendationDTO } from '../../api';
 
 interface FreelanceGrideProps {
     freelances: FreelancerRecommendationDTO[];
