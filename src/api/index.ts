@@ -11,6 +11,7 @@ export type { Client } from './models/Client';
 export type { Competence } from './models/Competence';
 export { Freelancer } from './models/Freelancer';
 export type { FreelancerRecommendationDTO } from './models/FreelancerRecommendationDTO';
+export { Mission } from './models/Mission';
 export type { MissionFreelance } from './models/MissionFreelance';
 
 export { ClientControllerService } from './services/ClientControllerService';

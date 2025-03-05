@@ -5,6 +5,8 @@ import FreelanceAddPage from './pages/freelance/FreelanceAddPage';
 import FreelanceEditPage from './pages/freelance/FreelanceEditPage';
 import FreelanceDetailsPage from './pages/freelance/FreelanceDetailsPage';
 import MissionPage from './pages/mission/MissionPage';
+import ClientMissionsPage from './pages/mission/ClientMissionsPage';
+
 import LoginPage from './pages/LoginPage';
 import ClientPage from './pages/client/ClientPage'
 
@@ -26,6 +28,8 @@ const App: React.FC = () => {
                 <Route path="/missions/:id" element={<MissionPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/clients/:nom" element={<ClientPage />} />
+                <Route path="/clients/:id/missions" element={<ClientMissionsPage />} />
+
             </Routes>
         </Router>
     );

@@ -7,6 +7,7 @@ const ClientDashboard: React.FC = () => {
     const { nom } = useParams<{ nom: string }>();
     const [client, setClient] = useState<Client | null>(null);
     const [loading, setLoading] = useState(true);
+    const [clientId, setClientId] = useState<number | null>(null);
 
     const fetchClient = async () => {
         if (!nom) {
@@ -17,6 +18,9 @@ const ClientDashboard: React.FC = () => {
         try {
             const response = await ClientControllerService.findClientByNom({ nom });
             setClient(response);
+            if (response.id !== undefined) {
+                setClientId(response.id);
+            }
         } catch (error) {
             toast.error("Erreur lors de la récupération des informations client.");
         } finally {
@@ -34,7 +38,18 @@ const ClientDashboard: React.FC = () => {
             <aside className="w-64 bg-blue-600 text-white p-5">
                 <h2 className="text-2xl font-bold">Dashboard</h2>
                 <nav className="mt-5 space-y-3">
-                    <a href="#" className="block px-3 py-2 rounded hover:bg-blue-700">Mes Missions</a>
+                    {clientId ? (
+                        <a 
+                            href={`/clients/${clientId}/missions`} 
+                            className="block px-3 py-2 rounded hover:bg-blue-700"
+                        >
+                            Mes Missions
+                        </a>
+                    ) : (
+                        <span className="block px-3 py-2 rounded text-gray-400 cursor-not-allowed">
+                            Mes Missions
+                        </span>
+                    )}
                </nav>
             </aside>
 

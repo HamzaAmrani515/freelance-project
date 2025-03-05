@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Client } from '../models/Client';
+import type { Mission } from '../models/Mission';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -21,6 +22,23 @@ export class ClientControllerService {
             url: '/api/clients',
             query: {
                 'nom': nom,
+            },
+        });
+    }
+    /**
+     * @returns Mission OK
+     * @throws ApiError
+     */
+    public static findMissionByClientId({
+        idClient,
+    }: {
+        idClient: number,
+    }): CancelablePromise<Array<Mission>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/clients/{idClient}/mission',
+            path: {
+                'idClient': idClient,
             },
         });
     }
