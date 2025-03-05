@@ -9,28 +9,28 @@ const ClientDashboard: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [clientId, setClientId] = useState<number | null>(null);
 
-    const fetchClient = async () => {
-        if (!nom) {
-            toast.error("Nom du client non spécifié.");
-            setLoading(false);
-            return;
-        }
-        try {
-            const response = await ClientControllerService.findClientByNom({ nom });
-            setClient(response);
-            if (response.id !== undefined) {
-                setClientId(response.id);
-            }
-        } catch (error) {
-            toast.error("Erreur lors de la récupération des informations client.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchClient();
-    }, [fetchClient]);
+        const fetchData = async () => {
+            if (!nom) {
+                toast.error("Nom du client non spécifié.");
+                setLoading(false);
+                return;
+            }
+            try {
+                const response = await ClientControllerService.findClientByNom({ nom });
+                setClient(response);
+                if (response.id !== undefined) {
+                    setClientId(response.id);
+                }
+            } catch (error) {
+                toast.error("Erreur lors de la récupération des informations client.");
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchData();
+    }, [nom]); // Only runs when 'nom' changes
     
 
     return (
