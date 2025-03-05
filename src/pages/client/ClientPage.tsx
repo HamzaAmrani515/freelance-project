@@ -30,7 +30,8 @@ const ClientDashboard: React.FC = () => {
 
     useEffect(() => {
         fetchClient();
-    }, []);
+    }, [fetchClient]);
+    
 
     return (
         <div className="flex h-screen bg-gray-100">

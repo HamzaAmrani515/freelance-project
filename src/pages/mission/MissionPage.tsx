@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import FreelanceGride from '../../components/freelance/FreelanceGride';
-import { toast } from "react-toastify";
 import { FreelancerRecommendationDTO, RecommendationControllerService } from '../../api';
 import { useParams } from 'react-router-dom';
 
