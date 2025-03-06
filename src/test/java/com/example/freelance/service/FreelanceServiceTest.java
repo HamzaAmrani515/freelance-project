@@ -1,7 +1,4 @@
 package com.example.freelance.service;
-
-
-
 import com.example.freelance.model.Freelancer;
 import com.example.freelance.model.MissionFreelance;
 import com.example.freelance.repository.MissionFreelanceRepository;

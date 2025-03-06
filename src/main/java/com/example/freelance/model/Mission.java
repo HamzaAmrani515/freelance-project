@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
-
 @Entity
 @Table(name = "missions")
+@EntityListeners(MissionListener.class)
 @Data
 @NoArgsConstructor
 public class Mission {
@@ -33,7 +33,6 @@ public class Mission {
     @Column(nullable = false)
     private MissionStatut statut;
 
-    // Relation avec Client (une mission a un seul client)
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
@@ -42,8 +41,18 @@ public class Mission {
     @JoinColumn(name = "freelancer_id")
     private Freelancer freelancer;
 
-    // Relation many-to-many avec Competence
-    @ManyToMany
-    @JoinTable(name = "mission_competences", joinColumns = @JoinColumn(name = "mission_id"), inverseJoinColumns = @JoinColumn(name = "competence_id"))
-    private Set<Competence> competences = new HashSet<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "mission_competences",
+//            joinColumns = @JoinColumn(name = "mission_id"),
+//            inverseJoinColumns = @JoinColumn(name = "competence_id")
+//    )
+//    private Set<Competence> competences = new HashSet<>();
+@ManyToMany(fetch = FetchType.EAGER)
+@JoinTable(
+        name = "mission_competences",
+        joinColumns = @JoinColumn(name = "mission_id"),
+        inverseJoinColumns = @JoinColumn(name = "competence_id")
+)
+private Set<Competence> competences = new HashSet<>();
 }
