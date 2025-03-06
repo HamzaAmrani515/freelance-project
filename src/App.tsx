@@ -1,9 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import FreelanceListPage from './pages/freelance/FreelanceListPage';
-import FreelanceAddPage from './pages/freelance/FreelanceAddPage';
-import FreelanceEditPage from './pages/freelance/FreelanceEditPage';
-import FreelanceDetailsPage from './pages/freelance/FreelanceDetailsPage';
 import MissionPage from './pages/mission/MissionPage';
 import ClientMissionsPage from './pages/mission/ClientMissionsPage';
 
@@ -21,11 +17,7 @@ const App: React.FC = () => {
         <Router>
              <ToastContainer position="top-right" autoClose={3000} />
             <Routes>
-                <Route path="/freelances" element={<FreelanceListPage />} />
-                <Route path="/freelances/add" element={<FreelanceAddPage />} />
-                <Route path="/freelances/edit/:id" element={<FreelanceEditPage />} />
-                <Route path="/freelances/details/:id" element={<FreelanceDetailsPage />} />
-                <Route path="/missions/:id" element={<MissionPage />} />
+               <Route path="/missions/:id" element={<MissionPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/clients/:nom" element={<ClientPage />} />
                 <Route path="/clients/:id/missions" element={<ClientMissionsPage />} />
