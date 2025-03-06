@@ -32,20 +32,7 @@ public class PlatformService {
         return platformRepository.findById(id);
     }
 
-    public Platform addMission(Long platformId) {
-        Platform platform = platformRepository.findById(platformId)
-                .orElseThrow(() -> new RuntimeException("Platform not found"));
-        List<Mission> missionsEnAttente = missionRepository.findAllByStatut(MissionStatut.EN_ATTENTE);
-        platform.getMissions().addAll(missionsEnAttente);
-        return platformRepository.save(platform);
-    }
 
-   /* public Platform addFreelancer(Long platformId) {
-        Platform platform = platformRepository.findById(platformId)
-                .orElseThrow(() -> new RuntimeException("Platform not found"));
-        platform.getFreelancers().add(freelancer);
-        return platformRepository.save(platform);
-    }*/
 
     public boolean isEligible(Freelancer freelancer, Mission mission) {
 

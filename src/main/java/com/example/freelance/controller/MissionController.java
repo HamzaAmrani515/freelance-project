@@ -16,10 +16,5 @@ public class MissionController {
 
     private final MissionService missionService;
 
-//    @PostMapping("/{missionId}/link-freelancer/{freelancerId}")
-//    public MissionFreelance linkMissionToFreelancer(
-//            @PathVariable Long missionId,
-//            @PathVariable Long freelancerId) {
-//        return missionService.linkMissionToFreelancer(missionId, freelancerId);
-//    }
+
 }
