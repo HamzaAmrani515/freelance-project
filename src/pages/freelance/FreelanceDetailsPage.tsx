@@ -1,5 +1,5 @@
 import React from 'react';
-import FreelanceDetails from '../components/FreelanceDetails';
+import FreelanceDetails from '../../components/freelance/FreelanceDetails';
 
 const FreelanceDetailsPage: React.FC = () => {
     return (

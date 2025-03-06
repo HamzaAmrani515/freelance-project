@@ -2,20 +2,20 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Freelance } from '../models/Freelance';
+import type { Freelancer } from '../models/Freelancer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class FreelanceControllerService {
     /**
-     * @returns Freelance OK
+     * @returns Freelancer OK
      * @throws ApiError
      */
     public static getFreelanceById({
         id,
     }: {
         id: number,
-    }): CancelablePromise<Freelance> {
+    }): CancelablePromise<Freelancer> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/freelances/{id}',
@@ -25,7 +25,7 @@ export class FreelanceControllerService {
         });
     }
     /**
-     * @returns Freelance OK
+     * @returns Freelancer OK
      * @throws ApiError
      */
     public static updateFreelance({
@@ -33,8 +33,8 @@ export class FreelanceControllerService {
         requestBody,
     }: {
         id: number,
-        requestBody: Freelance,
-    }): CancelablePromise<Freelance> {
+        requestBody: Freelancer,
+    }): CancelablePromise<Freelancer> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/freelances/{id}',
@@ -63,29 +63,46 @@ export class FreelanceControllerService {
         });
     }
     /**
-     * @returns Freelance OK
+     * @returns Freelancer OK
      * @throws ApiError
      */
-    public static getAllFreelances(): CancelablePromise<Array<Freelance>> {
+    public static getAllFreelances(): CancelablePromise<Array<Freelancer>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/freelances',
         });
     }
     /**
-     * @returns Freelance OK
+     * @returns Freelancer OK
      * @throws ApiError
      */
     public static saveFreelance({
         requestBody,
     }: {
-        requestBody: Freelance,
-    }): CancelablePromise<Freelance> {
+        requestBody: Freelancer,
+    }): CancelablePromise<Freelancer> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/freelances',
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+    /**
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static deleteFreelanceByName({
+        name,
+    }: {
+        name: string,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/freelances/test/{name}',
+            path: {
+                'name': name,
+            },
         });
     }
 }

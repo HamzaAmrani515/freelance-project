@@ -2,10 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Freelance = {
+export type Client = {
     id?: number;
     nom?: string;
     prenom?: string;
     email?: string;
+    budget?: number;
 };
 

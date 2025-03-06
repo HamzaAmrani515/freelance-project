@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Freelance } from '../api';
+import { Freelancer } from '../../api';
 
 interface FreelanceFormProps {
-    onSubmit: (freelance: Freelance) => void;
-    initialData?: Partial<Freelance>;
+    onSubmit: (freelance: Freelancer) => void;
+    initialData?: Partial<Freelancer>;
     isUpdate: boolean;
 }
 
 const FreelanceForm: React.FC<FreelanceFormProps> = ({ onSubmit, initialData = {}, isUpdate }) => {
-    const [freelance, setFreelance] = useState<Partial<Freelance>>({
+    const [freelance, setFreelance] = useState<Partial<Freelancer>>({
         nom: initialData.nom || '',
         prenom: initialData.prenom || '',
         email: initialData.email || '',
@@ -26,7 +26,7 @@ const FreelanceForm: React.FC<FreelanceFormProps> = ({ onSubmit, initialData = {
         e.preventDefault();
         if (freelance.nom && freelance.prenom && freelance.email) {
             console.log(freelance)
-            onSubmit(freelance as Freelance); // S'assurer que les valeurs sont complètes
+            onSubmit(freelance as Freelancer); // S'assurer que les valeurs sont complètes
         } else {
             alert('Tous les champs sont obligatoires.');
         }

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Freelance } from '../api';
+import { Freelancer } from '../../api';
 import { Link } from 'react-router-dom';
 
 interface FreelanceTableProps {
-    freelances: Freelance[];
+    freelances: Freelancer[];
     onDelete: (id: number) => void;
 }
 

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import FreelanceTable from '../components/FreelanceTable';
+import FreelanceTable from '../../components/freelance/FreelanceTable';
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { FreelanceControllerService } from '../api/';
-import { Freelance } from '../api/models/Freelance';
+import { FreelanceControllerService } from '../../api';
+import { Freelancer } from '../../api/models/Freelancer';
 
 const FreelanceListPage: React.FC = () => {
-    const [freelancesList, setFreelancesList] = useState<Freelance[]>([]);
+    const [freelancesList, setFreelancesList] = useState<Freelancer[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -53,7 +53,7 @@ const FreelanceListPage: React.FC = () => {
             <div className="max-w-7xl mx-auto space-y-8">
                 {/* Header section */}
                 <div className="flex justify-between items-center">
-                    <h1 className="text-3xl font-semibold text-gray-800">Liste des Freelances </h1>
+                    <h1 className="text-3xl font-semibold text-gray-800">Liste des Freelances liker </h1>
                     <Link to="/freelances/add">
                         <button
                             className="bg-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200">

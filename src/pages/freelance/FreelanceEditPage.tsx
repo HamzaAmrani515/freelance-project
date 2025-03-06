@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import FreelanceForm from '../components/FreelanceForm';
+import FreelanceForm from '../../components/freelance/FreelanceForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
-import { FreelanceControllerService } from '../api/';
-import { Freelance } from "../api/models/Freelance";
+import { FreelanceControllerService } from '../../api';
+import { Freelancer } from "../../api/models/Freelancer";
 
 const FreelanceEditPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    const [freelance, setFreelance] = useState<Freelance | null>(null);
+    const [freelance, setFreelance] = useState<Freelancer | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const FreelanceEditPage: React.FC = () => {
         }
     }, [errorMessage]);
 
-    const handleEditFreelance = async (updatedFreelance: Freelance) => {
+    const handleEditFreelance = async (updatedFreelance: Freelancer) => {
         if (freelance?.id) {
             try {
                 await FreelanceControllerService.updateFreelance({ id: Number(id), requestBody: updatedFreelance });
