@@ -24,7 +24,7 @@ variables:
   ############
   PROD_USER: "prodfront"
   PROD_PASSWORD: "prodfront"
-  PROD_HOST: "172.31.253.115"
+  PROD_HOST: "172.31.249.122"
   PROD_PATH: "/home/prodfront/react-app"
 
 build-front:
