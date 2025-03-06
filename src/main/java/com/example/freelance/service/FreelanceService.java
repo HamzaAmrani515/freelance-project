@@ -1,8 +1,11 @@
 package com.example.freelance.service;
 
 import com.example.freelance.model.Freelancer;
+import com.example.freelance.model.Mission;
 import com.example.freelance.repository.FreelancerRepository;
 import com.example.freelance.repository.MissionFreelanceRepository;
+import com.example.freelance.repository.MissionRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +18,10 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class FreelanceService {
+
     private final FreelancerRepository freelanceRepository;
     private final MissionFreelanceRepository missionFreelanceRepository;
-
+    private final MissionRepository missionRepository;
 
     
     public List<Freelancer> getAllFreelances() {
@@ -59,5 +63,9 @@ public class FreelanceService {
 
 
         return missionFreelanceRepository.findByFreelancerId(freelancer.getId()).isEmpty();
+    }
+    @Transactional
+    public Mission getMissionWithCompetences(Long missionId) {
+        return missionRepository.findById(missionId).orElseThrow();
     }
 }

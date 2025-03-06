@@ -1,9 +1,9 @@
 package com.example.freelance.repository;
 
-import com.example.freelance.model.Freelancer;
+
 import com.example.freelance.model.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+
 
 import java.util.List;
 
