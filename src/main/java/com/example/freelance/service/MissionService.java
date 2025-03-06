@@ -49,7 +49,7 @@ public class MissionService {
     public void createTestMissions() {
         // Mission 1
         Mission mission1 = new Mission();
-        mission1.setId(21504L);
+        mission1.setId(21507L);
         mission1.setTitre("Développement d'une application mobile");
         mission1.setDescription("Création d'une application mobile pour gérer les tâches.");
         mission1.setBudget(15000.00);
@@ -71,7 +71,7 @@ public class MissionService {
 
         // Mission 2
         Mission mission2 = new Mission();
-        mission2.setId(21505L);
+        mission2.setId(21509L);
         mission2.setTitre("Développement d'un site e-commerce");
         mission2.setDescription("Création d'un site de commerce en ligne pour une boutique.");
         mission2.setBudget(30000.00);
