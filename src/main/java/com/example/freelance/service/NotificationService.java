@@ -19,6 +19,17 @@ public class  NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
 
+
+//    public void createNotification(Long freelancerId, Long missionId) {
+//        Notification notification = new Notification();
+//        notification.setFreelancerId(freelancerId);
+//        notification.setMissionId(missionId);
+//        notification.setMessage("A new mission matching your skills is available!");
+//        notification.setIsRead(false);
+//        notification.setTimestamp(LocalDateTime.now());
+//
+//        notificationRepository.save(notification);
+//    }
     public void sendNotification(Freelancer freelancer, Mission mission) {
         String message = "Nouvelle mission disponible: " + mission.getTitre();
 
@@ -35,6 +46,7 @@ public class  NotificationService {
     public List<Notification> getNotificationsForFreelancer(Long freelancerId) {
         return notificationRepository.findByFreelancerId(freelancerId);
     }
+
 
 
 }
