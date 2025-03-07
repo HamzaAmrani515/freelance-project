@@ -25,10 +25,10 @@ public class PlatformController {
         return platformService.getPlatformById(id);
     }
 
-    @PostMapping("/{platformId}/addMission")
-    public Platform addMission(@PathVariable Long platformId) {
-        return platformService.addMission(platformId);
-    }
+//    @PostMapping("/{platformId}/addMission")
+//    public Platform addMission(@PathVariable Long platformId) {
+//        return platformService.addMission(platformId);
+//    }
 
 /*
     @PostMapping("/{platformId}/addFreelancer")

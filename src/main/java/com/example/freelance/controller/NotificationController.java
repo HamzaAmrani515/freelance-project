@@ -16,5 +16,9 @@ public class NotificationController {
     public List<Notification> getNotificationsForFreelancer(@PathVariable Long freelancerId) {
         return notificationService.getNotificationsForFreelancer(freelancerId);
     }
+    @PostMapping("/create")
+    public void createNotification(@RequestParam Long freelancerId, @RequestParam Long missionId) {
+        notificationService.createNotification(freelancerId, missionId);
+    }
 }
 
