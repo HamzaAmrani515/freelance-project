@@ -2,6 +2,7 @@ package com.example.freelance.model;
 
 
 import com.example.freelance.model.enums.MissionStatut;
+import com.example.freelance.service.listeners.MissionListener;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

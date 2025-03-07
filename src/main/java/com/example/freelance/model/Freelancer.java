@@ -1,5 +1,6 @@
 package com.example.freelance.model;
 
+import com.example.freelance.model.enums.FreelancerStatus;
 import com.example.freelance.model.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -30,6 +31,9 @@ public class Freelancer {
     @OneToMany(mappedBy = "freelancer")
     private Set<Mission> missions = new HashSet<>();
 
+    @OneToMany(mappedBy = "freelancer")
+    private Set<Competence> competences;
+
     private Double experience;
 
     private Integer age;
@@ -40,10 +44,8 @@ public class Freelancer {
 
     private String profil;
 
-    // Relation many-to-many avec Competence
-    @ManyToMany
-    @JoinTable(name = "freelancer_competences", joinColumns = @JoinColumn(name = "freelancer_id"), inverseJoinColumns = @JoinColumn(name = "competence_id"))
-    private Set<Competence> competences = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    private FreelancerStatus status;
 
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Notification> notifications = new HashSet<>();

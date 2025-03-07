@@ -20,5 +20,9 @@ public class Competence {
 
     @Column(length = 2000)
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "freelancer_id")
+    private Freelancer freelancer;
 }
 
