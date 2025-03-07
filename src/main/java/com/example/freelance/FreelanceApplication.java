@@ -17,12 +17,12 @@ public class FreelanceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FreelanceApplication.class, args);
 	}
-	@Bean
-	CommandLineRunner insertMissions(MissionService missionService) {
-		return args -> {
-			missionService.createTestMissions();
-			System.out.println("2 missions créées avec succès !");
-		};
-	}
+//	@Bean
+//	CommandLineRunner insertMissions(MissionService missionService) {
+//		return args -> {
+//			missionService.createTestMissions();
+//			System.out.println("2 missions créées avec succès !");
+//		};
+//	}
 
 }

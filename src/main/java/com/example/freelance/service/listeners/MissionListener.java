@@ -1,11 +1,11 @@
 package com.example.freelance.service.listeners;
 
-import com.example.freelance.model.Competence;
+
 import com.example.freelance.model.Freelancer;
 import com.example.freelance.model.Mission;
 import com.example.freelance.model.enums.MissionStatut;
 import com.example.freelance.service.FreelanceService;
-import com.example.freelance.service.MissionService;
+
 import com.example.freelance.service.NotificationService;
 import jakarta.persistence.PostPersist;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class MissionListener {

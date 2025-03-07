@@ -1,5 +1,6 @@
 package com.example.freelance.controller;
 
+import com.example.freelance.model.Mission;
 import com.example.freelance.model.MissionFreelance;
 import com.example.freelance.service.FreelanceService;
 import com.example.freelance.service.MissionService;
@@ -16,5 +17,9 @@ public class MissionController {
 
     private final MissionService missionService;
 
-
+    @PostMapping("/post")
+    public Mission postMachine(@RequestBody Mission mission) {
+        System.out.println(mission);
+        return missionService.saveMission(mission);
+    }
 }
