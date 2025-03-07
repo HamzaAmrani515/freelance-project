@@ -41,13 +41,6 @@ public class Mission {
     @JoinColumn(name = "freelancer_id")
     private Freelancer freelancer;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "mission_competences",
-//            joinColumns = @JoinColumn(name = "mission_id"),
-//            inverseJoinColumns = @JoinColumn(name = "competence_id")
-//    )
-//    private Set<Competence> competences = new HashSet<>();
 @ManyToMany(fetch = FetchType.EAGER)
 @JoinTable(
         name = "mission_competences",
