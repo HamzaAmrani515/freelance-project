@@ -2,6 +2,7 @@ package com.example.freelance.service;
 
 import com.example.freelance.model.Freelancer;
 import com.example.freelance.model.Mission;
+import com.example.freelance.model.enums.FreelancerStatus;
 import com.example.freelance.repository.FreelancerRepository;
 import com.example.freelance.repository.MissionFreelanceRepository;
 import com.example.freelance.repository.MissionRepository;
@@ -67,5 +68,9 @@ public class FreelanceService {
     @Transactional
     public Mission getMissionWithCompetences(Long missionId) {
         return missionRepository.findById(missionId).orElseThrow();
+    }
+
+    public List<Freelancer> getAllAvailableFreelancers() {
+        return freelanceRepository.findAllByStatus(FreelancerStatus.AVAILABLE);
     }
 }
