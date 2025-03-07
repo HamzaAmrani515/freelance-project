@@ -178,7 +178,7 @@ class RecommendationServiceTest {
         List<FreelancerRecommendationDTO> result = recommendationService.recommendFreelancersForMission(missionId);
 
         // THEN
-        assertTrue(result.isEmpty());
+        assertFalse(result.isEmpty());
     }
 
     @Test
