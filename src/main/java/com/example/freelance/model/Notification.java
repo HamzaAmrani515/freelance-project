@@ -37,6 +37,7 @@ public class Notification {
     public Notification(String message, Freelancer freelancer, Mission mission) {
         this.message = message;
         this.timestamp = LocalDateTime.now();
+        this.isRead = false;
         this.freelancer = freelancer;
         this.mission = mission;
     }

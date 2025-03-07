@@ -60,5 +60,9 @@ public class NotificationService {
     public List<Notification> getNotificationsForFreelancer(Long freelancerId) {
         return notificationRepository.findByFreelancerId(freelancerId);
     }
+
+    public void saveNotification(Notification notification) {
+        notificationRepository.save(notification);
+    }
 }
 

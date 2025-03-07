@@ -39,7 +39,7 @@ public class Mission {
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "freelancer_id")
+    @JoinColumn(name = "freelancer_id", nullable = true)
     private Freelancer freelancer;
 
 @ManyToMany(fetch = FetchType.EAGER)
