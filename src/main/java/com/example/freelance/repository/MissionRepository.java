@@ -31,4 +31,6 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     List<Long> findSimilarMissionIds(@Param("targetCompetenceIds") Set<Long> compIds, @Param("missionId") Long missionId, @Param("similar") int similar);
 
     List<Mission> findAllByStatut(MissionStatut statut);
+
+    List<Mission> findByIdBetween(Long startId, Long endId);
 }
