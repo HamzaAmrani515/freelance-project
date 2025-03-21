@@ -87,4 +87,29 @@ public class MissionService {
 
         return mission;
     }
+    public Mission updateMissionStatus(Long missionId, MissionStatut newStatut) {
+        Mission mission = missionRepository.findById(missionId)
+                .orElseThrow(() -> new RuntimeException("Mission non trouvée"));
+
+        // Vérifier si la transition est valide
+        if (!isValidStatusTransition(mission.getStatut(), newStatut)) {
+            throw new IllegalStateException("Changement de statut non autorisé");
+        }
+
+        mission.setStatut(newStatut);
+        return missionRepository.save(mission);
+    }
+
+    // Méthode privée pour valider les transitions de statut
+    private boolean isValidStatusTransition(MissionStatut current, MissionStatut next) {
+        return switch (current) {
+            case EN_ATTENTE -> next == MissionStatut.ACCEPTEE;
+            case ACCEPTEE -> next == MissionStatut.TERMINEE;
+            case TERMINEE -> false; // Une mission terminée ne peut pas changer de statut
+        };
+    }
+
+    public List<Mission> getMonitoredMissions() {
+        return missionRepository.findByIdBetween(Long.valueOf(1410), Long.valueOf(1700));
+    }
 }
