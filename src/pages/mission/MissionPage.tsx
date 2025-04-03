@@ -9,19 +9,23 @@ const FreelanceListPage: React.FC = () => {
     const [freelancesList, setFreelancesList] = useState<FreelancerRecommendationDTO[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const fetchFreelances = async () => {
-        setLoading(true);
-        try {
-            const freelances = await RecommendationControllerService.getRecommendations({ missionId: Number(id) });
-            setFreelancesList(freelances);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
+        const fetchFreelances = async () => {
+            setLoading(true);
+            try {
+                const freelances = await RecommendationControllerService.getRecommendations({
+                    missionId: Number(id)
+                });
+                setFreelancesList(freelances);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des freelances :", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchFreelances();
-    }, [id]); 
+    }, [id]);
 
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4">
