@@ -19,6 +19,10 @@ public class ClientService {
     public Client findClientByNom(String nom){
         return clientRepository.findByNom(nom);
     }
+    public Client findClientByEmail(String email){
+        return clientRepository.findByEmail(email);
+    }
+
 
     public List<Mission> findMissionByIdClient(Long idClient){
         return missionRepository.findTop50ByClientIdAndStatut(idClient, MissionStatut.EN_ATTENTE);
