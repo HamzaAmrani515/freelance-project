@@ -4,6 +4,7 @@ import com.example.freelance.model.Client;
 import com.example.freelance.model.Mission;
 import com.example.freelance.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,20 @@ public class ClientController {
 
     @GetMapping
     public Client findClientByNom(String nom) {
+
         return clientService.findClientByNom(nom);
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Client> findClientByEmail(String email) {
+
+        Client client = clientService.findClientByEmail(email);
+        if (client != null){
+            return ResponseEntity.ok(client) ;
+        }else {
+          return ResponseEntity.notFound().build();
+        }
+
     }
 
 

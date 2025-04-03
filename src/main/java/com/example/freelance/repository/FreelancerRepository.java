@@ -1,5 +1,6 @@
 package com.example.freelance.repository;
 
+import com.example.freelance.model.Client;
 import com.example.freelance.model.Freelancer;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,8 @@ public interface FreelancerRepository extends JpaRepository<Freelancer, Long> {
     @EntityGraph(attributePaths = {"competences"})
     @Query("SELECT f FROM Freelancer f WHERE f.id IN :freelancerIds")
     List<Freelancer> findAllWithCompetencesByIdIn(@Param("freelancerIds") Collection<Long> ids);
+
+
+
+    Freelancer findByEmail(String email);
 }
