@@ -101,3 +101,4 @@ deploy-job:
     - develop
     - staging
     - master
+    - HamzaBranch  # Ajoutez cette ligne
