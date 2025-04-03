@@ -1,0 +1,58 @@
+package com.example.freelance.service;
+
+import com.example.freelance.model.Evaluation;
+import com.example.freelance.model.Mission;
+import com.example.freelance.repository.EvaluationRepository;
+import com.example.freelance.repository.MissionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class EvaluationService {
+
+    private final EvaluationRepository evaluationRepository;
+    @Autowired
+    private MissionRepository missionRepository;
+    public EvaluationService(EvaluationRepository evaluationRepository) {
+        this.evaluationRepository = evaluationRepository;
+    }
+//    public Evaluation saveEvaluation(Evaluation evaluation, Long missionId) {
+//        // Vérifier si la mission existe
+//        Mission mission = missionRepository.findById(missionId)
+//                .orElseThrow(() -> new RuntimeException("Mission non trouvée"));
+//
+//        // Associer automatiquement le client et le freelancer
+//        evaluation.setMission(mission);
+//        evaluation.setClient(mission.getClient());
+//        evaluation.setFreelancer(mission.getFreelancer());
+//
+//        return evaluationRepository.save(evaluation);
+//    }
+public Evaluation saveEvaluation(Evaluation evaluation, Long missionId) {
+    // Check if the mission exists
+    Mission mission = missionRepository.findById(missionId)
+            .orElseThrow(() -> new RuntimeException("Mission non trouvée"));
+
+    // Check if the mission has a freelancer
+    if (mission.getFreelancer() == null) {
+        throw new RuntimeException("Mission does not have an assigned freelancer.");
+    }
+
+    // Associate automatically the client and the freelancer
+    evaluation.setMission(mission);
+    evaluation.setClient(mission.getClient());
+    evaluation.setFreelancer(mission.getFreelancer());
+
+    return evaluationRepository.save(evaluation);
+}
+    public List<Evaluation> getWarningMissions() {
+        List<Evaluation> warnings = evaluationRepository.findAllByNoteLessThanEqual(3.0);
+        return warnings.isEmpty() ? List.of() : warnings;
+    }
+
+    public List<Evaluation> getWellRatedMissions() {
+        List<Evaluation> wellRated = evaluationRepository.findAllByNoteGreaterThan(3.0);
+        return wellRated.isEmpty() ? List.of() : wellRated;
+    }
+}

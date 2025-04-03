@@ -1,4 +1,3 @@
-
 package com.example.freelance.service;
 
 import com.example.freelance.model.*;
@@ -18,7 +17,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class MissionService {
 
-
     private final MissionRepository missionRepository;
     private final ClientRepository clientRepository;
     private final CompetenceRepository competenceRepository;
@@ -33,9 +31,8 @@ public class MissionService {
 //    public void createTestMissions() {
 //        // Mission 1
 //        Mission mission1 = new Mission();
-//        mission1.setId(21517L);
 //        mission1.setTitre("Développement d'une application mobile");
-//        mission1.setDescription("Création d'une application mobile pour gérer les tâches.");
+//        mission1.setDescription("Demo avec prof de code .");
 //        mission1.setBudget(15000.00);
 //        mission1.setDuree("3 mois");
 //        mission1.setStatut(MissionStatut.EN_ATTENTE);
@@ -55,9 +52,8 @@ public class MissionService {
 //
 //        // Mission 2
 //        Mission mission2 = new Mission();
-//        mission2.setId(21516L);
 //        mission2.setTitre("Développement d'un site e-commerce");
-//        mission2.setDescription("Création d'un site de commerce en ligne pour une boutique.");
+//        mission2.setDescription("Demo avec le prof .");
 //        mission2.setBudget(30000.00);
 //        mission2.setDuree("9 mois");
 //        mission2.setStatut(MissionStatut.EN_ATTENTE);
@@ -75,13 +71,12 @@ public class MissionService {
 //        // Sauvegarde de la mission dans la base de données
 //        missionRepository.save(mission2);
 //    }
-
     public Mission saveMission(Mission m) {
         Mission mission = missionRepository.save(m);
         List<Freelancer> availableFreelancers = freelanceService.getAllAvailableFreelancers();
 
         availableFreelancers.forEach(freelancer -> {
-            Notification notification = new Notification("a new mission has been added, check it now !!", freelancer, mission);
+            Notification notification = new Notification("A new mission has been added, check it now !!", freelancer, mission);
             notificationService.saveNotification(notification);
         });
 
@@ -99,17 +94,16 @@ public class MissionService {
         mission.setStatut(newStatut);
         return missionRepository.save(mission);
     }
-
-    // Méthode privée pour valider les transitions de statut
     private boolean isValidStatusTransition(MissionStatut current, MissionStatut next) {
         return switch (current) {
-            case EN_ATTENTE -> next == MissionStatut.ACCEPTEE;
+            case EN_ATTENTE -> next == MissionStatut.EN_NEGOCIATION;
+            case EN_NEGOCIATION -> next == MissionStatut.ANNULEE || next == MissionStatut.ACCEPTEE;
             case ACCEPTEE -> next == MissionStatut.TERMINEE;
-            case TERMINEE -> false; // Une mission terminée ne peut pas changer de statut
+            case TERMINEE -> false;
+            default -> false;
         };
     }
-
     public List<Mission> getMonitoredMissions() {
-        return missionRepository.findByIdBetween(Long.valueOf(1410), Long.valueOf(1700));
+        return missionRepository.findByIdBetween(1410L, 1700L);
     }
 }
