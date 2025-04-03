@@ -4,7 +4,9 @@ import { Client, ClientControllerService } from "../../api"; // Import service
 import { useParams } from 'react-router-dom';
 
 const ClientDashboard: React.FC = () => {
+    //extraire le nom dans url
     const { nom } = useParams<{ nom: string }>();
+    //declarer les variable usestat pour declarer tous changement apres 
     const [client, setClient] = useState<Client | null>(null);
     const [loading, setLoading] = useState(true);
     const [clientId, setClientId] = useState<number | null>(null);
@@ -30,7 +32,7 @@ const ClientDashboard: React.FC = () => {
         };
     
         fetchData();
-    }, [nom]); // Only runs when 'nom' changes
+    }, [nom]); 
     
 
     return (
@@ -43,6 +45,7 @@ const ClientDashboard: React.FC = () => {
                         <a 
                             href={`/clients/${clientId}/missions`} 
                             className="block px-3 py-2 rounded hover:bg-blue-700"
+                            data-testid="mes-missions-link"
                         >
                             Mes Missions
                         </a>
@@ -54,14 +57,14 @@ const ClientDashboard: React.FC = () => {
                </nav>
             </aside>
 
-            {/* Main Content */}
+            {/* Main Contenu */}
             <div className="flex-1 p-8">
                 {/* Header */}
                 <header className="mb-8 flex justify-between items-center">
                     <h1 className="text-3xl font-semibold">Bienvenue sur votre espace client</h1>
                 </header>
 
-                {/* Client Info Card */}
+                {/* information de client */}
                 <div className="bg-white p-6 rounded-lg shadow-lg">
                     <h2 className="text-2xl font-semibold mb-4">Informations Client</h2>
                     {loading ? (

@@ -42,4 +42,21 @@ export class ClientControllerService {
             },
         });
     }
+    /**
+     * @returns Client OK
+     * @throws ApiError
+     */
+    public static findClientByEmail({
+        email,
+    }: {
+        email: string,
+    }): CancelablePromise<Client> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/clients/email/{email}',
+            query: {
+                'email': email,
+            },
+        });
+    }
 }

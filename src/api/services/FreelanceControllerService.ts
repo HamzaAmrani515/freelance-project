@@ -89,6 +89,23 @@ export class FreelanceControllerService {
         });
     }
     /**
+     * @returns Freelancer OK
+     * @throws ApiError
+     */
+    public static getFreelanceByEmail({
+        email,
+    }: {
+        email: string,
+    }): CancelablePromise<Freelancer> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/freelances/email/{email}',
+            path: {
+                'email': email,
+            },
+        });
+    }
+    /**
      * @returns any OK
      * @throws ApiError
      */
