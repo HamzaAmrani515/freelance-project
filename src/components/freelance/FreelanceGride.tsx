@@ -1,10 +1,11 @@
 import React from 'react';
 import { FreelancerRecommendationDTO } from '../../api';
 
+//
 interface FreelanceGrideProps {
     freelances: FreelancerRecommendationDTO[];
 }
-
+//{ freelances }) extrait directement la liste de freelances passée en prop
 const FreelanceGride: React.FC<FreelanceGrideProps> = ({ freelances}) => {
     return (
         <div className="overflow-x-auto shadow-lg rounded-lg bg-white p-4">

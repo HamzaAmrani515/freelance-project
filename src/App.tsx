@@ -5,6 +5,7 @@ import ClientMissionsPage from './pages/mission/ClientMissionsPage';
 
 import LoginPage from './pages/LoginPage';
 import ClientPage from './pages/client/ClientPage'
+import FreelancePage from './pages/freelance/FreelancePage'
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +21,8 @@ const App: React.FC = () => {
                <Route path="/missions/:id" element={<MissionPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/clients/:nom" element={<ClientPage />} />
+                <Route path="/freelance/:nom" element={<FreelancePage />} />
+
                 <Route path="/clients/:id/missions" element={<ClientMissionsPage />} />
 
             </Routes>
