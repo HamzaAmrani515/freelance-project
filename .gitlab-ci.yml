@@ -101,4 +101,4 @@ deploy-job:
     - develop
     - staging
     - master
-    -HamzaBranch
+    - HamzaBranch
