@@ -28,10 +28,10 @@ public class Freelancer {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "freelancer")
+    @OneToMany(mappedBy = "freelancer", fetch = FetchType.LAZY)  // Lazy Loading ici
     private Set<Mission> missions = new HashSet<>();
 
-    @OneToMany(mappedBy = "freelancer")
+    @OneToMany(mappedBy = "freelancer", fetch = FetchType.LAZY)  // Lazy Loading ici
     private Set<Competence> competences;
 
     private Double experience;
@@ -49,4 +49,5 @@ public class Freelancer {
 
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Notification> notifications = new HashSet<>();
+
 }

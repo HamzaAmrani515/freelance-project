@@ -1,6 +1,4 @@
 package com.example.freelance.service.listeners;
-
-
 import com.example.freelance.model.Freelancer;
 import com.example.freelance.model.Mission;
 import com.example.freelance.model.enums.MissionStatut;
@@ -39,7 +37,7 @@ public class MissionListener {
 
         if (mission.getStatut() != MissionStatut.EN_ATTENTE) {
             System.out.println(" Mission is not in EN_ATTENTE status. Skipping notifications.");
-            return ;
+            return;
         }
 
         List<Freelancer> freelancers = freelanceService.getAllAvailableFreelancers();
@@ -49,8 +47,8 @@ public class MissionListener {
         for (Freelancer freelancer : freelancers) {
             System.out.println(" Checking freelancer: " + freelancer.getNom());
 
-            notificationService.createNotification(freelancer.getId(), mission.getId() );
-//            if (freelancerCompetences.containsAll(competences)
+            notificationService.createNotification(freelancer.getId(), mission.getId());
+//            if (freelancer.containsAll(competences)
 //                    && freelanceService.isFreelancerAvailable(freelancer)) {
 //
 //                System.out.println(" Freelancer " + freelancer.getNom() + " matches and is available.");
@@ -58,7 +56,7 @@ public class MissionListener {
 //            } else {
 //                System.out.println(" Freelancer " + freelancer.getNom() + " does not match the required skills or is unavailable.");
 //            }
-        }
+//        }
 
-}
-}
+        }
+    }}
