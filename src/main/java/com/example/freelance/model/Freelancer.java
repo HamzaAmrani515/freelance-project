@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,10 +29,10 @@ public class Freelancer {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "freelancer", fetch = FetchType.LAZY)  // Lazy Loading ici
-    private Set<Mission> missions = new HashSet<>();
+    @OneToMany(mappedBy = "freelancer")
+    private Set<Mission> missions;
 
-    @OneToMany(mappedBy = "freelancer", fetch = FetchType.LAZY)  // Lazy Loading ici
+    @OneToMany(mappedBy = "freelancer")
     private Set<Competence> competences;
 
     private Double experience;
@@ -49,5 +50,6 @@ public class Freelancer {
 
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Notification> notifications = new HashSet<>();
+
 
 }

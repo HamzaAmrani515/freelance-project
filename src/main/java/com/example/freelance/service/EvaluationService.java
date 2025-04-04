@@ -6,6 +6,10 @@ import com.example.freelance.repository.EvaluationRepository;
 import com.example.freelance.repository.MissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,8 +45,7 @@ public Evaluation saveEvaluation(Evaluation evaluation, Long missionId) {
 
     // Associate automatically the client and the freelancer
     evaluation.setMission(mission);
-    evaluation.setClient(mission.getClient());
-    evaluation.setFreelancer(mission.getFreelancer());
+    evaluation.setDateEvaluation(LocalDateTime.now());
 
     return evaluationRepository.save(evaluation);
 }

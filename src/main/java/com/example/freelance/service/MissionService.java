@@ -104,6 +104,6 @@ public class MissionService {
         };
     }
     public List<Mission> getMonitoredMissions() {
-        return missionRepository.findByIdBetween(1410L, 1700L);
+        return missionRepository.findByIdBetween(26750L, 26831L);
     }
 }
