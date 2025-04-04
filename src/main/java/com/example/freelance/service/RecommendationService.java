@@ -67,7 +67,7 @@ public class RecommendationService {
             return Collections.emptyList();
         }
 
-        Map<Long, List<Evaluation>> evalsByFreelancer = evaluationsOnSimilar.stream().collect(Collectors.groupingBy(e -> e.getFreelancer().getId()));
+        Map<Long, List<Evaluation>> evalsByFreelancer = evaluationsOnSimilar.stream().collect(Collectors.groupingBy(e -> e.getMission().getFreelancer().getId()));
         log.info("Regroupement des évaluations par freelance effectué.");
 
         Set<Long> freelancerIds = evalsByFreelancer.keySet();

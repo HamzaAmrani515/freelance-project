@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -23,16 +24,7 @@ public class Evaluation {
     private String commentaire;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateEvaluation;
-
-    @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
-
-    @ManyToOne
-    @JoinColumn(name = "freelancer_id", nullable = false)
-    private Freelancer freelancer;
+    private LocalDateTime dateEvaluation;
 
     @ManyToOne
     @JoinColumn(name = "mission_id", nullable = false)
