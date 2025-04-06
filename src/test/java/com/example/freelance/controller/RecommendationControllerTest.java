@@ -1,6 +1,7 @@
 package com.example.freelance.controller;
 
 import com.example.freelance.dto.FreelancerRecommendationDTO;
+import com.example.freelance.service.RecommendationMissionService;
 import com.example.freelance.service.RecommendationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(RecommendationController.class)
 class RecommendationControllerTest {
+    @MockBean
+private RecommendationMissionService recommendationMissionService;
 
     @Autowired
     private MockMvc mockMvc;

@@ -33,7 +33,7 @@ public class RecommendationService {
     @Autowired
     private EvaluationRepository evaluationRepository;
 
-    private static final Integer MIN_SIMILAR = 3;
+    private Integer MIN_SIMILAR = 3;
 
     public List<FreelancerRecommendationDTO> recommendFreelancersForMission(Long missionId) {
         log.info("Début de la recommandation des freelances pour la mission ID: {}", missionId);

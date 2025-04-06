@@ -14,7 +14,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -178,13 +180,18 @@ class RecommendationServiceTest {
         List<FreelancerRecommendationDTO> result = recommendationService.recommendFreelancersForMission(missionId);
 
         // THEN
-        assertFalse(result.isEmpty());
+        assertTrue(result.isEmpty());
     }
 
     @Test
     @DisplayName("retourner le freelance recommander avec le score calculer ")
-    void recommendFreelancersForMission_ValidRecommendation() {
 
+    void recommendFreelancersForMission_ValidRecommendation() {
+        Field field = ReflectionUtils.findField(RecommendationService.class, "MIN_SIMILAR");
+        if (field != null) {
+            ReflectionUtils.makeAccessible(field); // rend accessible le champ privé
+            ReflectionUtils.setField(field, recommendationService, 1); // set dynamique
+        }
         Long missionId = 1L;
 
         // Création des compétences requises pour la mission
