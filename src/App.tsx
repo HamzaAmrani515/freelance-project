@@ -19,7 +19,7 @@ const App: React.FC = () => {
         <Router>
              <ToastContainer position="top-right" autoClose={3000} />
             <Routes>
-               <Route path="/missions/:id" element={<MissionPage />} />
+               <Route path="/missions/:id/:titre" element={<MissionPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/clients/:nom" element={<ClientPage />} />
                 <Route path="/freelance/:nom" element={<FreelancePage />} />

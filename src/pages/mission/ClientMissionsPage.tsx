@@ -41,7 +41,7 @@ const ClientMissions: React.FC = () => {
                         <div 
                             key={mission.id} 
                             className="bg-white p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition" 
-                            onClick={() => navigate(`/missions/${mission.id}`)}
+                            onClick={() => navigate(`/missions/${mission.id}/${mission.titre}`)}
                             data-testid={`mission-${mission.id}`}
                         >
                             <h2 className="text-xl font-bold mb-2">{mission.titre}</h2>
