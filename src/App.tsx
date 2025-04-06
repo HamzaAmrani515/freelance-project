@@ -10,6 +10,7 @@ import FreelancePage from './pages/freelance/FreelancePage'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { OpenAPI } from './api';
+import FreelanceMissions from './pages/freelance/FreelanceMission';
 
 const App: React.FC = () => {
     OpenAPI.BASE = OpenAPI.BASE = process.env.REACT_APP_BACK_API_URL || 'http://default-api-url.com';
@@ -24,6 +25,7 @@ const App: React.FC = () => {
                 <Route path="/freelance/:nom" element={<FreelancePage />} />
 
                 <Route path="/clients/:id/missions" element={<ClientMissionsPage />} />
+                <Route path="/freelances/:id/missions" element={<FreelanceMissions />} />
 
             </Routes>
         </Router>

@@ -43,12 +43,12 @@ const FreelanceDashboard: React.FC = () => {
                             className="block px-3 py-2 rounded hover:bg-blue-700"
                             data-testid="mes-missions-link"
                         >
-                            Mes Missions
+                            Trouver une mission
                         </a>
                     ) : (
                         <span className="block px-3 py-2 rounded text-gray-400 cursor-not-allowed">
-                            Mes Missions
-                        </span>
+                            Trouver une mission
+                            </span>
                     )}
                 </nav>
             </aside>
