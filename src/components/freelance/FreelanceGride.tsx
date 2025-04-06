@@ -15,6 +15,8 @@ const FreelanceGride: React.FC<FreelanceGrideProps> = ({ freelances}) => {
                     <th className="px-6 py-3 text-sm font-semibold">Nom</th>
                     <th className="px-6 py-3 text-sm font-semibold">Prénom</th>
                     <th className="px-6 py-3 text-sm font-semibold">Score</th>
+                    <th className="px-6 py-3 text-sm font-semibold">profil</th>
+
                 </tr>
                 </thead>
                 <tbody className="text-gray-700">
@@ -26,6 +28,7 @@ const FreelanceGride: React.FC<FreelanceGrideProps> = ({ freelances}) => {
                         <td className="px-6 py-4">{freelance.nom}</td>
                         <td className="px-6 py-4">{freelance.prenom}</td>
                         <td className="px-6 py-4">{freelance.score}</td>
+                        <td className="px-6 py-4">{freelance.profil}</td>
                 
                     </tr>
                 ))}
