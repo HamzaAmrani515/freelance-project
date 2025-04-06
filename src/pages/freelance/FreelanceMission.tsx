@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ClientControllerService, RecommendationControllerService } from "../../api";
+import { RecommendationControllerService } from "../../api";
 import type { Mission } from "../../api/models/Mission";
 
 const FreelanceMissions: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
     const [missions, setMissions] = useState<Mission[]>([]);
     const [loading, setLoading] = useState(true);
 
