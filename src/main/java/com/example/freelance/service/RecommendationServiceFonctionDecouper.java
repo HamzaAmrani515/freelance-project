@@ -24,7 +24,7 @@ public class RecommendationServiceFonctionDecouper {
     private FreelancerRepository freelancerRepository;
     @Autowired
     private EvaluationRepository evaluationRepository;
-    private static final Integer MIN_SIMILAR = 2;
+    private static final Integer MIN_SIMILAR = 1;
 
 
     public List<FreelancerRecommendationDTO> recommendFreelancersForMission(Long missionId) {
@@ -92,7 +92,7 @@ public class RecommendationServiceFonctionDecouper {
 
                 log.info("Freelancer {} - Score calculé: {}", freelancer.getNom(), score);
                 // Dto c'est le format de retoure de mon API
-                recommendations.add(new FreelancerRecommendationDTO(freelancerId, freelancer.getNom(), freelancer.getPrenom(), score));
+                recommendations.add(new FreelancerRecommendationDTO(freelancerId, freelancer.getNom(), freelancer.getPrenom(), score, freelancer.getProfil()));
             }
         }
         // Je tri la liste de recommendation
