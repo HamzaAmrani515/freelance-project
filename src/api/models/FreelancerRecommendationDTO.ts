@@ -7,5 +7,6 @@ export type FreelancerRecommendationDTO = {
     nom?: string;
     prenom?: string;
     score?: number;
+    profil?: string;
 };
 
