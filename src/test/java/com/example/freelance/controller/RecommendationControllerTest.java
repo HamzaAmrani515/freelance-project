@@ -1,6 +1,7 @@
 package com.example.freelance.controller;
 
 import com.example.freelance.dto.FreelancerRecommendationDTO;
+import com.example.freelance.service.RecommendationMissionService;
 import com.example.freelance.service.RecommendationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(RecommendationController.class)
 class RecommendationControllerTest {
+    @MockBean
+private RecommendationMissionService recommendationMissionService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,8 +35,8 @@ class RecommendationControllerTest {
     void testGetRecommendations_ReturnsList() throws Exception {
         // GIVEN
         Long missionId = 1L;
-        FreelancerRecommendationDTO recommendation1 = new FreelancerRecommendationDTO(10L, "Doe", "John", 15);
-        FreelancerRecommendationDTO recommendation2 = new FreelancerRecommendationDTO(11L, "Smith", "Jane", 12);
+        FreelancerRecommendationDTO recommendation1 = new FreelancerRecommendationDTO(10L, "Doe", "John", 15, "dev java");
+        FreelancerRecommendationDTO recommendation2 = new FreelancerRecommendationDTO(11L, "Smith", "Jane", 12, "devOps");
         List<FreelancerRecommendationDTO> recommendations = List.of(recommendation1, recommendation2);
         when(recommendationService.recommendFreelancersForMission(missionId)).thenReturn(recommendations);
 

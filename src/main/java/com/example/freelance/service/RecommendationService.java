@@ -33,7 +33,7 @@ public class RecommendationService {
     @Autowired
     private EvaluationRepository evaluationRepository;
 
-    private static final Integer MIN_SIMILAR = 1;
+    private Integer MIN_SIMILAR = 2;
 
     public List<FreelancerRecommendationDTO> recommendFreelancersForMission(Long missionId) {
         log.info("Début de la recommandation des freelances pour la mission ID: {}", missionId);
@@ -112,7 +112,7 @@ public class RecommendationService {
 
                 log.info("Freelancer {} - Score calculé: {}", freelancer.getNom(), score);
                 // Dto c'est le format de retoure de mon API
-                recommendations.add(new FreelancerRecommendationDTO(freelancerId, freelancer.getNom(), freelancer.getPrenom(), score));
+                recommendations.add(new FreelancerRecommendationDTO(freelancerId, freelancer.getNom(), freelancer.getPrenom(), score, freelancer.getProfil()));
             }
         }
        // Je tri la liste de recommendation

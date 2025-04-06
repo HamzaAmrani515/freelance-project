@@ -10,5 +10,6 @@ public class FreelancerRecommendationDTO {
     private String nom;
     private String prenom;
     private double score;
+    private String profil;
 }
 
