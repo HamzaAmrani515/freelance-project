@@ -35,8 +35,8 @@ private RecommendationMissionService recommendationMissionService;
     void testGetRecommendations_ReturnsList() throws Exception {
         // GIVEN
         Long missionId = 1L;
-        FreelancerRecommendationDTO recommendation1 = new FreelancerRecommendationDTO(10L, "Doe", "John", 15);
-        FreelancerRecommendationDTO recommendation2 = new FreelancerRecommendationDTO(11L, "Smith", "Jane", 12);
+        FreelancerRecommendationDTO recommendation1 = new FreelancerRecommendationDTO(10L, "Doe", "John", 15, "dev java");
+        FreelancerRecommendationDTO recommendation2 = new FreelancerRecommendationDTO(11L, "Smith", "Jane", 12, "devOps");
         List<FreelancerRecommendationDTO> recommendations = List.of(recommendation1, recommendation2);
         when(recommendationService.recommendFreelancersForMission(missionId)).thenReturn(recommendations);
 
