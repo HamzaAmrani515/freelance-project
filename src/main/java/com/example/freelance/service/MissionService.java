@@ -25,7 +25,7 @@ public class MissionService {
     @Autowired
     private FreelanceService freelanceService;
 
-//    // Crée deux missions de test
+//
 //    public void createTestMissions() {
 //        // Mission 1
 //        Mission mission1 = new Mission();
@@ -35,17 +35,17 @@ public class MissionService {
 //        mission1.setDuree("3 mois");
 //        mission1.setStatut(MissionStatut.EN_ATTENTE);
 //
-//        // Récupération d'un client valide
+//
 //        Client client1 = clientRepository.findById(351L).orElseThrow(() -> new RuntimeException("Client non trouvé"));
 //        mission1.setClient(client1);
 //
-//        // Récupération des compétences valides
+//
 //        Set<Competence> competences1 = new HashSet<>();
 //        Competence competence1 = competenceRepository.findById(2056L).orElseThrow(() -> new RuntimeException("Compétence non trouvée"));
 //        competences1.add(competence1);
 //        mission1.setCompetences(competences1);
 //
-//        // Sauvegarde de la mission dans la base de données
+//
 //        missionRepository.save(mission1);
 //
 //        // Mission 2
@@ -56,17 +56,17 @@ public class MissionService {
 //        mission2.setDuree("9 mois");
 //        mission2.setStatut(MissionStatut.EN_ATTENTE);
 //
-//        // Récupération d'un autre client valide
+//
 //        Client client2 = clientRepository.findById(352L).orElseThrow(() -> new RuntimeException("Client non trouvé"));
 //        mission2.setClient(client2);
 //
-//        // Récupération des compétences valides
+//
 //        Set<Competence> competences2 = new HashSet<>();
 //        Competence competence2 = competenceRepository.findById(2057L).orElseThrow(() -> new RuntimeException("Compétence non trouvée"));
 //        competences2.add(competence2);
 //        mission2.setCompetences(competences2);
 //
-//        // Sauvegarde de la mission dans la base de données
+//
 //        missionRepository.save(mission2);
 //    }
     public Mission saveMission(Mission m) {
@@ -84,7 +84,7 @@ public class MissionService {
         Mission mission = missionRepository.findById(missionId)
                 .orElseThrow(() -> new RuntimeException("Mission non trouvée"));
 
-        // Vérifier si la transition est valide
+
         if (!isValidStatusTransition(mission.getStatut(), newStatut)) {
             throw new IllegalStateException("Changement de statut non autorisé");
         }
@@ -102,7 +102,7 @@ public class MissionService {
         };
     }
     public List<Mission> getMonitoredMissions() {
-        return missionRepository.findByIdBetween(32794L, 32845L);
+        return missionRepository.findByIdBetween(39970L,40045L);
     }
 
 }
