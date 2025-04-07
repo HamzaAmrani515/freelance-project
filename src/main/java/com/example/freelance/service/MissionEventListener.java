@@ -23,7 +23,7 @@ public class MissionEventListener {
         this.notificationService = notificationService;
     }
 
-    @Async // Exécuté en arrière-plan pour éviter de bloquer le processus principal
+    @Async
     @EventListener
     public void handleMissionCreatedEvent(MissionCreatedEvent event) {
         Mission mission = event.getMission();

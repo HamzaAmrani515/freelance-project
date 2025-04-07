@@ -19,11 +19,11 @@ public class EvaluationService {
         this.evaluationRepository = evaluationRepository;
     }
 //    public Evaluation saveEvaluation(Evaluation evaluation, Long missionId) {
-//        // Vérifier si la mission existe
+//
 //        Mission mission = missionRepository.findById(missionId)
 //                .orElseThrow(() -> new RuntimeException("Mission non trouvée"));
 //
-//        // Associer automatiquement le client et le freelancer
+//
 //        evaluation.setMission(mission);
 //        evaluation.setClient(mission.getClient());
 //        evaluation.setFreelancer(mission.getFreelancer());
@@ -31,7 +31,7 @@ public class EvaluationService {
 //        return evaluationRepository.save(evaluation);
 //    }
 public Evaluation saveEvaluation(Evaluation evaluation, Long missionId) {
-    // Check if the mission exists
+
     Mission mission = missionRepository.findById(missionId)
             .orElseThrow(() -> new RuntimeException("Mission non trouvée"));
 
