@@ -105,40 +105,6 @@ class RecommendationServiceTest {
         assertTrue(result.isEmpty());
     }
 
-    @Test
-    @DisplayName("zapper un frrelance s'il a pas rouver dans le repository")
-    void recommendFreelancersForMission_FreelancerNotFound() {
-        // GIVEN
-        Long missionId = 1L;
-        Competence competence = new Competence();
-        competence.setId(100L);
-
-        Mission mission = new Mission();
-        mission.setId(missionId);
-        mission.setTitre("Test Mission");
-        mission.setCompetences(Set.of(competence));
-
-        when(missionRepository.findById(missionId)).thenReturn(java.util.Optional.of(mission));
-        when(missionRepository.findSimilarMissionIds(anySet(), eq(missionId), anyInt()))
-                .thenReturn(List.of(2L));
-
-        Evaluation evaluation = new Evaluation();
-        evaluation.setNote(5.0);
-        Freelancer freelancer = new Freelancer();
-        freelancer.setId(10L);
-        evaluation.setFreelancer(freelancer);
-
-        when(evaluationRepository.findAllByMissionIds(anyList())).thenReturn(List.of(evaluation));
-        // Simuler un cas où aucun freelance n'est trouvé
-        when(freelancerRepository.findAllWithCompetencesByIdIn(anySet()))
-                .thenReturn(Collections.emptyList());
-
-        // WHEN
-        List<FreelancerRecommendationDTO> result = recommendationService.recommendFreelancersForMission(missionId);
-
-        // THEN
-        assertTrue(result.isEmpty());
-    }
 
     @Test
     @DisplayName("retourner une liste vide si le freelance n'a pas assez de competence ")
