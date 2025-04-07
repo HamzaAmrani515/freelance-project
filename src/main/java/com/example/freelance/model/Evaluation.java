@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 @Entity
 @Table(name = "evaluations")
@@ -29,4 +29,6 @@ public class Evaluation {
     @ManyToOne
     @JoinColumn(name = "mission_id", nullable = false)
     private Mission mission;
+
+
 }
