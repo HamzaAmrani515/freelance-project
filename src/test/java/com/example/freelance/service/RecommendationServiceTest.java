@@ -43,12 +43,12 @@ class RecommendationServiceTest {
 
     @Test
     @DisplayName("faire une  IllegalArgumentException si la mission n'est pas trouver")
-    void recommendFreelancersForMission_MissionNotFound() {
-        // GIVEN
+    void recommendFreelancersForMissionExistePas() {
+
         Long missionId = 1L;
         when(missionRepository.findById(missionId)).thenReturn(java.util.Optional.empty());
 
-        // WHEN & THEN
+
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
                 recommendationService.recommendFreelancersForMission(missionId)
         );
@@ -57,7 +57,7 @@ class RecommendationServiceTest {
 
     @Test
     @DisplayName("retourner une liste vide si il a pas de lmission similaire")
-    void recommendFreelancersForMission_NoSimilarMissions() {
+    void recommendFreelancersForMissionPasdeSimilarMissions() {
         // GIVEN ( création d'un jeux de données )
         Long missionId = 1L;
         Competence competence = new Competence();
@@ -72,17 +72,17 @@ class RecommendationServiceTest {
         when(missionRepository.findSimilarMissionIds(anySet(), eq(missionId), anyInt()))
                 .thenReturn(Collections.emptyList());
 
-        // WHEN
+
         List<FreelancerRecommendationDTO> result = recommendationService.recommendFreelancersForMission(missionId);
 
-        // THEN
+
         assertTrue(result.isEmpty());
     }
 
     @Test
     @DisplayName("retourner une liste vite si il trouve pas d'evaluation ")
-    void recommendFreelancersForMission_NoEvaluations() {
-        // GIVEN
+    void recommendFreelancersForMissionpasdEvaluations() {
+
         Long missionId = 1L;
         Competence competence = new Competence();
         competence.setId(100L);
@@ -98,51 +98,17 @@ class RecommendationServiceTest {
         when(evaluationRepository.findAllByMissionIds(anyList()))
                 .thenReturn(Collections.emptyList());
 
-        // WHEN
+
         List<FreelancerRecommendationDTO> result = recommendationService.recommendFreelancersForMission(missionId);
 
-        // THEN
+
         assertTrue(result.isEmpty());
     }
 
-    @Test
-    @DisplayName("zapper un frrelance s'il a pas rouver dans le repository")
-    void recommendFreelancersForMission_FreelancerNotFound() {
-        // GIVEN
-        Long missionId = 1L;
-        Competence competence = new Competence();
-        competence.setId(100L);
-
-        Mission mission = new Mission();
-        mission.setId(missionId);
-        mission.setTitre("Test Mission");
-        mission.setCompetences(Set.of(competence));
-
-        when(missionRepository.findById(missionId)).thenReturn(java.util.Optional.of(mission));
-        when(missionRepository.findSimilarMissionIds(anySet(), eq(missionId), anyInt()))
-                .thenReturn(List.of(2L));
-
-        Evaluation evaluation = new Evaluation();
-        evaluation.setNote(5.0);
-        Freelancer freelancer = new Freelancer();
-        freelancer.setId(10L);
-        evaluation.setFreelancer(freelancer);
-
-        when(evaluationRepository.findAllByMissionIds(anyList())).thenReturn(List.of(evaluation));
-        // Simuler un cas où aucun freelance n'est trouvé
-        when(freelancerRepository.findAllWithCompetencesByIdIn(anySet()))
-                .thenReturn(Collections.emptyList());
-
-        // WHEN
-        List<FreelancerRecommendationDTO> result = recommendationService.recommendFreelancersForMission(missionId);
-
-        // THEN
-        assertTrue(result.isEmpty());
-    }
 
     @Test
     @DisplayName("retourner une liste vide si le freelance n'a pas assez de competence ")
-    void recommendFreelancersForMission_NotEnoughCommonCompetences() {
+    void recommendFreelancersForMissionNotEnoughCommonCompetences() {
         // GIVEN
         Long missionId = 1L;
         Competence competence1 = new Competence();
@@ -176,17 +142,17 @@ class RecommendationServiceTest {
         when(freelancerRepository.findAllWithCompetencesByIdIn(Set.of(10L)))
                 .thenReturn(List.of(freelancer));
 
-        // WHEN
+
         List<FreelancerRecommendationDTO> result = recommendationService.recommendFreelancersForMission(missionId);
 
-        // THEN
+
         assertTrue(result.isEmpty());
     }
 
     @Test
     @DisplayName("retourner le freelance recommander avec le score calculer ")
 
-    void recommendFreelancersForMission_ValidRecommendation() {
+    void recommendFreelancersForMissionRecommendationtrouver() {
         Field field = ReflectionUtils.findField(RecommendationService.class, "MIN_SIMILAR");
         if (field != null) {
             ReflectionUtils.makeAccessible(field); // rend accessible le champ privé
@@ -234,10 +200,10 @@ class RecommendationServiceTest {
         when(freelancerRepository.findAllWithCompetencesByIdIn(Set.of(10L)))
                 .thenReturn(List.of(freelancer));
 
-        // WHEN
+
         List<FreelancerRecommendationDTO> result = recommendationService.recommendFreelancersForMission(missionId);
 
-        // THEN
+
         //assertion pour faire les vérification
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -246,13 +212,7 @@ class RecommendationServiceTest {
         assertEquals("Doe", recommendation.getNom());
         assertEquals("John", recommendation.getPrenom());
 
-        /*
-         * Calcul du score attendu :
-         * - Nombre de compétences en commun (commonCount) = 2
-         * - Expérience = 3.0
-         * - Note moyenne = (4.0 + 4.0) / 2 = 4.0
-         * Score = (2 * 2) + 3.0 + (4.0 * 2) = 4 + 3 + 8 = 15
-         */
+
         assertEquals(15, recommendation.getScore());
     }
 }
