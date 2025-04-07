@@ -8,10 +8,8 @@ import com.example.freelance.repository.CompetenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 @Service
 @RequiredArgsConstructor
@@ -104,6 +102,7 @@ public class MissionService {
         };
     }
     public List<Mission> getMonitoredMissions() {
-        return missionRepository.findByIdBetween(26750L, 26831L);
+        return missionRepository.findByIdBetween(32794L, 32845L);
     }
+
 }

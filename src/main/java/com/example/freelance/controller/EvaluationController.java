@@ -20,7 +20,7 @@ public class EvaluationController {
     @PostMapping("/add")
     public ResponseEntity<Evaluation> createEvaluation(
             @RequestBody Evaluation evaluation,
-            @RequestParam Long missionId) {  // On passe seulement l'ID de la mission
+            @RequestParam Long missionId) {
 
         Evaluation savedEvaluation = evaluationService.saveEvaluation(evaluation, missionId);
         return ResponseEntity.ok(savedEvaluation);
