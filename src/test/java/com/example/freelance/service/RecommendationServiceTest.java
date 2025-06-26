@@ -106,7 +106,7 @@ class RecommendationServiceTest {
     @Test
     @DisplayName("Should skip a freelancer if it is not found in the repository")
     void recommendFreelancersForMission_FreelancerNotFound() {
-        // GIVEN
+
         Long missionId = 1L;
         Competence competence = new Competence();
         competence.setId(100L);
@@ -127,11 +127,11 @@ class RecommendationServiceTest {
         evaluation.setFreelancer(freelancer);
 
         when(evaluationRepository.findAllByMissionIds(anyList())).thenReturn(List.of(evaluation));
-        // Simuler un cas où aucun freelance n'est trouvé
+
         when(freelancerRepository.findAllWithCompetencesByIdIn(anySet()))
                 .thenReturn(Collections.emptyList());
 
-        // WHEN
+
         List<FreelancerRecommendationDTO> result = recommendationService.recommendFreelancersForMission(missionId);
 
         // THEN

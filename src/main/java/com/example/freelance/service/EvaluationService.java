@@ -18,18 +18,6 @@ public class EvaluationService {
     public EvaluationService(EvaluationRepository evaluationRepository) {
         this.evaluationRepository = evaluationRepository;
     }
-//    public Evaluation saveEvaluation(Evaluation evaluation, Long missionId) {
-//
-//        Mission mission = missionRepository.findById(missionId)
-//                .orElseThrow(() -> new RuntimeException("Mission non trouvée"));
-//
-//
-//        evaluation.setMission(mission);
-//        evaluation.setClient(mission.getClient());
-//        evaluation.setFreelancer(mission.getFreelancer());
-//
-//        return evaluationRepository.save(evaluation);
-//    }
 public Evaluation saveEvaluation(Evaluation evaluation, Long missionId) {
 
     Mission mission = missionRepository.findById(missionId)

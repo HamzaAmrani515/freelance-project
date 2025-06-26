@@ -1,9 +1,7 @@
 package com.example.freelance.repository;
 
 import com.example.freelance.model.Freelancer;
-import com.example.freelance.model.Mission;
 import com.example.freelance.model.enums.FreelancerStatus;
-import com.example.freelance.model.enums.MissionStatut;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
