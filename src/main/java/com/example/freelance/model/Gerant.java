@@ -24,5 +24,5 @@ public class Gerant {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // Pour l’instant, pas d’attribut supplémentaire.
+
 }

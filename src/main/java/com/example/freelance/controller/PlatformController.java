@@ -1,6 +1,4 @@
 package com.example.freelance.controller;
-import com.example.freelance.model.Freelancer;
-import com.example.freelance.model.Mission;
 import com.example.freelance.model.Platform;
 import com.example.freelance.service.PlatformService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +23,7 @@ public class PlatformController {
         return platformService.getPlatformById(id);
     }
 
-//    @PostMapping("/{platformId}/addMission")
-//    public Platform addMission(@PathVariable Long platformId) {
-//        return platformService.addMission(platformId);
-//    }
 
-/*
-    @PostMapping("/{platformId}/addFreelancer")
-    public Platform addFreelancer(@PathVariable Long platformId, @RequestBody Freelancer freelancer) {
-        return platformService.addFreelancer(platformId, freelancer);
-    }
-* */
 
 
 }
