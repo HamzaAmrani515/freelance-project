@@ -48,15 +48,7 @@ public class MissionListener {
             System.out.println(" Checking freelancer: " + freelancer.getNom());
 
             notificationService.createNotification(freelancer.getId(), mission.getId());
-//            if (freelancer.containsAll(competences)
-//                    && freelanceService.isFreelancerAvailable(freelancer)) {
-//
-//                System.out.println(" Freelancer " + freelancer.getNom() + " matches and is available.");
-//                notificationService.sendNotification(freelancer, mission);
-//            } else {
-//                System.out.println(" Freelancer " + freelancer.getNom() + " does not match the required skills or is unavailable.");
-//            }
-//        }
+
 
         }
     }}
