@@ -8,50 +8,36 @@ import com.example.freelance.model.Mission;
 import com.example.freelance.repository.EvaluationRepository;
 import com.example.freelance.repository.FreelancerRepository;
 import com.example.freelance.repository.MissionRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * J'ai utiliser chatgpt
- * Service de recommandation permettant de proposer des freelances
- * en fonction d'une mission donnée.
- *
- * @author Assala Hamoudi
- */
-@Service
 @Slf4j
-public class RecommendationService {
-
+@Service
+public class RecommendationServiceFonctionDecouper {
     @Autowired
     private MissionRepository missionRepository;
     @Autowired
     private FreelancerRepository freelancerRepository;
     @Autowired
     private EvaluationRepository evaluationRepository;
+    private static final Integer MIN_SIMILAR = 1;
 
-    private Integer MIN_SIMILAR = 2;
 
     public List<FreelancerRecommendationDTO> recommendFreelancersForMission(Long missionId) {
         log.info("Début de la recommandation des freelances pour la mission ID: {}", missionId);
 
-        Mission targetMission = missionRepository.findById(missionId).orElseThrow(() -> {
-            log.error("Mission non trouvée avec ID: {}", missionId);
-            return new IllegalArgumentException("Mission non trouvée : " + missionId);
-        });
-        log.info("Mission récupérée : {}", targetMission.getTitre());
+        // 1. Récupération de la mission
+        Mission targetMission = getMissionById(missionId);
 
-
-        //On extrait les compétences requises pour la mission sous forme d’ID (targetCompetenceIds)(stock les id des competence dans un set).
-        Set<Long> targetCompetenceIds = targetMission.getCompetences().stream().map(Competence::getId).collect(Collectors.toSet());
+        Set<Long> targetCompetenceIds = getTargetCompetenceIds(targetMission);
         log.info("Compétences de la mission cible récupérées: {}", targetCompetenceIds);
 
+        List<Long> similarMissionIds = getSimilarMissionIds(targetCompetenceIds, missionId);
 
-
-        List<Long> similarMissionIds = missionRepository.findSimilarMissionIds(targetCompetenceIds, missionId, MIN_SIMILAR);
         log.info("{} missions similaires trouvées pour la mission ID: {}", similarMissionIds.size(), missionId);
 
         if (similarMissionIds.isEmpty()) {
@@ -59,15 +45,14 @@ public class RecommendationService {
             return Collections.emptyList();
         }
 
-        List<Evaluation> evaluationsOnSimilar = evaluationRepository.findAllByMissionIds(similarMissionIds);
+        List<Evaluation> evaluationsOnSimilar = getEvaluationsOnSimilar(similarMissionIds);
         log.info("{} évaluations récupérées pour les missions similaires.", evaluationsOnSimilar.size());
 
         if (evaluationsOnSimilar.isEmpty()) {
             log.warn("Aucune évaluation trouvée, arrêt du processus de recommandation.");
             return Collections.emptyList();
         }
-
-        Map<Long, List<Evaluation>> evalsByFreelancer = evaluationsOnSimilar.stream().collect(Collectors.groupingBy(e -> e.getMission().getFreelancer().getId()));
+        Map<Long, List<Evaluation>> evalsByFreelancer = getEvalsByFreelancer(evaluationsOnSimilar);
         log.info("Regroupement des évaluations par freelance effectué.");
 
         Set<Long> freelancerIds = evalsByFreelancer.keySet();
@@ -75,10 +60,8 @@ public class RecommendationService {
             log.warn("Aucun freelance évalué, arrêt du processus de recommandation.");
             return Collections.emptyList();
         }
-
-        List<Freelancer> freelancers = freelancerRepository.findAllWithCompetencesByIdIn(freelancerIds);
+        List<Freelancer> freelancers= getFreelancers(freelancerIds);
         log.info("{} freelances récupérés avec leurs compétences.", freelancers.size());
-//map les freelance     avec leurs Id
         Map<Long, Freelancer> freelancerMap = freelancers.stream().collect(Collectors.toMap(Freelancer::getId, f -> f));
 
         List<FreelancerRecommendationDTO> recommendations = new ArrayList<>();
@@ -112,10 +95,41 @@ public class RecommendationService {
                 recommendations.add(new FreelancerRecommendationDTO(freelancerId, freelancer.getNom(), freelancer.getPrenom(), score, freelancer.getProfil()));
             }
         }
-       // Je tri la liste de recommendation
+        // Je tri la liste de recommendation
         recommendations.sort(Comparator.comparingDouble(FreelancerRecommendationDTO::getScore).reversed());
         log.info("Recommandation terminée. {} freelances recommandés avec les id {} .", recommendations.size(), recommendations.stream().map(FreelancerRecommendationDTO::getFreelancerId).toList());
 
         return recommendations;
     }
+
+    private Mission getMissionById(Long missionId) {
+        return missionRepository.findById(missionId).orElseThrow(() -> {
+            log.error("Mission non trouvée avec ID: {}", missionId);
+            return new IllegalArgumentException("Mission non trouvée : " + missionId);
+        });
+    }
+
+    private Set<Long> getTargetCompetenceIds(Mission targetMission) {
+        return targetMission.getCompetences().stream().map(Competence::getId).collect(Collectors.toSet());
+    }
+
+    private List<Long> getSimilarMissionIds(Set<Long> targetCompetenceIds, Long missionId){
+        return missionRepository.findSimilarMissionIds(targetCompetenceIds, missionId, MIN_SIMILAR);
+    }
+
+    private  List<Evaluation> getEvaluationsOnSimilar(List<Long> similarMissionIds){
+        return evaluationRepository.findAllByMissionIds(similarMissionIds);
+    }
+
+    private Map<Long, List<Evaluation>> getEvalsByFreelancer(List<Evaluation> evaluationsOnSimilar ){
+        return evaluationsOnSimilar.stream().collect(Collectors.groupingBy(e -> e.getFreelancer().getId()));
+    }
+
+    private List<Freelancer> getFreelancers(Set<Long> freelancerIds){
+        return freelancerRepository.findAllWithCompetencesByIdIn(freelancerIds);
+    }
+
+
 }
+
+
