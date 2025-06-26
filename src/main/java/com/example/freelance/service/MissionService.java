@@ -25,50 +25,7 @@ public class MissionService {
     @Autowired
     private FreelanceService freelanceService;
 
-//
-//    public void createTestMissions() {
-//        // Mission 1
-//        Mission mission1 = new Mission();
-//        mission1.setTitre("Développement d'une application mobile");
-//        mission1.setDescription("Demo avec prof de code .");
-//        mission1.setBudget(15000.00);
-//        mission1.setDuree("3 mois");
-//        mission1.setStatut(MissionStatut.EN_ATTENTE);
-//
-//
-//        Client client1 = clientRepository.findById(351L).orElseThrow(() -> new RuntimeException("Client non trouvé"));
-//        mission1.setClient(client1);
-//
-//
-//        Set<Competence> competences1 = new HashSet<>();
-//        Competence competence1 = competenceRepository.findById(2056L).orElseThrow(() -> new RuntimeException("Compétence non trouvée"));
-//        competences1.add(competence1);
-//        mission1.setCompetences(competences1);
-//
-//
-//        missionRepository.save(mission1);
-//
-//        // Mission 2
-//        Mission mission2 = new Mission();
-//        mission2.setTitre("Développement d'un site e-commerce");
-//        mission2.setDescription("Demo avec le prof .");
-//        mission2.setBudget(30000.00);
-//        mission2.setDuree("9 mois");
-//        mission2.setStatut(MissionStatut.EN_ATTENTE);
-//
-//
-//        Client client2 = clientRepository.findById(352L).orElseThrow(() -> new RuntimeException("Client non trouvé"));
-//        mission2.setClient(client2);
-//
-//
-//        Set<Competence> competences2 = new HashSet<>();
-//        Competence competence2 = competenceRepository.findById(2057L).orElseThrow(() -> new RuntimeException("Compétence non trouvée"));
-//        competences2.add(competence2);
-//        mission2.setCompetences(competences2);
-//
-//
-//        missionRepository.save(mission2);
-//    }
+
     public Mission saveMission(Mission m) {
         Mission mission = missionRepository.save(m);
         List<Freelancer> availableFreelancers = freelanceService.getAllAvailableFreelancers();
@@ -102,7 +59,8 @@ public class MissionService {
         };
     }
     public List<Mission> getMonitoredMissions() {
-        return missionRepository.findByIdBetween(39970L,40045L);
+        //return missionRepository.findByIdBetween(41782L,41830L);
+        return missionRepository.findByIdBetween(42194L,42239L);
     }
 
 }

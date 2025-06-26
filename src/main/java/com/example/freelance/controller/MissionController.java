@@ -1,7 +1,6 @@
 package com.example.freelance.controller;
 
 import com.example.freelance.model.Mission;
-import com.example.freelance.model.MissionFreelance;
 import com.example.freelance.model.enums.MissionStatut;
 import com.example.freelance.service.FreelanceService;
 import com.example.freelance.service.MissionService;

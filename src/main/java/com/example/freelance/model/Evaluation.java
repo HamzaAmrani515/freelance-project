@@ -30,5 +30,7 @@ public class Evaluation {
     @JoinColumn(name = "mission_id", nullable = false)
     private Mission mission;
 
+    @Column(length = 2000)
+    private String detail;
 
 }

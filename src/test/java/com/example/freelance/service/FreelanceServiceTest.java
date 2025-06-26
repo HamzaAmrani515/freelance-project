@@ -24,33 +24,33 @@ public class FreelanceServiceTest {
 
     @Test
     public void testFreelancerIsAvailable() {
-        // Arrange
+
         Freelancer freelancer = new Freelancer();
-        freelancer.setId(1L);  // Setting the freelancer ID
+        freelancer.setId(1L);
 
         when(missionFreelanceRepository.findByFreelancerId(freelancer.getId())).thenReturn(Collections.emptyList());
 
-        // Act
+
         boolean result = freelanceService.isFreelancerAvailable(freelancer);
 
-        // Assert
+
         assertTrue(result, "Freelancer should be available.");
     }
 
     @Test
     public void testFreelancerIsNotAvailable() {
-        // Arrange
+
         Freelancer freelancer = new Freelancer();
         freelancer.setId(1L);
 
-        // Simulate that the freelancer is already linked to a mission
+
         MissionFreelance missionFreelance = new MissionFreelance();
         when(missionFreelanceRepository.findByFreelancerId(freelancer.getId())).thenReturn(Collections.singletonList(missionFreelance));
 
-        // Act
+
         boolean result = freelanceService.isFreelancerAvailable(freelancer);
 
-        // Assert
+
         assertFalse(result, "Freelancer should not be available.");
     }
 }
