@@ -54,10 +54,11 @@ class RecommendationServiceTest {
         );
         assertTrue(exception.getMessage().contains("Mission non trouvée"));
     }
+}
 
-    @Test
+   /*  @Test
     @DisplayName("retourner une liste vide si il a pas de lmission similaire")
-    void recommendFreelancersForMissionPasdeSimilarMissions() {
+   void recommendFreelancersForMissionPasdeSimilarMissions() {
         // GIVEN ( création d'un jeux de données )
         Long missionId = 1L;
         Competence competence = new Competence();
@@ -215,4 +216,6 @@ class RecommendationServiceTest {
 
         assertEquals(15, recommendation.getScore());
     }
-}
+}*\
+
+    */

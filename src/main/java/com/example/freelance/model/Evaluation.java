@@ -1,10 +1,12 @@
 package com.example.freelance.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "evaluations")
@@ -21,18 +23,14 @@ public class Evaluation {
     @Column(length = 2000)
     private String commentaire;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateEvaluation;
-
-    @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
-
-    @ManyToOne
-    @JoinColumn(name = "freelancer_id", nullable = false)
-    private Freelancer freelancer;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dateEvaluation;
 
     @ManyToOne
     @JoinColumn(name = "mission_id", nullable = false)
     private Mission mission;
+
+    @Column(length = 2000)
+    private String detail;
+
 }

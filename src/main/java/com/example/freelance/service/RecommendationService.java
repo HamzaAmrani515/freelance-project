@@ -49,10 +49,7 @@ public class RecommendationService {
         Set<Long> targetCompetenceIds = targetMission.getCompetences().stream().map(Competence::getId).collect(Collectors.toSet());
         log.info("Compétences de la mission cible récupérées: {}", targetCompetenceIds);
 
-       /* Set<Long> x = new HashSet<>();
-        for (Competence competence : targetMission.getCompetences()) {
-            x.add(competence.getId());
-        }*/
+
 
         List<Long> similarMissionIds = missionRepository.findSimilarMissionIds(targetCompetenceIds, missionId, MIN_SIMILAR);
         log.info("{} missions similaires trouvées pour la mission ID: {}", similarMissionIds.size(), missionId);
@@ -70,7 +67,7 @@ public class RecommendationService {
             return Collections.emptyList();
         }
 
-        Map<Long, List<Evaluation>> evalsByFreelancer = evaluationsOnSimilar.stream().collect(Collectors.groupingBy(e -> e.getFreelancer().getId()));
+        Map<Long, List<Evaluation>> evalsByFreelancer = evaluationsOnSimilar.stream().collect(Collectors.groupingBy(e -> e.getMission().getFreelancer().getId()));
         log.info("Regroupement des évaluations par freelance effectué.");
 
         Set<Long> freelancerIds = evalsByFreelancer.keySet();

@@ -2,6 +2,7 @@ package com.example.freelance.model;
 
 
 import com.example.freelance.model.enums.MissionStatut;
+import com.example.freelance.service.listeners.MissionListener;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "missions")
+@EntityListeners(MissionListener.class)
 @Data
 @NoArgsConstructor
 public class Mission {
@@ -33,14 +35,19 @@ public class Mission {
     @Column(nullable = false)
     private MissionStatut statut;
 
-    // Relation avec Client (une mission a un seul client)
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @ManyToOne
+    @JoinColumn(name = "freelancer_id", nullable = true)
+    private Freelancer freelancer;
 
-    // Relation many-to-many avec Competence
-    @ManyToMany
-    @JoinTable(name = "mission_competences", joinColumns = @JoinColumn(name = "mission_id"), inverseJoinColumns = @JoinColumn(name = "competence_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "mission_competences",
+            joinColumns = @JoinColumn(name = "mission_id"),
+            inverseJoinColumns = @JoinColumn(name = "competence_id")
+    )
     private Set<Competence> competences = new HashSet<>();
 }
