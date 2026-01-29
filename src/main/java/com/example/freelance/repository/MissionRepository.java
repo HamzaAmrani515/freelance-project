@@ -30,21 +30,7 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
         """)
     List<Long> findSimilarMissionIds(@Param("targetCompetenceIds") Set<Long> compIds, @Param("missionId") Long missionId, @Param("similar") int similar);
 
-    List<Mission> findTop50ByClientIdAndStatut(Long clientId, MissionStatut statut);
+    List<Mission> findAllByStatut(MissionStatut statut);
 
-    @Query(value = """
-            select m.id
-                from missions m
-                join mission_competences mc ON  m.id = mc.mission_id
-                where m.statut = 'EN_ATTENTE' and mc.competence_id in(
-                select x.competence_id from freelancer_competences x where x.freelancer_id = :freelanceId
-                )
-                 group by m.id
-                having count(distinct mc.competence_id)>= :similar
-        """,nativeQuery = true)
-    List<Long> findSimilarMissionIdF(Long freelanceId, Integer similar);
-
-
-
-
+    List<Mission> findByIdBetween(Long startId, Long endId);
 }

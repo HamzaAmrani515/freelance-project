@@ -33,9 +33,6 @@ public class FreelanceService {
     public Freelancer getFreelanceById(Long id) {
         return freelanceRepository.findById(id).orElse(null);
     }
-    public Freelancer getFreelanceByEmail(String email) {
-        return freelanceRepository.findByEmail(email);
-    }
 
     
     public Freelancer saveFreelance(Freelancer freelance) {
