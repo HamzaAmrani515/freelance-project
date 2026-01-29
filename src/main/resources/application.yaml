@@ -1,13 +1,25 @@
 spring:
   datasource:
-    url: jdbc:postgresql://172.31.253.115:5432/dev_freelance
+    url: jdbc:postgresql://172.31.253.108:5432/dev_freelance
     username: dev_freelance_user
     password: freelance
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    root: INFO
+    com.example.freelance: DEBUG  # Remplace par ton package si besoin
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: null
+
+
+server:
+  port: 9091

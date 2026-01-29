@@ -31,27 +31,43 @@ public class RecommendationMissionService {
 
 
     public List<Mission> recommendMissionForFreelance(Long freelanceId) {
-        log.info("Début de la recommandation des mission pour les freelance ID: {}", freelanceId);
+        log.info("Début de la recommandation des missions pour le freelance ID: {}", freelanceId);
 
+        // 1. Récupération du freelance
         Freelancer targetFreelance = freelancerRepository.findById(freelanceId).orElseThrow(() -> {
-            log.error("Mission non trouvée avec ID: {}", freelanceId);
+            log.error("Freelance non trouvée avec ID: {}", freelanceId);
             return new IllegalArgumentException("Freelance non trouvée : " + freelanceId);
         });
-        log.info("Mission récupérée : {}", targetFreelance.getNom());
+        log.info("Freelance récupéré : {}", targetFreelance.getNom());
 
+        // 2. Récupération des compétences avec noms
+        Set<Competence> competences = targetFreelance.getCompetences();
+        Set<Long> targetCompetenceIds = competences.stream()
+                .map(Competence::getId)
+                .collect(Collectors.toSet());
 
-        //On extrait les compétences requises pour la mission sous forme d’ID (targetCompetenceIds)(stock les id des competence dans un set).
-        Set<Long> targetCompetenceIds = targetFreelance.getCompetences().stream().map(Competence::getId).collect(Collectors.toSet());
-        log.info("Compétences du freelance cible récupérées: {}", targetCompetenceIds);
+        String competenceNames = competences.stream()
+                .map(Competence::getNom)
+                .collect(Collectors.joining(", "));
+        log.info("Compétences du freelance : {}", competenceNames);
 
-       /* Set<Long> x = new HashSet<>();
-        for (Competence competence : targetMission.getCompetences()) {
-            x.add(competence.getId());
-        }*/
+        // 3. Récupération des missions similaires par ID
+        List<Long> similarMissionIds = missionRepository.findSimilarMissionIdF(freelanceId, MIN_SIMILAR);
+        log.info("{} missions correspondantes trouvées pour le freelance ID: {}", similarMissionIds.size(), freelanceId);
 
-        List<Long> similarCompetance = missionRepository.findSimilarMissionIdF(freelanceId, MIN_SIMILAR);
-        log.info("{} missions corespondante  trouvées pour le freeelance ID: {}", similarCompetance.size(), freelanceId);
+        // 4. Chargement des missions complètes
+        List<Mission> missions = missionRepository.findAllById(similarMissionIds);
 
-         return missionRepository.findAllById(similarCompetance);
+        // 5. Log détaillé des missions recommandées avec leurs compétences
+        for (Mission mission : missions) {
+            String missionCompetenceNames = mission.getCompetences().stream()
+                    .map(Competence::getNom)
+                    .collect(Collectors.joining(", "));
+            log.info("Mission recommandée : {} | Compétences : {}", mission.getTitre(), missionCompetenceNames);
+        }
+
+        return missions;
     }
 }
+
+

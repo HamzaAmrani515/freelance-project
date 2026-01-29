@@ -38,6 +38,7 @@ public class Mission {
     @JoinColumn(name = "client_id")
     private Client client;
 
+
     // Relation many-to-many avec Competence
     @ManyToMany
     @JoinTable(name = "mission_competences", joinColumns = @JoinColumn(name = "mission_id"), inverseJoinColumns = @JoinColumn(name = "competence_id"))
