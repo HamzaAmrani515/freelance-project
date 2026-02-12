@@ -14,6 +14,6 @@ public interface MissionFreelanceRepository extends JpaRepository<MissionFreelan
 
     List<MissionFreelance> findByFreelancerId(Long freelancerId);
 
-    @Query("SELECT mf FROM MissionFreelance mf WHERE mf.dateFin = :targetDate AND mf.notificationEnvoyee = false")
+    @Query("SELECT mf FROM MissionFreelance mf WHERE mf.dateFin = :targetDate AND (mf.notificationEnvoyee = false OR mf.notificationEnvoyee IS NULL)")
     List<MissionFreelance> findMissionsEndingOn(@Param("targetDate") LocalDate targetDate);
 }

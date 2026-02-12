@@ -1,6 +1,7 @@
 package com.example.freelance.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Evaluation {
 
     @ManyToOne
     @JoinColumn(name = "mission_id", nullable = false)
+    @JsonIgnoreProperties({"freelancer", "competences", "client"})
     private Mission mission;
 
     @Column(length = 2000)

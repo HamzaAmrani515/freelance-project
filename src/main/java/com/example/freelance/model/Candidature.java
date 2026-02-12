@@ -1,5 +1,6 @@
 package com.example.freelance.model;
 import com.example.freelance.model.enums.CandidatureStatut;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,10 +29,12 @@ public class Candidature {
 
     @ManyToOne
     @JoinColumn(name = "freelancer_id", nullable = false)
+    @JsonIgnoreProperties({"missions", "competences", "notifications"})
     private Freelancer freelancer;
 
     @ManyToOne
     @JoinColumn(name = "mission_id", nullable = false)
+    @JsonIgnoreProperties({"freelancer", "competences", "client"})
     private Mission mission;
 }
 

@@ -10,12 +10,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Assala Hamoudi
  */
 @Repository
 public interface FreelancerRepository extends JpaRepository<Freelancer, Long> {
+
+    Optional<Freelancer> findByEmail(String email);
     @EntityGraph(attributePaths = {"competences"})
     @Query("SELECT f FROM Freelancer f WHERE f.id IN :freelancerIds")
     List<Freelancer> findAllWithCompetencesByIdIn(@Param("freelancerIds") Collection<Long> ids);

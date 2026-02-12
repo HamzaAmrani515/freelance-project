@@ -30,6 +30,11 @@ public class MissionController {
         return missionService.updateMissionStatus(id, status);
     }
 
+    @GetMapping("/{id}")
+    public Mission getMissionById(@PathVariable Long id) {
+        return freelanceService.getMissionWithCompetences(id);
+    }
+
     @GetMapping("/monitored")
     public List<Mission> getMonitoredMissions() {
         return missionService.getMonitoredMissions();

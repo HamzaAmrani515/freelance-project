@@ -1,5 +1,6 @@
 package com.example.freelance.service;
 
+import com.example.freelance.dto.MissionEndingEvent;
 import com.example.freelance.model.*;
 import com.example.freelance.model.enums.MissionStatut;
 import com.example.freelance.repository.MissionRepository;
@@ -20,7 +21,7 @@ public class MissionService {
     private final CompetenceRepository competenceRepository;
 
     @Autowired
-    private NotificationService notificationService;
+    private MissionEventProducer missionEventProducer;
 
     @Autowired
     private FreelanceService freelanceService;
@@ -31,8 +32,15 @@ public class MissionService {
         List<Freelancer> availableFreelancers = freelanceService.getAllAvailableFreelancers();
 
         availableFreelancers.forEach(freelancer -> {
-            Notification notification = new Notification("A new mission has been added, check it now !!", freelancer, mission);
-            notificationService.saveNotification(notification);
+            MissionEndingEvent event = new MissionEndingEvent(
+                    mission.getId(),
+                    freelancer.getId(),
+                    freelancer.getEmail(),
+                    mission.getTitre(),
+                    null,
+                    0
+            );
+            missionEventProducer.publishMissionAssignedEvent(event);
         });
 
         return mission;

@@ -1,6 +1,8 @@
 package com.example.freelance.controller;
 
 import com.example.freelance.dto.FreelancerRecommendationDTO;
+import com.example.freelance.model.Mission;
+import com.example.freelance.repository.MissionRepository;
 import com.example.freelance.service.RecommendationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +23,17 @@ import java.util.List;
 public class RecommendationController {
 
     private final RecommendationService recommendationService;
+    private final MissionRepository missionRepository;
 
     @GetMapping("/mission/{missionId}")
     public List<FreelancerRecommendationDTO> getRecommendations(@PathVariable Long missionId) {
-        log.info("Récupérer les freelances recommendés pour la mission {}",missionId);
+        log.info("Récupérer les freelances recommendés pour la mission {}", missionId);
         return recommendationService.recommendFreelancersForMission(missionId);
+    }
+
+    @GetMapping("/freelance/{freelanceId}")
+    public List<Mission> getMissionRecommendations(@PathVariable Long freelanceId) {
+        log.info("Récupérer les missions du freelancer {}", freelanceId);
+        return missionRepository.findByFreelancerId(freelanceId);
     }
 }

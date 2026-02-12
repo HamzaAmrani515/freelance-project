@@ -2,18 +2,21 @@ package com.example.freelance.model;
 
 import com.example.freelance.model.enums.FreelancerStatus;
 import com.example.freelance.model.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "freelancers")
 @Data
 @NoArgsConstructor
+@ToString(exclude = {"missions", "competences"})
+@EqualsAndHashCode(exclude = {"missions", "competences"})
 public class Freelancer {
 
     @Id
@@ -29,9 +32,11 @@ public class Freelancer {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "freelancer")
     private Set<Mission> missions;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "freelancer")
     private Set<Competence> competences;
 
@@ -47,9 +52,5 @@ public class Freelancer {
 
     @Enumerated(EnumType.STRING)
     private FreelancerStatus status;
-
-    @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Notification> notifications = new HashSet<>();
-
 
 }

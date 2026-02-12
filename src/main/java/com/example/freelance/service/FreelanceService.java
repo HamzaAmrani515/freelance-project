@@ -73,4 +73,8 @@ public class FreelanceService {
     public List<Freelancer> getAllAvailableFreelancers() {
         return freelanceRepository.findAllByStatus(FreelancerStatus.AVAILABLE);
     }
+
+    public Freelancer getFreelanceByEmail(String email) {
+        return freelanceRepository.findByEmail(email).orElse(null);
+    }
 }

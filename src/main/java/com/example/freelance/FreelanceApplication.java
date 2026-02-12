@@ -11,16 +11,17 @@ import org.springframework.context.annotation.Bean;
 @EnableScheduling
 public class FreelanceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FreelanceApplication.class, args);
-	}
 
-@Bean
-CommandLineRunner test(FreelancerReportRepository reportRepository) {
-	return args -> {
-		long count = reportRepository.count(); // Cela suffit à Hibernate pour forcer la reconnaissance
-		System.out.println("Nombre de rapports existants : " + count);
-	};
-}
+    public static void main(String[] args) {
+        SpringApplication.run(FreelanceApplication.class, args);
+    }
+
+    @Bean
+    CommandLineRunner test(FreelancerReportRepository reportRepository) {
+        return args -> {
+            long count = reportRepository.count(); // Cela suffit à Hibernate pour forcer la reconnaissance
+            System.out.println("Nombre de rapports existants : " + count);
+        };
+    }
 
 }

@@ -82,6 +82,7 @@ public class MissionFreelance {
      *
      * Exemple : 2026-01-15
      */
+
     @Column(name = "date_debut")
     private LocalDate dateDebut;
 

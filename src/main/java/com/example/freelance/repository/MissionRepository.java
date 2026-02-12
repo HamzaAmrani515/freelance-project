@@ -33,4 +33,9 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     List<Mission> findAllByStatut(MissionStatut statut);
 
     List<Mission> findByIdBetween(Long startId, Long endId);
+
+    List<Mission> findByClientId(Long clientId);
+
+    @Query("SELECT m FROM Mission m JOIN MissionFreelance mf ON mf.missionId = m.id WHERE mf.freelancerId = :freelancerId")
+    List<Mission> findByFreelancerId(@Param("freelancerId") Long freelancerId);
 }

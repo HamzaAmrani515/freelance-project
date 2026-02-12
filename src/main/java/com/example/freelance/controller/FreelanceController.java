@@ -41,6 +41,11 @@ public class FreelanceController {
 
     }
 
+    @GetMapping("/email/{email}")
+    public Freelancer getFreelanceByEmail(@PathVariable String email) {
+        return freelanceService.getFreelanceByEmail(email);
+    }
+
     @PutMapping("/{id}")
     public Freelancer updateFreelance(@PathVariable Long id, @RequestBody Freelancer freelance) {
         return freelanceService.updateFreelance(id, freelance);
