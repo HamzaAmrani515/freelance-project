@@ -3,11 +3,20 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { RecommendationControllerService } from "../../api";
 import type { Mission } from "../../api/models/Mission";
+import { NotificationBell } from "../../components/notifications";
+import { useNotifications } from "../../context/NotificationContext";
 
 const FreelanceMissions: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [missions, setMissions] = useState<Mission[]>([]);
     const [loading, setLoading] = useState(true);
+    const { setFreelancerId } = useNotifications();
+
+    useEffect(() => {
+        if (id) {
+            setFreelancerId(Number(id));
+        }
+    }, [id, setFreelancerId]);
 
     useEffect(() => {
         const fetchMissions = async () => {
@@ -31,7 +40,10 @@ const FreelanceMissions: React.FC = () => {
 
     return (
         <div className="container mx-auto p-8">
-            <h1 className="text-3xl font-semibold mb-6">Missions du Client</h1>
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-3xl font-semibold">Missions recommandées</h1>
+                <NotificationBell />
+            </div>
             {loading ? (
                 <p className="text-center">Chargement...</p>
             ) : missions.length > 0 ? (

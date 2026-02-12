@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { FreelanceControllerService, Freelancer } from "../../api";
 import { useParams } from 'react-router-dom';
+import { NotificationBell } from "../../components/notifications";
+import { useNotifications } from "../../context/NotificationContext";
 
 const FreelanceDashboard: React.FC = () => {
     const { nom } = useParams<{ nom: string }>();
     const [freelance, setFreelance] = useState<Freelancer | null>(null);
     const [loading, setLoading] = useState(true);
     const [freelanceId, setFreelanceId] = useState<number | null>(null);
+    const { setFreelancerId } = useNotifications();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,6 +24,7 @@ const FreelanceDashboard: React.FC = () => {
                 setFreelance(response);
                 if (response.id !== undefined) {
                     setFreelanceId(response.id);
+                    setFreelancerId(response.id);
                 }
             } catch (error) {
                 toast.error("Erreur lors de la récupération des informations freelance.");
@@ -28,9 +32,9 @@ const FreelanceDashboard: React.FC = () => {
                 setLoading(false);
             }
         };
-    
+
         fetchData();
-    }, [nom]);
+    }, [nom, setFreelancerId]);
     
     return (
         <div className="flex h-screen bg-gray-100">
@@ -56,6 +60,7 @@ const FreelanceDashboard: React.FC = () => {
             <div className="flex-1 p-8">
                 <header className="mb-8 flex justify-between items-center">
                     <h1 className="text-3xl font-semibold">Bienvenue sur votre espace freelance</h1>
+                    <NotificationBell />
                 </header>
 
                 <div className="bg-white p-6 rounded-lg shadow-lg">
