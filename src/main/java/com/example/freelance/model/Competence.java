@@ -4,6 +4,7 @@ package com.example.freelance.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "competences")
@@ -23,6 +24,7 @@ public class Competence {
 
     @ManyToOne
     @JoinColumn(name = "freelancer_id")
+    @JsonIgnore
     private Freelancer freelancer;
 }
 

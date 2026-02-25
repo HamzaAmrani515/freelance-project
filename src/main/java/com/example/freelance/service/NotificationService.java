@@ -40,7 +40,7 @@ public class NotificationService {
 
         // Create and save the notification
         Notification notification = new Notification("A new mission matching your skills is available!", freelancer, mission);
-        notification.setIsRead(false);
+        notification.setRead(false);
         notification.setTimestamp(LocalDateTime.now());
 
         notificationRepository.save(notification);

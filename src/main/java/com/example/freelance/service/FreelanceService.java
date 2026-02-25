@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author Assala Hamoudi
- */
+
 @Service
 @RequiredArgsConstructor
 public class FreelanceService {
@@ -76,4 +74,8 @@ public class FreelanceService {
     public List<Freelancer> getAllAvailableFreelancers() {
         return freelanceRepository.findAllByStatus(FreelancerStatus.AVAILABLE);
     }
+    public List<Freelancer> debugAvailable() {
+        return freelanceRepository.findAllByStatus(FreelancerStatus.AVAILABLE);
+    }
+
 }

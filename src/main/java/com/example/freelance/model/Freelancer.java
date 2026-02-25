@@ -4,7 +4,9 @@ import com.example.freelance.model.enums.FreelancerStatus;
 import com.example.freelance.model.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 import java.util.HashSet;
@@ -12,7 +14,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "freelancers")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Freelancer {
 
@@ -32,8 +35,8 @@ public class Freelancer {
     @OneToMany(mappedBy = "freelancer")
     private Set<Mission> missions;
 
-    @OneToMany(mappedBy = "freelancer")
-    private Set<Competence> competences;
+    @OneToMany(mappedBy = "freelancer", fetch = FetchType.EAGER)
+    private Set<Competence> competences = new HashSet<>();
 
     private Double experience;
 

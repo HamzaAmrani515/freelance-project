@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @author Assala Hamoudi
- */
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/freelances")
@@ -58,4 +56,9 @@ public class FreelanceController {
     public Freelancer updateFreelance(@PathVariable Long id, @RequestBody Freelancer freelance) {
         return freelanceService.updateFreelance(id, freelance);
     }
+    @GetMapping("/available-debug")
+    public List<Freelancer> debugAvailable() {
+        return freelanceService.debugAvailable();
+    }
+
 }

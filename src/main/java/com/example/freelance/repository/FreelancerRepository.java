@@ -7,13 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
+import com.example.freelance.model.enums.FreelancerStatus;
+import java.util.List;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author Assala Hamoudi
- */
+
 @Repository
 public interface FreelancerRepository extends JpaRepository<Freelancer, Long> {
     //pour me rajouter
@@ -24,4 +23,15 @@ public interface FreelancerRepository extends JpaRepository<Freelancer, Long> {
 
 
     Freelancer findByEmail(String email);
+    @EntityGraph(attributePaths = {"competences"})
+    List<Freelancer> findAllByStatus(FreelancerStatus status);
+    @EntityGraph(attributePaths = {"competences"})
+    @Query("""
+        select distinct f
+        from Freelancer f
+        join f.competences c
+        where f.status = com.example.freelance.model.enums.FreelancerStatus.AVAILABLE
+          and lower(c.nom) = lower(:competenceName)
+    """)
+    List<Freelancer> findAvailableByCompetenceName(String competenceName);
 }

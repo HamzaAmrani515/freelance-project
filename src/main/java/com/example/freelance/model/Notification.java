@@ -1,37 +1,39 @@
 package com.example.freelance.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notifications")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
-    @Column(nullable = false)
     private String message;
 
-    @Column(nullable = false)
     private LocalDateTime timestamp;
 
-    @Column(nullable = false)
-    private Boolean isRead = false;
 
+    private boolean isRead;
 
     @ManyToOne
     @JoinColumn(name = "freelancer_id")
+    @JsonIgnoreProperties({"notifications", "missions"})
     private Freelancer freelancer;
-
 
     @ManyToOne
     @JoinColumn(name = "mission_id")
+    @JsonIgnoreProperties({"freelancer", "client", "competences"})
     private Mission mission;
 
     public Notification(String message, Freelancer freelancer, Mission mission) {
@@ -41,8 +43,4 @@ public class Notification {
         this.freelancer = freelancer;
         this.mission = mission;
     }
-
-
 }
-
-

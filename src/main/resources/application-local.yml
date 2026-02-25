@@ -1,9 +1,6 @@
-server:
-  port: 8080
-
 spring:
   datasource:
-    url: jdbc:postgresql://172.31.253.108:5432/dev_freelance
+    url: jdbc:postgresql://localhost:5433/dev_freelance
     username: dev_freelance_user
     password: freelance
     driver-class-name: org.postgresql.Driver
@@ -13,7 +10,7 @@ spring:
       ddl-auto: update
 
   kafka:
-    bootstrap-servers: 172.31.249.103:9093
+    bootstrap-servers: localhost:9092
 
     consumer:
       group-id: notification-service
@@ -35,13 +32,3 @@ app:
   kafka:
     topics:
       missionCreated: mission.created.v1
-
-logging:
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5level | %X{traceId:-no-trace} | %logger{36} | %msg%n"
-  level:
-    root: INFO
-    com.example.freelance: INFO
-    org.springframework.web: WARN
-    org.hibernate: WARN
-    org.apache.kafka: WARN

@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * @author Assala Hamoudi
- */
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor

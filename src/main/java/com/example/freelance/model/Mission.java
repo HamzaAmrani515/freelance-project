@@ -2,7 +2,6 @@ package com.example.freelance.model;
 
 
 import com.example.freelance.model.enums.MissionStatut;
-import com.example.freelance.service.listeners.MissionListener;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 @Entity
 @Table(name = "missions")
-@EntityListeners(MissionListener.class)
 @Data
 @NoArgsConstructor
 public class Mission {
