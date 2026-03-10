@@ -1,13 +1,9 @@
 package com.example.freelance.model;
 
-
 import com.example.freelance.model.enums.MissionStatut;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,7 +27,6 @@ public class Mission {
     private String description;
 
     private Double budget;
-
     private String duree;
 
     @Enumerated(EnumType.STRING)
@@ -44,7 +39,7 @@ public class Mission {
 
     @ManyToOne
     @JoinColumn(name = "freelancer_id", nullable = true)
-    @JsonIgnoreProperties({"missions", "competences"})
+    @JsonIgnoreProperties({"missions", "competences", "notifications"})
     private Freelancer freelancer;
 
     @ManyToMany(fetch = FetchType.EAGER)
