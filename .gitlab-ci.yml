@@ -35,26 +35,19 @@ build-front:
     - local
   before_script:
     - |
-      while fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do
-        echo "Waiting for apt lock..."
-        sleep 5
-      done
-      while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
-        echo "Waiting for dpkg lock..."
-        sleep 5
-      done
-      apt-get update -y
-    - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
-    - |
-      while fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do
-        echo "Waiting for apt lock..."
-        sleep 5
-      done
-      while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
-        echo "Waiting for dpkg lock..."
-        sleep 5
-      done
-      apt-get install -y nodejs
+      export NODE_VERSION="v22.12.0"
+      export NODE_DIR="$CI_PROJECT_DIR/.node"
+      export PATH="$NODE_DIR/bin:$PATH"
+
+      if [ ! -x "$NODE_DIR/bin/node" ]; then
+        echo "Installing Node.js locally..."
+        curl -fsSL "https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.xz" -o node.tar.xz
+        mkdir -p "$NODE_DIR"
+        tar -xJf node.tar.xz -C "$NODE_DIR" --strip-components=1
+      fi
+
+      node -v
+      npm -v
   script:
     - if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then cp .env.dev .env; fi
     - if [ "$CI_COMMIT_REF_NAME" == "staging" ]; then cp .env.pprod .env; fi
@@ -73,16 +66,19 @@ deploy-front:
     - build-front
   before_script:
     - |
-      while fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do
-        echo "Waiting for apt lock..."
-        sleep 5
-      done
-      while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
-        echo "Waiting for dpkg lock..."
-        sleep 5
-      done
-      apt-get update -qq
-      apt-get install -qqy sshpass
+      if ! command -v sshpass >/dev/null 2>&1; then
+        echo "sshpass not found, installing..."
+        timeout 180 bash -c '
+          while fuser /var/lib/apt/lists/lock >/dev/null 2>&1 || fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+            echo "Waiting for apt lock..."
+            sleep 5
+          done
+        '
+        apt-get update -qq
+        apt-get install -qqy sshpass
+      else
+        echo "sshpass already installed"
+      fi
   script:
     - |
       if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then
