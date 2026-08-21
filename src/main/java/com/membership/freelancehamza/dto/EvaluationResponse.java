@@ -5,6 +5,9 @@ public record EvaluationResponse(
         Long freelancerId,
         Integer globalNote,
         Double evaluationScore,
-        String generatedEventType,
+        Double finalScore,
+        String deliveryStatus,
+        String trendLabel,
         String message
-) {}
+) {
+}

@@ -2,7 +2,7 @@ package com.membership.freelancehamza.dto;
 
 import java.time.LocalDateTime;
 
-public record FreelancerMissionHistoryDto(
+public record FreelancerEvaluationHistoryDto(
         Long missionId,
         String missionTitle,
         String deliveryStatus,

@@ -14,7 +14,7 @@ public class FreelancerController {
     public FreelancerController(FreelancerDetailService service) {
         this.service = service;
     }
-
+// methode pour avoir les profil complet du freelancer
     @GetMapping("/{id}/details")
     public FreelancerDetailDto getDetails(@PathVariable Long id) {
         return service.getFreelancerDetails(id);

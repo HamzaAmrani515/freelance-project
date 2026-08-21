@@ -11,17 +11,22 @@ import java.util.List;
 @CrossOrigin
 public class RankingController {
 
-    private final RankingService service;
+    private final RankingService rankingService;
 
-    public RankingController(RankingService service) {
-        this.service = service;
+    public RankingController(RankingService rankingService) {
+        this.rankingService = rankingService;
     }
 
     @GetMapping
     public List<FreelancerRankingDto> getRanking(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "50") int size
+            @RequestParam(defaultValue = "100") int size
     ) {
-        return service.getRanking(page, size);
+        return rankingService.getRanking(page, size);
+    }
+
+    @GetMapping("/{freelancerId}")
+    public FreelancerRankingDto getFreelancerRankingById(@PathVariable Long freelancerId) {
+        return rankingService.getFreelancerRankingById(freelancerId);
     }
 }

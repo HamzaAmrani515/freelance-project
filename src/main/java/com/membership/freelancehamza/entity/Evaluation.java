@@ -12,65 +12,137 @@ public class Evaluation {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="mission_id", nullable = false)
+    @JoinColumn(name = "mission_id", nullable = false)
     private Mission mission;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="freelancer_id", nullable = false)
+    @JoinColumn(name = "freelancer_id", nullable = false)
     private Freelancer freelancer;
 
-    @Column(name="note", nullable = false)
+    @Column(name = "note", nullable = false)
     private Integer note;
 
-    @Column(name="technical_quality")
+    @Column(name = "technical_quality")
     private Integer technicalQuality;
 
-    @Column(name="communication")
+    @Column(name = "communication")
     private Integer communication;
 
-    @Column(name="deadline_respect")
-    private Integer deadlineRespect;
-
-    @Column(name="autonomy")
+    @Column(name = "autonomy")
     private Integer autonomy;
 
-    @Column(name="test_quality")
+    @Column(name = "test_quality")
     private Integer testQuality;
 
-    @Column(name="feedback")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "delivery_status", length = 30)
+    private DeliveryStatus deliveryStatus;
+
+    @Column(name = "feedback")
     private String feedback;
 
-    @Column(name="created_at", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    public Evaluation() {}
+    public Evaluation() {
+    }
 
     @PrePersist
     void onCreate() {
-        if (createdAt == null) createdAt = LocalDateTime.now();
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+
+        if (deliveryStatus == null) {
+            deliveryStatus = DeliveryStatus.ON_TIME;
+        }
     }
 
-    public Long getId() { return id; }
-    public Mission getMission() { return mission; }
-    public Freelancer getFreelancer() { return freelancer; }
-    public Integer getNote() { return note; }
-    public Integer getTechnicalQuality() { return technicalQuality; }
-    public Integer getCommunication() { return communication; }
-    public Integer getDeadlineRespect() { return deadlineRespect; }
-    public Integer getAutonomy() { return autonomy; }
-    public Integer getTestQuality() { return testQuality; }
-    public String getFeedback() { return feedback; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public Long getId() {
+        return id;
+    }
 
-    public void setId(Long id) { this.id = id; }
-    public void setMission(Mission mission) { this.mission = mission; }
-    public void setFreelancer(Freelancer freelancer) { this.freelancer = freelancer; }
-    public void setNote(Integer note) { this.note = note; }
-    public void setTechnicalQuality(Integer technicalQuality) { this.technicalQuality = technicalQuality; }
-    public void setCommunication(Integer communication) { this.communication = communication; }
-    public void setDeadlineRespect(Integer deadlineRespect) { this.deadlineRespect = deadlineRespect; }
-    public void setAutonomy(Integer autonomy) { this.autonomy = autonomy; }
-    public void setTestQuality(Integer testQuality) { this.testQuality = testQuality; }
-    public void setFeedback(String feedback) { this.feedback = feedback; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public Mission getMission() {
+        return mission;
+    }
+
+    public Freelancer getFreelancer() {
+        return freelancer;
+    }
+
+    public Integer getNote() {
+        return note;
+    }
+
+    public Integer getTechnicalQuality() {
+        return technicalQuality;
+    }
+
+    public Integer getCommunication() {
+        return communication;
+    }
+
+    public Integer getAutonomy() {
+        return autonomy;
+    }
+
+    public Integer getTestQuality() {
+        return testQuality;
+    }
+
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
+    }
+
+    public void setFreelancer(Freelancer freelancer) {
+        this.freelancer = freelancer;
+    }
+
+    public void setNote(Integer note) {
+        this.note = note;
+    }
+
+    public void setTechnicalQuality(Integer technicalQuality) {
+        this.technicalQuality = technicalQuality;
+    }
+
+    public void setCommunication(Integer communication) {
+        this.communication = communication;
+    }
+
+    public void setAutonomy(Integer autonomy) {
+        this.autonomy = autonomy;
+    }
+
+    public void setTestQuality(Integer testQuality) {
+        this.testQuality = testQuality;
+    }
+
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

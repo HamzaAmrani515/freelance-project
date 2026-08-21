@@ -26,11 +26,11 @@ public class MissionFreelance {
         this.freelancer = freelancer;
         this.missionId = mission.getId();
     }
-
+// getters
     public Long getMissionId() { return missionId; }
     public Mission getMission() { return mission; }
     public Freelancer getFreelancer() { return freelancer; }
-
+// setters
     public void setMissionId(Long missionId) { this.missionId = missionId; }
     public void setMission(Mission mission) { this.mission = mission; }
     public void setFreelancer(Freelancer freelancer) { this.freelancer = freelancer; }

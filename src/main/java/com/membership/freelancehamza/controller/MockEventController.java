@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+
+// ce mock est utilise generalement pour generer les evenments de test
 @RestController
 @RequestMapping("/api/mock")
 @CrossOrigin
@@ -19,12 +22,12 @@ public class MockEventController {
     public MockEventController(MockEventService service) {
         this.service = service;
     }
-
+// ca pour creerv un seul evenement  de test
     @PostMapping("/event")
     public MockEventResponse mockEvent(@Valid @RequestBody MockEventRequest request) {
         return service.createMockEvent(request);
     }
-
+// ca pour creer plusieurs evenments de test ujne seul fois
     @PostMapping("/events/batch")
     public List<MockEventResponse> mockEventsBatch(@RequestBody BatchMockEventRequest request) {
         return service.createMockEventsBatch(request);
