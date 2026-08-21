@@ -4,6 +4,7 @@ stages:
 
 variables:
   BUILD_PATH: "build"
+
   ###########
   ### DEV ###
   ###########
@@ -11,6 +12,7 @@ variables:
   DEV_PASSWORD: "devfront"
   DEV_HOST: "172.31.250.216"
   DEV_PATH: "/home/devfront/react-app"
+
   #############
   ### PPROD ###
   #############
@@ -32,9 +34,27 @@ build-front:
   tags:
     - local
   before_script:
-    - apt-get update -y
+    - |
+      while fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do
+        echo "Waiting for apt lock..."
+        sleep 5
+      done
+      while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+        echo "Waiting for dpkg lock..."
+        sleep 5
+      done
+      apt-get update -y
     - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
-    - apt-get install -y nodejs
+    - |
+      while fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do
+        echo "Waiting for apt lock..."
+        sleep 5
+      done
+      while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+        echo "Waiting for dpkg lock..."
+        sleep 5
+      done
+      apt-get install -y nodejs
   script:
     - if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then cp .env.dev .env; fi
     - if [ "$CI_COMMIT_REF_NAME" == "staging" ]; then cp .env.pprod .env; fi
@@ -52,7 +72,17 @@ deploy-front:
   dependencies:
     - build-front
   before_script:
-    - apt-get update -qq && apt-get install -qqy sshpass
+    - |
+      while fuser /var/lib/apt/lists/lock >/dev/null 2>&1; do
+        echo "Waiting for apt lock..."
+        sleep 5
+      done
+      while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+        echo "Waiting for dpkg lock..."
+        sleep 5
+      done
+      apt-get update -qq
+      apt-get install -qqy sshpass
   script:
     - |
       if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then
