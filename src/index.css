@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.input {
+  width: 100%;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: white;
+  border-radius: 14px;
+  padding: 14px 16px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(59, 130, 246, 0.8);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
