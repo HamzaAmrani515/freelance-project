@@ -122,7 +122,7 @@ export default function FreelanceDetailsPage() {
           <p className="text-blue-100">Score final sur 100</p>
         </div>
 
-        <div className="grid grid-cols-5 gap-4 mb-8">
+        <div className="hidden">
           <Info label="Score final" value={formatNumber(detail.finalScore)} />
           <Info label="Tendance" value={formatLabel(detail.trendLabel)} />
           <Info
@@ -140,7 +140,7 @@ export default function FreelanceDetailsPage() {
             Score officiel récupéré depuis le backend et historique chargé depuis la base de données.
           </p>
 
-          <div className="grid grid-cols-3 gap-4 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
             <FormulaCard
               title="Dernière évaluation"
               value={`${formatNumber(latestEvaluationScore)} / 5`}
@@ -287,9 +287,13 @@ function Info({ label, value }: { label: string; value: any }) {
 }
 
 function Badge({ value }: { value?: string | null }) {
-  const isSuccess = value === "ON_TIME" || value === "COMPLETED";
-  const isWarning = value === "LATE_DELIVERY" || value === "IN_PROGRESS";
-  const isDanger = value === "CANCELLED" || value === "DECLINING";
+  const currentValue = String(value || "");
+
+  const isSuccess = currentValue === "ON_TIME" || currentValue === "COMPLETED";
+  const isWarning =
+    currentValue === "LATE_DELIVERY" || currentValue === "IN_PROGRESS";
+  const isDanger =
+    currentValue === "CANCELLED" || currentValue === "DECLINING";
 
   const className = isSuccess
     ? "bg-green-500/20 text-green-300"
@@ -301,7 +305,7 @@ function Badge({ value }: { value?: string | null }) {
 
   return (
     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${className}`}>
-      {formatLabel(value)}
+      {formatLabel(currentValue)}
     </span>
   );
 }
